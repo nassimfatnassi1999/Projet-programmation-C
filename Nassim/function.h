@@ -17,8 +17,8 @@ struct liste_electorale{
 int Id_Liste;
 char Nom_Liste[];
 struct Date date_creation;
-int orientation[];
-char Municipalite[];
+int orientation;
+char Municipalite;
 int Cin_Liste;
 struct Candidat les_candidats;
 };
