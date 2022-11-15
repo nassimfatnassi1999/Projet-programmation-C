@@ -23,7 +23,7 @@ int ajouterListe(char * filename, Liste L);
 int modifierListe( char * filename,int id,Liste nouvL );
 int supprimerListe(char * filename, int id);
 Liste chercher(char * , int);
-
+int genererIdListe(char * filename);
 
 #endif // FUNCTION_H_INCLUDED
 

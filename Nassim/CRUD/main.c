@@ -5,10 +5,10 @@
 int main()
 {
 
-     Liste L1={21,"bilelel",12,15,1999,1,2,"hamma","nounou","rined","lool"};
-     Liste L2={25,"hammoooo",17,9,1999,2,3,"hello","chalbi","randa","hiiiii"};
-     int x;
-     //saisir(&L1);
+     Liste L1={-1,"bilelel",12,15,1999,1,2,"hamma","nounou","rined","lool"};
+     Liste L2={-1,"hammoooo",17,9,1999,2,3,"hello","chalbi","randa","hiiiii"};     
+int x;
+     
 
      x=ajouterListe("liste.txt",L2);
 
@@ -16,14 +16,14 @@ int main()
         printf("\najout de Liste avec succees!!!!!!!!!");
     else printf("\nechec ajout");
 
-  /*  x=modifierListe("liste.txt",10,L2);
+    /*x=modifierListe("liste.txt",21,L2);
 
     if(x==1)
         printf("\nModification de Liste avec succes");
     else printf("\nechec Modification");*/
 
 
-   /* x=supprimerListe("liste.txt",20 );
+   /* x=supprimerListe("liste.txt",21 );
     if(x==1)
         printf("\nSuppression de Liste avec succés");
     else

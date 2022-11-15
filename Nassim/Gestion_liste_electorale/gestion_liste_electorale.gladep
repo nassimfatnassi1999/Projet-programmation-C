@@ -1,8 +1,0 @@
-<?xml version="1.0" standalone="no"?> <!--*- mode: xml -*-->
-<!DOCTYPE glade-project SYSTEM "http://glade.gnome.org/glade-project-2.0.dtd">
-
-<glade-project>
-  <name>Gestion_liste_electorale</name>
-  <program_name>gestion_liste_electorale</program_name>
-  <gnome_support>FALSE</gnome_support>
-</glade-project>
