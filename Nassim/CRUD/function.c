@@ -2,10 +2,23 @@
 #include <string.h>
 #include "function.h"
 //function pour ajouter liste
+
+int genererIdListe(char * filename)
+{
+int id;
+Liste L;
+ FILE * f=fopen(filename, "r");
+while(fscanf(f,"%d %s %d %d %d %d %d %s %s %s %s\n",&L.id,L.nom_liste,&L.d.jour,&L.d.mois,&L.d.annee,&L.orientation,&L.municipalite,L.nom_tete_liste,L.candidat_1,L.candidat_2,L.candidat_3)!=EOF);
+   fclose(f); 
+id=L.id++;
+return id;
+}
+
 int ajouterListe(char * filename, Liste L)
 {
-
+   L.id=genererIdListe(filename);
     FILE * f=fopen(filename, "a");
+ 
     if(f!=NULL)
     {
         fprintf(f,"%d %s %d %d %d %d %d %s %s %s %s\n",L.id,L.nom_liste,L.d.jour,L.d.mois,L.d.annee,L.orientation,L.municipalite,L.nom_tete_liste,L.candidat_1,L.candidat_2,L.candidat_3);
@@ -24,7 +37,7 @@ int modifierListe( char * filename,int id,Liste nouvL )
     FILE * f2=fopen("nouv.txt", "w");
     if(f!=NULL && f2!=NULL)
     {
-        while(fscanf(f,"%d %s %d %d %d %d %d %s %s %s %s\n",&L.id,&L.nom_liste,&L.d.jour,&L.d.mois,&L.d.annee,&L.orientation,&L.municipalite,&L.nom_tete_liste,&L.candidat_1,&L.candidat_2,&L.candidat_3)!=EOF)
+        while(fscanf(f,"%d %s %d %d %d %d %d %s %s %s %s\n",&L.id,L.nom_liste,&L.d.jour,&L.d.mois,&L.d.annee,&L.orientation,&L.municipalite,L.nom_tete_liste,L.candidat_1,L.candidat_2,L.candidat_3)!=EOF)
         {
             if(L.id== id)
             {
@@ -52,7 +65,7 @@ int supprimerListe(char * filename, int id)
     FILE * f2=fopen("nouv.txt", "w");
     if(f!=NULL && f2!=NULL)
     {
-        while(fscanf(f,"%d %s %d %d %d %d %d %s %s %s %s\n",&L.id,&L.nom_liste,&L.d.jour,&L.d.mois,&L.d.annee,&L.orientation,&L.municipalite,&L.nom_tete_liste,&L.candidat_1,&L.candidat_2,&L.candidat_3)!=EOF)
+        while(fscanf(f,"%d %s %d %d %d %d %d %s %s %s %s\n",&L.id,L.nom_liste,&L.d.jour,&L.d.mois,&L.d.annee,&L.orientation,&L.municipalite,L.nom_tete_liste,L.candidat_1,L.candidat_2,L.candidat_3)!=EOF)
         {
             if(L.id==id)
                 tr=1;
@@ -74,7 +87,7 @@ Liste chercher(char * filename, int id)
     FILE * f=fopen(filename, "r");
     if(f!=NULL)
     {
-        while(tr==0&& fscanf(f,"%d %s %d %d %d %d %d %s %s %s %s\n",&L.id,L.nom_liste,&L.d.jour,&L.d.mois,&L.d.annee,&L.orientation,&L.municipalite,&L.nom_tete_liste,&L.candidat_1,&L.candidat_2,&L.candidat_3)!=EOF)
+        while(tr==0&& fscanf(f,"%d %s %d %d %d %d %d %s %s %s %s\n",&L.id,L.nom_liste,&L.d.jour,&L.d.mois,&L.d.annee,&L.orientation,&L.municipalite,L.nom_tete_liste,L.candidat_1,L.candidat_2,L.candidat_3)!=EOF)
         {
             if(L.id== id)
                 tr=1;
