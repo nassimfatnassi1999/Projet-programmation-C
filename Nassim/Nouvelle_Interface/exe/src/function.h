@@ -1,5 +1,6 @@
 #ifndef FUNCTION_H_INCLUDED
 #define FUNCTION_H_INCLUDED
+#include <gtk/gtk.h>
 typedef struct Date
 {
     int jour;
@@ -12,8 +13,8 @@ typedef struct liste_electorale
     int id;
     char nom_liste[30];
     date d;
-    int orientation;
-    int municipalite;
+    char orientation[20];
+    char municipalite[20];
     char nom_tete_liste[30];
     char candidat_1[30];
     char candidat_2[30];
@@ -40,20 +41,29 @@ typedef struct infoUtilisateur
 } utilisateur;
 //les fonctions
 
+int genererIdListe(char * filename);
 
-int ajouterListe(char * filename, Liste L);
+void ajouterListe(Liste L);
 
 int modifierListe( char * filename,int id,Liste nouvL );
 
-int supprimerListe(char * filename, int id);
+void supprimerListe(Liste Li);
 
 Liste chercher(char *, int);
 
 int nbv(char * filename,int id);
 
-void remplirtab(char * filename,char * filename2,Lorder tab[],int *n);
+void afficherTab(int tab,int n);
 
 void printTab(Lorder tab[],int *n);
+
+void remplirtab(char * filename,char * filename2,Lorder tab[],int *n);
+
+int connexion(int login,int pass);
+
+int verifier(char * filename, char nom[]);
+
+void afficher_Liste(GtkWidget *liste);
 
 
 
