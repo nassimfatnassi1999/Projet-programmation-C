@@ -254,3 +254,16 @@ on_retourbv_clicked           (GtkButton       *button,
 
 
 
+
+void
+on_btn_Retour_Ajouter_clicked          (GtkButton       *button,
+                                        gpointer         user_data)
+{
+	GtkWidget *ajouter;
+	GtkWidget *afficher_Nassim;
+	afficher_Nassim=lookup_widget(button,"AjouterListe");
+	gtk_widget_destroy(afficher_Nassim);
+	ajouter=create_GestionListeElectorale();
+	gtk_widget_show (ajouter);
+}
+

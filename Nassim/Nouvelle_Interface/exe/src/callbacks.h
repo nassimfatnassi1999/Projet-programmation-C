@@ -1,6 +1,6 @@
 #include <gtk/gtk.h>
 
-
+///////////////////////////////////////////////////////Nassim fatnassi hnifi////////////////////////////////////////////////
 void
 on_btn_Ajouter_Nassim_clicked          (GtkButton       *button,
                                         gpointer         user_data);
@@ -34,6 +34,14 @@ on_btn_Afficher_Tree_Liste_clicked     (GtkButton       *button,
 void
 on_btn_Modifier_clicked                (GtkButton       *button,
                                         gpointer         user_data);
+void
+on_btn_retour_modifier_nassim_clicked  (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_btn_Retour_Ajouter_clicked          (GtkButton       *button,
+                                        gpointer         user_data);
+///////////////////////////////////////////////////////chaima mattoussi////////////////////////////////////////////////
 
 void
 on_salle1_toggled                      (GtkToggleButton *togglebutton,
@@ -64,6 +72,4 @@ on_bt_clicked           (GtkButton       *button,
 void
 on_retourbv_clicked           (GtkButton       *button,
                                         gpointer         user_data);
-void
-on_btn_retour_modifier_nassim_clicked  (GtkButton       *button,
-                                        gpointer         user_data);
+

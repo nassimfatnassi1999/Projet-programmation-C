@@ -121,7 +121,6 @@ create_GestionListeElectorale (void)
   GtkWidget *GestionListeElectorale;
   GtkWidget *fixedListe;
   GtkWidget *treeview1;
-  GtkWidget *labelTreeListe;
   GtkWidget *btn_Afficher_Tree_Liste;
   GtkWidget *alignment8;
   GtkWidget *hbox8;
@@ -139,6 +138,7 @@ create_GestionListeElectorale (void)
   GtkWidget *hbox3;
   GtkWidget *image3;
   GtkWidget *label7;
+  GtkWidget *labelTreeListe;
 
   GestionListeElectorale = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title (GTK_WINDOW (GestionListeElectorale), _("Gestion Liste Electorale"));
@@ -152,11 +152,6 @@ create_GestionListeElectorale (void)
   gtk_widget_show (treeview1);
   gtk_fixed_put (GTK_FIXED (fixedListe), treeview1, 24, 96);
   gtk_widget_set_size_request (treeview1, 896, 280);
-
-  labelTreeListe = gtk_label_new (_("Les Listes Electorales"));
-  gtk_widget_show (labelTreeListe);
-  gtk_fixed_put (GTK_FIXED (fixedListe), labelTreeListe, 296, 32);
-  gtk_widget_set_size_request (labelTreeListe, 200, 30);
 
   btn_Afficher_Tree_Liste = gtk_button_new ();
   gtk_widget_show (btn_Afficher_Tree_Liste);
@@ -231,6 +226,12 @@ create_GestionListeElectorale (void)
   gtk_widget_show (label7);
   gtk_box_pack_start (GTK_BOX (hbox3), label7, FALSE, FALSE, 0);
 
+  labelTreeListe = gtk_label_new (_("<big><b><span color='#842431'>Les Listes Electorale</span></b> \n</big>"));
+  gtk_widget_show (labelTreeListe);
+  gtk_fixed_put (GTK_FIXED (fixedListe), labelTreeListe, 310, 39);
+  gtk_widget_set_size_request (labelTreeListe, 257, 25);
+  gtk_label_set_use_markup (GTK_LABEL (labelTreeListe), TRUE);
+
   g_signal_connect ((gpointer) treeview1, "row_activated",
                     G_CALLBACK (on_treeview1_row_activated),
                     NULL);
@@ -248,7 +249,6 @@ create_GestionListeElectorale (void)
   GLADE_HOOKUP_OBJECT_NO_REF (GestionListeElectorale, GestionListeElectorale, "GestionListeElectorale");
   GLADE_HOOKUP_OBJECT (GestionListeElectorale, fixedListe, "fixedListe");
   GLADE_HOOKUP_OBJECT (GestionListeElectorale, treeview1, "treeview1");
-  GLADE_HOOKUP_OBJECT (GestionListeElectorale, labelTreeListe, "labelTreeListe");
   GLADE_HOOKUP_OBJECT (GestionListeElectorale, btn_Afficher_Tree_Liste, "btn_Afficher_Tree_Liste");
   GLADE_HOOKUP_OBJECT (GestionListeElectorale, alignment8, "alignment8");
   GLADE_HOOKUP_OBJECT (GestionListeElectorale, hbox8, "hbox8");
@@ -266,6 +266,7 @@ create_GestionListeElectorale (void)
   GLADE_HOOKUP_OBJECT (GestionListeElectorale, hbox3, "hbox3");
   GLADE_HOOKUP_OBJECT (GestionListeElectorale, image3, "image3");
   GLADE_HOOKUP_OBJECT (GestionListeElectorale, label7, "label7");
+  GLADE_HOOKUP_OBJECT (GestionListeElectorale, labelTreeListe, "labelTreeListe");
 
   return GestionListeElectorale;
 }
@@ -276,47 +277,50 @@ create_AjouterListe (void)
   GtkWidget *AjouterListe;
   GtkWidget *fixedAjouterListe;
   GtkWidget *imageAjouterListe;
-  GtkWidget *labelNomListe;
-  GtkWidget *labelDateListe;
   GtkWidget *entryNomListe;
-  GtkWidget *labelIDListe;
   GtkObject *spinJourListe_adj;
   GtkWidget *spinJourListe;
   GtkObject *spinMoisListe_adj;
   GtkWidget *spinMoisListe;
   GtkObject *spinAnneeListe_adj;
   GtkWidget *spinAnneeListe;
-  GtkWidget *labelOrientation;
-  GtkWidget *labelMunicipalite;
-  GtkWidget *labelCinTete;
   GtkWidget *entryCinTete;
   GtkWidget *entryCinC1;
   GtkWidget *entryCinC2;
-  GtkWidget *labelC2;
-  GtkWidget *labelC1;
-  GtkWidget *labelC3;
   GtkWidget *entryCinC3;
   GtkWidget *labelVerif;
-  GtkWidget *btn_Verifier;
-  GtkWidget *alignment5;
-  GtkWidget *hbox5;
-  GtkWidget *image6;
-  GtkWidget *label18;
-  GtkWidget *btn_Retour;
-  GtkWidget *alignment7;
-  GtkWidget *hbox7;
-  GtkWidget *image8;
-  GtkWidget *label21;
-  GtkWidget *btn_Ajouter_Liste;
-  GtkWidget *alignment6;
-  GtkWidget *hbox6;
-  GtkWidget *image7;
-  GtkWidget *label20;
   GtkWidget *radiobtn_Gauche;
   GSList *radiobtn_Gauche_group = NULL;
   GtkWidget *radiobtn_Centre;
   GtkWidget *radiobtn_Droite;
   GtkWidget *combobox_nassim;
+  GtkWidget *labelSmallDate;
+  GtkWidget *labelC2;
+  GtkWidget *labelC3;
+  GtkWidget *btn_Verifier;
+  GtkWidget *alignment5;
+  GtkWidget *hbox5;
+  GtkWidget *image6;
+  GtkWidget *label18;
+  GtkWidget *btn_Ajouter_Liste;
+  GtkWidget *alignment6;
+  GtkWidget *hbox6;
+  GtkWidget *image7;
+  GtkWidget *label20;
+  GtkWidget *btn_Retour_Ajouter;
+  GtkWidget *alignment7;
+  GtkWidget *hbox7;
+  GtkWidget *image8;
+  GtkWidget *label21;
+  GtkWidget *labelIDListe;
+  GtkWidget *labelNomListe;
+  GtkWidget *labelDateListe;
+  GtkWidget *labelOrientation;
+  GtkWidget *labelMunicipalite;
+  GtkWidget *labelCinTete;
+  GtkWidget *labelC1;
+  GtkWidget *label_title_ajoutNassim;
+  GtkWidget *labelsmalltitle;
 
   AjouterListe = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title (GTK_WINDOW (AjouterListe), _("Ajouter Liste Electorale"));
@@ -324,21 +328,12 @@ create_AjouterListe (void)
   fixedAjouterListe = gtk_fixed_new ();
   gtk_widget_show (fixedAjouterListe);
   gtk_container_add (GTK_CONTAINER (AjouterListe), fixedAjouterListe);
+  gtk_widget_set_size_request (fixedAjouterListe, 800, 600);
 
   imageAjouterListe = create_pixmap (AjouterListe, "liste2.png");
   gtk_widget_show (imageAjouterListe);
   gtk_fixed_put (GTK_FIXED (fixedAjouterListe), imageAjouterListe, 8, 16);
   gtk_widget_set_size_request (imageAjouterListe, 150, 176);
-
-  labelNomListe = gtk_label_new (_("Nom de la Liste"));
-  gtk_widget_show (labelNomListe);
-  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), labelNomListe, 168, 80);
-  gtk_widget_set_size_request (labelNomListe, 114, 25);
-
-  labelDateListe = gtk_label_new (_("Date"));
-  gtk_widget_show (labelDateListe);
-  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), labelDateListe, 176, 112);
-  gtk_widget_set_size_request (labelDateListe, 100, 25);
 
   entryNomListe = gtk_entry_new ();
   gtk_widget_show (entryNomListe);
@@ -346,43 +341,23 @@ create_AjouterListe (void)
   gtk_widget_set_size_request (entryNomListe, 200, 25);
   gtk_entry_set_invisible_char (GTK_ENTRY (entryNomListe), 8226);
 
-  labelIDListe = gtk_label_new (_("Identifiant"));
-  gtk_widget_show (labelIDListe);
-  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), labelIDListe, 176, 48);
-  gtk_widget_set_size_request (labelIDListe, 100, 25);
-
-  spinJourListe_adj = gtk_adjustment_new (1, 0, 100, 1, 10, 10);
+  spinJourListe_adj = gtk_adjustment_new (1, 1, 31, 1, 10, 10);
   spinJourListe = gtk_spin_button_new (GTK_ADJUSTMENT (spinJourListe_adj), 1, 0);
   gtk_widget_show (spinJourListe);
   gtk_fixed_put (GTK_FIXED (fixedAjouterListe), spinJourListe, 288, 112);
   gtk_widget_set_size_request (spinJourListe, 60, 25);
 
-  spinMoisListe_adj = gtk_adjustment_new (1, 0, 100, 1, 10, 10);
+  spinMoisListe_adj = gtk_adjustment_new (1, 1, 12, 1, 10, 10);
   spinMoisListe = gtk_spin_button_new (GTK_ADJUSTMENT (spinMoisListe_adj), 1, 0);
   gtk_widget_show (spinMoisListe);
   gtk_fixed_put (GTK_FIXED (fixedAjouterListe), spinMoisListe, 360, 112);
   gtk_widget_set_size_request (spinMoisListe, 60, 25);
 
-  spinAnneeListe_adj = gtk_adjustment_new (1, 0, 100, 1, 10, 10);
+  spinAnneeListe_adj = gtk_adjustment_new (2000, 2000, 2200, 1, 10, 10);
   spinAnneeListe = gtk_spin_button_new (GTK_ADJUSTMENT (spinAnneeListe_adj), 1, 0);
   gtk_widget_show (spinAnneeListe);
   gtk_fixed_put (GTK_FIXED (fixedAjouterListe), spinAnneeListe, 432, 112);
   gtk_widget_set_size_request (spinAnneeListe, 60, 25);
-
-  labelOrientation = gtk_label_new (_("Orientation"));
-  gtk_widget_show (labelOrientation);
-  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), labelOrientation, 168, 152);
-  gtk_widget_set_size_request (labelOrientation, 114, 25);
-
-  labelMunicipalite = gtk_label_new (_("Municipalite"));
-  gtk_widget_show (labelMunicipalite);
-  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), labelMunicipalite, 168, 184);
-  gtk_widget_set_size_request (labelMunicipalite, 114, 25);
-
-  labelCinTete = gtk_label_new (_("Cin tete Liste"));
-  gtk_widget_show (labelCinTete);
-  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), labelCinTete, 168, 224);
-  gtk_widget_set_size_request (labelCinTete, 110, 25);
 
   entryCinTete = gtk_entry_new ();
   gtk_widget_show (entryCinTete);
@@ -402,21 +377,6 @@ create_AjouterListe (void)
   gtk_widget_set_size_request (entryCinC2, 200, 25);
   gtk_entry_set_invisible_char (GTK_ENTRY (entryCinC2), 8226);
 
-  labelC2 = gtk_label_new (_("Cin candidat 2"));
-  gtk_widget_show (labelC2);
-  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), labelC2, 168, 304);
-  gtk_widget_set_size_request (labelC2, 110, 25);
-
-  labelC1 = gtk_label_new (_("Cin candidat 1"));
-  gtk_widget_show (labelC1);
-  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), labelC1, 168, 264);
-  gtk_widget_set_size_request (labelC1, 110, 25);
-
-  labelC3 = gtk_label_new (_("Cin candidat 3"));
-  gtk_widget_show (labelC3);
-  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), labelC3, 168, 344);
-  gtk_widget_set_size_request (labelC3, 110, 25);
-
   entryCinC3 = gtk_entry_new ();
   gtk_widget_show (entryCinC3);
   gtk_fixed_put (GTK_FIXED (fixedAjouterListe), entryCinC3, 288, 344);
@@ -427,69 +387,6 @@ create_AjouterListe (void)
   gtk_widget_show (labelVerif);
   gtk_fixed_put (GTK_FIXED (fixedAjouterListe), labelVerif, 288, 376);
   gtk_widget_set_size_request (labelVerif, 200, 30);
-
-  btn_Verifier = gtk_button_new ();
-  gtk_widget_show (btn_Verifier);
-  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), btn_Verifier, 512, 376);
-  gtk_widget_set_size_request (btn_Verifier, 80, 30);
-
-  alignment5 = gtk_alignment_new (0.5, 0.5, 0, 0);
-  gtk_widget_show (alignment5);
-  gtk_container_add (GTK_CONTAINER (btn_Verifier), alignment5);
-
-  hbox5 = gtk_hbox_new (FALSE, 2);
-  gtk_widget_show (hbox5);
-  gtk_container_add (GTK_CONTAINER (alignment5), hbox5);
-
-  image6 = gtk_image_new_from_stock ("gtk-find", GTK_ICON_SIZE_BUTTON);
-  gtk_widget_show (image6);
-  gtk_box_pack_start (GTK_BOX (hbox5), image6, FALSE, FALSE, 0);
-
-  label18 = gtk_label_new_with_mnemonic (_("Verifier"));
-  gtk_widget_show (label18);
-  gtk_box_pack_start (GTK_BOX (hbox5), label18, FALSE, FALSE, 0);
-
-  btn_Retour = gtk_button_new ();
-  gtk_widget_show (btn_Retour);
-  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), btn_Retour, 64, 472);
-  gtk_widget_set_size_request (btn_Retour, 80, 30);
-
-  alignment7 = gtk_alignment_new (0.5, 0.5, 0, 0);
-  gtk_widget_show (alignment7);
-  gtk_container_add (GTK_CONTAINER (btn_Retour), alignment7);
-
-  hbox7 = gtk_hbox_new (FALSE, 2);
-  gtk_widget_show (hbox7);
-  gtk_container_add (GTK_CONTAINER (alignment7), hbox7);
-
-  image8 = gtk_image_new_from_stock ("gtk-go-back", GTK_ICON_SIZE_BUTTON);
-  gtk_widget_show (image8);
-  gtk_box_pack_start (GTK_BOX (hbox7), image8, FALSE, FALSE, 0);
-
-  label21 = gtk_label_new_with_mnemonic (_("Retour"));
-  gtk_widget_show (label21);
-  gtk_box_pack_start (GTK_BOX (hbox7), label21, FALSE, FALSE, 0);
-
-  btn_Ajouter_Liste = gtk_button_new ();
-  gtk_widget_show (btn_Ajouter_Liste);
-  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), btn_Ajouter_Liste, 352, 432);
-  gtk_widget_set_size_request (btn_Ajouter_Liste, 80, 30);
-
-  alignment6 = gtk_alignment_new (0.5, 0.5, 0, 0);
-  gtk_widget_show (alignment6);
-  gtk_container_add (GTK_CONTAINER (btn_Ajouter_Liste), alignment6);
-
-  hbox6 = gtk_hbox_new (FALSE, 2);
-  gtk_widget_show (hbox6);
-  gtk_container_add (GTK_CONTAINER (alignment6), hbox6);
-
-  image7 = gtk_image_new_from_stock ("gtk-add", GTK_ICON_SIZE_BUTTON);
-  gtk_widget_show (image7);
-  gtk_box_pack_start (GTK_BOX (hbox6), image7, FALSE, FALSE, 0);
-
-  label20 = gtk_label_new_with_mnemonic (_("Ajouter"));
-  gtk_widget_show (label20);
-  gtk_box_pack_start (GTK_BOX (hbox6), label20, FALSE, FALSE, 0);
 
   radiobtn_Gauche = gtk_radio_button_new_with_mnemonic (NULL, _("Gauche"));
   gtk_widget_show (radiobtn_Gauche);
@@ -520,9 +417,141 @@ create_AjouterListe (void)
   gtk_combo_box_append_text (GTK_COMBO_BOX (combobox_nassim), _("tunis "));
   gtk_combo_box_append_text (GTK_COMBO_BOX (combobox_nassim), _("sousse"));
 
-  g_signal_connect ((gpointer) btn_Ajouter_Liste, "clicked",
-                    G_CALLBACK (on_btn_Ajouter_Liste_clicked),
-                    NULL);
+  labelSmallDate = gtk_label_new (_("<small>jour/mois/ann\303\251e</small>"));
+  gtk_widget_show (labelSmallDate);
+  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), labelSmallDate, 168, 132);
+  gtk_widget_set_size_request (labelSmallDate, 118, 17);
+  gtk_label_set_use_markup (GTK_LABEL (labelSmallDate), TRUE);
+
+  labelC2 = gtk_label_new (_("<b><span color='black'>Cin candidat 2</span></b>"));
+  gtk_widget_show (labelC2);
+  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), labelC2, 168, 304);
+  gtk_widget_set_size_request (labelC2, 110, 25);
+  gtk_label_set_use_markup (GTK_LABEL (labelC2), TRUE);
+
+  labelC3 = gtk_label_new (_("<b><span color='black'>Cin candidat 3</span></b>"));
+  gtk_widget_show (labelC3);
+  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), labelC3, 168, 344);
+  gtk_widget_set_size_request (labelC3, 110, 25);
+  gtk_label_set_use_markup (GTK_LABEL (labelC3), TRUE);
+
+  btn_Verifier = gtk_button_new ();
+  gtk_widget_show (btn_Verifier);
+  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), btn_Verifier, 512, 376);
+  gtk_widget_set_size_request (btn_Verifier, 100, 35);
+
+  alignment5 = gtk_alignment_new (0.5, 0.5, 0, 0);
+  gtk_widget_show (alignment5);
+  gtk_container_add (GTK_CONTAINER (btn_Verifier), alignment5);
+
+  hbox5 = gtk_hbox_new (FALSE, 2);
+  gtk_widget_show (hbox5);
+  gtk_container_add (GTK_CONTAINER (alignment5), hbox5);
+
+  image6 = gtk_image_new_from_stock ("gtk-find", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_show (image6);
+  gtk_box_pack_start (GTK_BOX (hbox5), image6, FALSE, FALSE, 0);
+
+  label18 = gtk_label_new_with_mnemonic (_("Verifier"));
+  gtk_widget_show (label18);
+  gtk_box_pack_start (GTK_BOX (hbox5), label18, FALSE, FALSE, 0);
+
+  btn_Ajouter_Liste = gtk_button_new ();
+  gtk_widget_show (btn_Ajouter_Liste);
+  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), btn_Ajouter_Liste, 352, 432);
+  gtk_widget_set_size_request (btn_Ajouter_Liste, 100, 35);
+
+  alignment6 = gtk_alignment_new (0.5, 0.5, 0, 0);
+  gtk_widget_show (alignment6);
+  gtk_container_add (GTK_CONTAINER (btn_Ajouter_Liste), alignment6);
+
+  hbox6 = gtk_hbox_new (FALSE, 2);
+  gtk_widget_show (hbox6);
+  gtk_container_add (GTK_CONTAINER (alignment6), hbox6);
+
+  image7 = gtk_image_new_from_stock ("gtk-add", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_show (image7);
+  gtk_box_pack_start (GTK_BOX (hbox6), image7, FALSE, FALSE, 0);
+
+  label20 = gtk_label_new_with_mnemonic (_("Ajouter"));
+  gtk_widget_show (label20);
+  gtk_box_pack_start (GTK_BOX (hbox6), label20, FALSE, FALSE, 0);
+
+  btn_Retour_Ajouter = gtk_button_new ();
+  gtk_widget_show (btn_Retour_Ajouter);
+  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), btn_Retour_Ajouter, 64, 472);
+  gtk_widget_set_size_request (btn_Retour_Ajouter, 100, 35);
+
+  alignment7 = gtk_alignment_new (0.5, 0.5, 0, 0);
+  gtk_widget_show (alignment7);
+  gtk_container_add (GTK_CONTAINER (btn_Retour_Ajouter), alignment7);
+
+  hbox7 = gtk_hbox_new (FALSE, 2);
+  gtk_widget_show (hbox7);
+  gtk_container_add (GTK_CONTAINER (alignment7), hbox7);
+
+  image8 = gtk_image_new_from_stock ("gtk-go-back", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_show (image8);
+  gtk_box_pack_start (GTK_BOX (hbox7), image8, FALSE, FALSE, 0);
+
+  label21 = gtk_label_new_with_mnemonic (_("Retour"));
+  gtk_widget_show (label21);
+  gtk_box_pack_start (GTK_BOX (hbox7), label21, FALSE, FALSE, 0);
+
+  labelIDListe = gtk_label_new (_("<b><span color='black'>Identifiant</span></b>"));
+  gtk_widget_show (labelIDListe);
+  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), labelIDListe, 176, 48);
+  gtk_widget_set_size_request (labelIDListe, 100, 25);
+  gtk_label_set_use_markup (GTK_LABEL (labelIDListe), TRUE);
+
+  labelNomListe = gtk_label_new (_("<b><span color='black'>Nom de Liste</span></b>"));
+  gtk_widget_show (labelNomListe);
+  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), labelNomListe, 168, 80);
+  gtk_widget_set_size_request (labelNomListe, 114, 25);
+  gtk_label_set_use_markup (GTK_LABEL (labelNomListe), TRUE);
+
+  labelDateListe = gtk_label_new (_("<b><span color='black'>Date</span></b>"));
+  gtk_widget_show (labelDateListe);
+  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), labelDateListe, 176, 112);
+  gtk_widget_set_size_request (labelDateListe, 100, 25);
+  gtk_label_set_use_markup (GTK_LABEL (labelDateListe), TRUE);
+
+  labelOrientation = gtk_label_new (_("<b><span color='black'>Orientation</span></b>"));
+  gtk_widget_show (labelOrientation);
+  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), labelOrientation, 168, 152);
+  gtk_widget_set_size_request (labelOrientation, 114, 25);
+  gtk_label_set_use_markup (GTK_LABEL (labelOrientation), TRUE);
+
+  labelMunicipalite = gtk_label_new (_("<b><span color='black'>Municipalite</span></b>"));
+  gtk_widget_show (labelMunicipalite);
+  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), labelMunicipalite, 168, 184);
+  gtk_widget_set_size_request (labelMunicipalite, 114, 25);
+  gtk_label_set_use_markup (GTK_LABEL (labelMunicipalite), TRUE);
+
+  labelCinTete = gtk_label_new (_("<b><span color='black'>Cin tete Liste</span></b>"));
+  gtk_widget_show (labelCinTete);
+  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), labelCinTete, 168, 224);
+  gtk_widget_set_size_request (labelCinTete, 110, 25);
+  gtk_label_set_use_markup (GTK_LABEL (labelCinTete), TRUE);
+
+  labelC1 = gtk_label_new (_("<b><span color='black'>Cin candidat 1</span></b>"));
+  gtk_widget_show (labelC1);
+  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), labelC1, 168, 264);
+  gtk_widget_set_size_request (labelC1, 110, 25);
+  gtk_label_set_use_markup (GTK_LABEL (labelC1), TRUE);
+
+  label_title_ajoutNassim = gtk_label_new (_("<big><b><span color='#842431'>Formulaire d'ajout d'une liste \303\251lectorale</span></b> \n</big>"));
+  gtk_widget_show (label_title_ajoutNassim);
+  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), label_title_ajoutNassim, 176, 16);
+  gtk_widget_set_size_request (label_title_ajoutNassim, 382, 34);
+  gtk_label_set_use_markup (GTK_LABEL (label_title_ajoutNassim), TRUE);
+
+  labelsmalltitle = gtk_label_new (_("<small>*Pri\303\250re d'entrer les informations \nde la liste \303\251lectorale \navec pr\303\251caution</small> "));
+  gtk_widget_show (labelsmalltitle);
+  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), labelsmalltitle, 512, 40);
+  gtk_widget_set_size_request (labelsmalltitle, 253, 36);
+  gtk_label_set_use_markup (GTK_LABEL (labelsmalltitle), TRUE);
+
   g_signal_connect ((gpointer) radiobtn_Gauche, "toggled",
                     G_CALLBACK (on_radiobtn_Gauche_toggled),
                     NULL);
@@ -532,48 +561,57 @@ create_AjouterListe (void)
   g_signal_connect ((gpointer) radiobtn_Droite, "toggled",
                     G_CALLBACK (on_radiobtn_Droite_toggled),
                     NULL);
+  g_signal_connect ((gpointer) btn_Ajouter_Liste, "clicked",
+                    G_CALLBACK (on_btn_Ajouter_Liste_clicked),
+                    NULL);
+  g_signal_connect ((gpointer) btn_Retour_Ajouter, "clicked",
+                    G_CALLBACK (on_btn_Retour_Ajouter_clicked),
+                    NULL);
 
   /* Store pointers to all widgets, for use by lookup_widget(). */
   GLADE_HOOKUP_OBJECT_NO_REF (AjouterListe, AjouterListe, "AjouterListe");
   GLADE_HOOKUP_OBJECT (AjouterListe, fixedAjouterListe, "fixedAjouterListe");
   GLADE_HOOKUP_OBJECT (AjouterListe, imageAjouterListe, "imageAjouterListe");
-  GLADE_HOOKUP_OBJECT (AjouterListe, labelNomListe, "labelNomListe");
-  GLADE_HOOKUP_OBJECT (AjouterListe, labelDateListe, "labelDateListe");
   GLADE_HOOKUP_OBJECT (AjouterListe, entryNomListe, "entryNomListe");
-  GLADE_HOOKUP_OBJECT (AjouterListe, labelIDListe, "labelIDListe");
   GLADE_HOOKUP_OBJECT (AjouterListe, spinJourListe, "spinJourListe");
   GLADE_HOOKUP_OBJECT (AjouterListe, spinMoisListe, "spinMoisListe");
   GLADE_HOOKUP_OBJECT (AjouterListe, spinAnneeListe, "spinAnneeListe");
-  GLADE_HOOKUP_OBJECT (AjouterListe, labelOrientation, "labelOrientation");
-  GLADE_HOOKUP_OBJECT (AjouterListe, labelMunicipalite, "labelMunicipalite");
-  GLADE_HOOKUP_OBJECT (AjouterListe, labelCinTete, "labelCinTete");
   GLADE_HOOKUP_OBJECT (AjouterListe, entryCinTete, "entryCinTete");
   GLADE_HOOKUP_OBJECT (AjouterListe, entryCinC1, "entryCinC1");
   GLADE_HOOKUP_OBJECT (AjouterListe, entryCinC2, "entryCinC2");
-  GLADE_HOOKUP_OBJECT (AjouterListe, labelC2, "labelC2");
-  GLADE_HOOKUP_OBJECT (AjouterListe, labelC1, "labelC1");
-  GLADE_HOOKUP_OBJECT (AjouterListe, labelC3, "labelC3");
   GLADE_HOOKUP_OBJECT (AjouterListe, entryCinC3, "entryCinC3");
   GLADE_HOOKUP_OBJECT (AjouterListe, labelVerif, "labelVerif");
+  GLADE_HOOKUP_OBJECT (AjouterListe, radiobtn_Gauche, "radiobtn_Gauche");
+  GLADE_HOOKUP_OBJECT (AjouterListe, radiobtn_Centre, "radiobtn_Centre");
+  GLADE_HOOKUP_OBJECT (AjouterListe, radiobtn_Droite, "radiobtn_Droite");
+  GLADE_HOOKUP_OBJECT (AjouterListe, combobox_nassim, "combobox_nassim");
+  GLADE_HOOKUP_OBJECT (AjouterListe, labelSmallDate, "labelSmallDate");
+  GLADE_HOOKUP_OBJECT (AjouterListe, labelC2, "labelC2");
+  GLADE_HOOKUP_OBJECT (AjouterListe, labelC3, "labelC3");
   GLADE_HOOKUP_OBJECT (AjouterListe, btn_Verifier, "btn_Verifier");
   GLADE_HOOKUP_OBJECT (AjouterListe, alignment5, "alignment5");
   GLADE_HOOKUP_OBJECT (AjouterListe, hbox5, "hbox5");
   GLADE_HOOKUP_OBJECT (AjouterListe, image6, "image6");
   GLADE_HOOKUP_OBJECT (AjouterListe, label18, "label18");
-  GLADE_HOOKUP_OBJECT (AjouterListe, btn_Retour, "btn_Retour");
-  GLADE_HOOKUP_OBJECT (AjouterListe, alignment7, "alignment7");
-  GLADE_HOOKUP_OBJECT (AjouterListe, hbox7, "hbox7");
-  GLADE_HOOKUP_OBJECT (AjouterListe, image8, "image8");
-  GLADE_HOOKUP_OBJECT (AjouterListe, label21, "label21");
   GLADE_HOOKUP_OBJECT (AjouterListe, btn_Ajouter_Liste, "btn_Ajouter_Liste");
   GLADE_HOOKUP_OBJECT (AjouterListe, alignment6, "alignment6");
   GLADE_HOOKUP_OBJECT (AjouterListe, hbox6, "hbox6");
   GLADE_HOOKUP_OBJECT (AjouterListe, image7, "image7");
   GLADE_HOOKUP_OBJECT (AjouterListe, label20, "label20");
-  GLADE_HOOKUP_OBJECT (AjouterListe, radiobtn_Gauche, "radiobtn_Gauche");
-  GLADE_HOOKUP_OBJECT (AjouterListe, radiobtn_Centre, "radiobtn_Centre");
-  GLADE_HOOKUP_OBJECT (AjouterListe, radiobtn_Droite, "radiobtn_Droite");
-  GLADE_HOOKUP_OBJECT (AjouterListe, combobox_nassim, "combobox_nassim");
+  GLADE_HOOKUP_OBJECT (AjouterListe, btn_Retour_Ajouter, "btn_Retour_Ajouter");
+  GLADE_HOOKUP_OBJECT (AjouterListe, alignment7, "alignment7");
+  GLADE_HOOKUP_OBJECT (AjouterListe, hbox7, "hbox7");
+  GLADE_HOOKUP_OBJECT (AjouterListe, image8, "image8");
+  GLADE_HOOKUP_OBJECT (AjouterListe, label21, "label21");
+  GLADE_HOOKUP_OBJECT (AjouterListe, labelIDListe, "labelIDListe");
+  GLADE_HOOKUP_OBJECT (AjouterListe, labelNomListe, "labelNomListe");
+  GLADE_HOOKUP_OBJECT (AjouterListe, labelDateListe, "labelDateListe");
+  GLADE_HOOKUP_OBJECT (AjouterListe, labelOrientation, "labelOrientation");
+  GLADE_HOOKUP_OBJECT (AjouterListe, labelMunicipalite, "labelMunicipalite");
+  GLADE_HOOKUP_OBJECT (AjouterListe, labelCinTete, "labelCinTete");
+  GLADE_HOOKUP_OBJECT (AjouterListe, labelC1, "labelC1");
+  GLADE_HOOKUP_OBJECT (AjouterListe, label_title_ajoutNassim, "label_title_ajoutNassim");
+  GLADE_HOOKUP_OBJECT (AjouterListe, labelsmalltitle, "labelsmalltitle");
 
   return AjouterListe;
 }
@@ -1567,6 +1605,10 @@ create_windowModifierListe (void)
   GtkWidget *entryCINC3M;
   GtkWidget *combobox7;
   GtkWidget *entryIDchercherNassim;
+  GtkWidget *radiobtn_GM;
+  GSList *radiobtn_GM_group = NULL;
+  GtkWidget *radiotbn_CM;
+  GtkWidget *radiobtn_DM;
   GtkWidget *label_nassim_1;
   GtkWidget *label_nassim_2;
   GtkWidget *label_nassim_3;
@@ -1581,15 +1623,13 @@ create_windowModifierListe (void)
   GtkWidget *hbox22;
   GtkWidget *image26;
   GtkWidget *label_nassim_10;
-  GtkWidget *radiobtn_GM;
-  GSList *radiobtn_GM_group = NULL;
-  GtkWidget *radiotbn_CM;
-  GtkWidget *radiobtn_DM;
   GtkWidget *btn_Modifier_Nassim;
   GtkWidget *alignment23;
   GtkWidget *hbox23;
   GtkWidget *image27;
   GtkWidget *label_nassim_11;
+  GtkWidget *image28;
+  GtkWidget *labelModifiertitle;
   GtkWidget *btn_retour_modifier_nassim;
   GtkWidget *alignment20;
   GtkWidget *hbox20;
@@ -1610,19 +1650,19 @@ create_windowModifierListe (void)
   gtk_widget_set_size_request (entryNLM, 200, 25);
   gtk_entry_set_invisible_char (GTK_ENTRY (entryNLM), 8226);
 
-  spin_J_modifier_adj = gtk_adjustment_new (1, 0, 100, 1, 10, 10);
+  spin_J_modifier_adj = gtk_adjustment_new (1, 1, 31, 1, 10, 10);
   spin_J_modifier = gtk_spin_button_new (GTK_ADJUSTMENT (spin_J_modifier_adj), 1, 0);
   gtk_widget_show (spin_J_modifier);
   gtk_fixed_put (GTK_FIXED (fixedModiferNassim), spin_J_modifier, 288, 112);
   gtk_widget_set_size_request (spin_J_modifier, 60, 25);
 
-  spin_M_modifier_adj = gtk_adjustment_new (1, 0, 100, 1, 10, 10);
+  spin_M_modifier_adj = gtk_adjustment_new (1, 1, 12, 1, 10, 10);
   spin_M_modifier = gtk_spin_button_new (GTK_ADJUSTMENT (spin_M_modifier_adj), 1, 0);
   gtk_widget_show (spin_M_modifier);
   gtk_fixed_put (GTK_FIXED (fixedModiferNassim), spin_M_modifier, 360, 112);
   gtk_widget_set_size_request (spin_M_modifier, 60, 25);
 
-  spin_A_modifier_adj = gtk_adjustment_new (1, 0, 100, 1, 10, 10);
+  spin_A_modifier_adj = gtk_adjustment_new (2000, 2000, 2200, 1, 10, 10);
   spin_A_modifier = gtk_spin_button_new (GTK_ADJUSTMENT (spin_A_modifier_adj), 1, 0);
   gtk_widget_show (spin_A_modifier);
   gtk_fixed_put (GTK_FIXED (fixedModiferNassim), spin_A_modifier, 432, 112);
@@ -1666,72 +1706,6 @@ create_windowModifierListe (void)
   gtk_widget_set_size_request (entryIDchercherNassim, 200, 25);
   gtk_entry_set_invisible_char (GTK_ENTRY (entryIDchercherNassim), 8226);
 
-  label_nassim_1 = gtk_label_new (_("Identifiant"));
-  gtk_widget_show (label_nassim_1);
-  gtk_fixed_put (GTK_FIXED (fixedModiferNassim), label_nassim_1, 176, 48);
-  gtk_widget_set_size_request (label_nassim_1, 100, 25);
-
-  label_nassim_2 = gtk_label_new (_("Nom de la Liste"));
-  gtk_widget_show (label_nassim_2);
-  gtk_fixed_put (GTK_FIXED (fixedModiferNassim), label_nassim_2, 168, 80);
-  gtk_widget_set_size_request (label_nassim_2, 114, 25);
-
-  label_nassim_3 = gtk_label_new (_("Date"));
-  gtk_widget_show (label_nassim_3);
-  gtk_fixed_put (GTK_FIXED (fixedModiferNassim), label_nassim_3, 176, 112);
-  gtk_widget_set_size_request (label_nassim_3, 100, 25);
-
-  label_nassim_4 = gtk_label_new (_("Orientation"));
-  gtk_widget_show (label_nassim_4);
-  gtk_fixed_put (GTK_FIXED (fixedModiferNassim), label_nassim_4, 168, 152);
-  gtk_widget_set_size_request (label_nassim_4, 114, 25);
-
-  label_nassim_5 = gtk_label_new (_("Municipalite"));
-  gtk_widget_show (label_nassim_5);
-  gtk_fixed_put (GTK_FIXED (fixedModiferNassim), label_nassim_5, 168, 184);
-  gtk_widget_set_size_request (label_nassim_5, 114, 25);
-
-  label_nassim_6 = gtk_label_new (_("Cin tete Liste"));
-  gtk_widget_show (label_nassim_6);
-  gtk_fixed_put (GTK_FIXED (fixedModiferNassim), label_nassim_6, 168, 224);
-  gtk_widget_set_size_request (label_nassim_6, 110, 25);
-
-  label_nassim_7 = gtk_label_new (_("Cin candidat 1"));
-  gtk_widget_show (label_nassim_7);
-  gtk_fixed_put (GTK_FIXED (fixedModiferNassim), label_nassim_7, 168, 264);
-  gtk_widget_set_size_request (label_nassim_7, 110, 25);
-
-  label_nassim_8 = gtk_label_new (_("Cin candidat 2"));
-  gtk_widget_show (label_nassim_8);
-  gtk_fixed_put (GTK_FIXED (fixedModiferNassim), label_nassim_8, 168, 304);
-  gtk_widget_set_size_request (label_nassim_8, 110, 25);
-
-  label_nassim_9 = gtk_label_new (_("Cin candidat 3"));
-  gtk_widget_show (label_nassim_9);
-  gtk_fixed_put (GTK_FIXED (fixedModiferNassim), label_nassim_9, 168, 344);
-  gtk_widget_set_size_request (label_nassim_9, 110, 25);
-
-  btn_chercher_Nassim = gtk_button_new ();
-  gtk_widget_show (btn_chercher_Nassim);
-  gtk_fixed_put (GTK_FIXED (fixedModiferNassim), btn_chercher_Nassim, 504, 48);
-  gtk_widget_set_size_request (btn_chercher_Nassim, 91, 30);
-
-  alignment22 = gtk_alignment_new (0.5, 0.5, 0, 0);
-  gtk_widget_show (alignment22);
-  gtk_container_add (GTK_CONTAINER (btn_chercher_Nassim), alignment22);
-
-  hbox22 = gtk_hbox_new (FALSE, 2);
-  gtk_widget_show (hbox22);
-  gtk_container_add (GTK_CONTAINER (alignment22), hbox22);
-
-  image26 = gtk_image_new_from_stock ("gtk-find", GTK_ICON_SIZE_BUTTON);
-  gtk_widget_show (image26);
-  gtk_box_pack_start (GTK_BOX (hbox22), image26, FALSE, FALSE, 0);
-
-  label_nassim_10 = gtk_label_new_with_mnemonic (_("Chercher"));
-  gtk_widget_show (label_nassim_10);
-  gtk_box_pack_start (GTK_BOX (hbox22), label_nassim_10, FALSE, FALSE, 0);
-
   radiobtn_GM = gtk_radio_button_new_with_mnemonic (NULL, _("Gauche"));
   gtk_widget_show (radiobtn_GM);
   gtk_fixed_put (GTK_FIXED (fixedModiferNassim), radiobtn_GM, 288, 152);
@@ -1753,10 +1727,85 @@ create_windowModifierListe (void)
   gtk_radio_button_set_group (GTK_RADIO_BUTTON (radiobtn_DM), radiobtn_GM_group);
   radiobtn_GM_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radiobtn_DM));
 
+  label_nassim_1 = gtk_label_new (_("<b><span color='black'>Identifiant</span></b>"));
+  gtk_widget_show (label_nassim_1);
+  gtk_fixed_put (GTK_FIXED (fixedModiferNassim), label_nassim_1, 176, 48);
+  gtk_widget_set_size_request (label_nassim_1, 100, 25);
+  gtk_label_set_use_markup (GTK_LABEL (label_nassim_1), TRUE);
+
+  label_nassim_2 = gtk_label_new (_("<b><span color='black'>Nom de Liste</span></b>"));
+  gtk_widget_show (label_nassim_2);
+  gtk_fixed_put (GTK_FIXED (fixedModiferNassim), label_nassim_2, 168, 80);
+  gtk_widget_set_size_request (label_nassim_2, 114, 25);
+  gtk_label_set_use_markup (GTK_LABEL (label_nassim_2), TRUE);
+
+  label_nassim_3 = gtk_label_new (_("<b><span color='black'>Date</span></b>"));
+  gtk_widget_show (label_nassim_3);
+  gtk_fixed_put (GTK_FIXED (fixedModiferNassim), label_nassim_3, 176, 112);
+  gtk_widget_set_size_request (label_nassim_3, 100, 25);
+  gtk_label_set_use_markup (GTK_LABEL (label_nassim_3), TRUE);
+
+  label_nassim_4 = gtk_label_new (_("<b><span color='black'>Orientation</span></b>"));
+  gtk_widget_show (label_nassim_4);
+  gtk_fixed_put (GTK_FIXED (fixedModiferNassim), label_nassim_4, 168, 152);
+  gtk_widget_set_size_request (label_nassim_4, 114, 25);
+  gtk_label_set_use_markup (GTK_LABEL (label_nassim_4), TRUE);
+
+  label_nassim_5 = gtk_label_new (_("<b><span color='black'>Municipalite</span></b>"));
+  gtk_widget_show (label_nassim_5);
+  gtk_fixed_put (GTK_FIXED (fixedModiferNassim), label_nassim_5, 168, 184);
+  gtk_widget_set_size_request (label_nassim_5, 114, 25);
+  gtk_label_set_use_markup (GTK_LABEL (label_nassim_5), TRUE);
+
+  label_nassim_6 = gtk_label_new (_("<b><span color='black'>Cin tete Liste</span></b>"));
+  gtk_widget_show (label_nassim_6);
+  gtk_fixed_put (GTK_FIXED (fixedModiferNassim), label_nassim_6, 168, 224);
+  gtk_widget_set_size_request (label_nassim_6, 110, 25);
+  gtk_label_set_use_markup (GTK_LABEL (label_nassim_6), TRUE);
+
+  label_nassim_7 = gtk_label_new (_("<b><span color='black'>Cin candidat 1</span></b>"));
+  gtk_widget_show (label_nassim_7);
+  gtk_fixed_put (GTK_FIXED (fixedModiferNassim), label_nassim_7, 168, 264);
+  gtk_widget_set_size_request (label_nassim_7, 110, 25);
+  gtk_label_set_use_markup (GTK_LABEL (label_nassim_7), TRUE);
+
+  label_nassim_8 = gtk_label_new (_("<b><span color='black'>Cin candidat 2</span></b>"));
+  gtk_widget_show (label_nassim_8);
+  gtk_fixed_put (GTK_FIXED (fixedModiferNassim), label_nassim_8, 168, 304);
+  gtk_widget_set_size_request (label_nassim_8, 110, 25);
+  gtk_label_set_use_markup (GTK_LABEL (label_nassim_8), TRUE);
+
+  label_nassim_9 = gtk_label_new (_("<b><span color='black'>Cin candidat 3</span></b>"));
+  gtk_widget_show (label_nassim_9);
+  gtk_fixed_put (GTK_FIXED (fixedModiferNassim), label_nassim_9, 168, 344);
+  gtk_widget_set_size_request (label_nassim_9, 110, 25);
+  gtk_label_set_use_markup (GTK_LABEL (label_nassim_9), TRUE);
+
+  btn_chercher_Nassim = gtk_button_new ();
+  gtk_widget_show (btn_chercher_Nassim);
+  gtk_fixed_put (GTK_FIXED (fixedModiferNassim), btn_chercher_Nassim, 504, 48);
+  gtk_widget_set_size_request (btn_chercher_Nassim, 100, 35);
+
+  alignment22 = gtk_alignment_new (0.5, 0.5, 0, 0);
+  gtk_widget_show (alignment22);
+  gtk_container_add (GTK_CONTAINER (btn_chercher_Nassim), alignment22);
+
+  hbox22 = gtk_hbox_new (FALSE, 2);
+  gtk_widget_show (hbox22);
+  gtk_container_add (GTK_CONTAINER (alignment22), hbox22);
+
+  image26 = gtk_image_new_from_stock ("gtk-find", GTK_ICON_SIZE_BUTTON);
+  gtk_widget_show (image26);
+  gtk_box_pack_start (GTK_BOX (hbox22), image26, FALSE, FALSE, 0);
+
+  label_nassim_10 = gtk_label_new_with_mnemonic (_("Chercher"));
+  gtk_widget_show (label_nassim_10);
+  gtk_box_pack_start (GTK_BOX (hbox22), label_nassim_10, FALSE, FALSE, 0);
+
   btn_Modifier_Nassim = gtk_button_new ();
   gtk_widget_show (btn_Modifier_Nassim);
   gtk_fixed_put (GTK_FIXED (fixedModiferNassim), btn_Modifier_Nassim, 344, 408);
-  gtk_widget_set_size_request (btn_Modifier_Nassim, 90, 30);
+  gtk_widget_set_size_request (btn_Modifier_Nassim, 100, 35);
 
   alignment23 = gtk_alignment_new (0.5, 0.5, 0, 0);
   gtk_widget_show (alignment23);
@@ -1774,10 +1823,21 @@ create_windowModifierListe (void)
   gtk_widget_show (label_nassim_11);
   gtk_box_pack_start (GTK_BOX (hbox23), label_nassim_11, FALSE, FALSE, 0);
 
+  image28 = create_pixmap (windowModifierListe, "editer.png");
+  gtk_widget_show (image28);
+  gtk_fixed_put (GTK_FIXED (fixedModiferNassim), image28, 584, 400);
+  gtk_widget_set_size_request (image28, 209, 200);
+
+  labelModifiertitle = gtk_label_new (_("<small>*Pri\303\250re d'entrer l'identifiant\nde la liste \303\251lectorale \n\303\240 modifier</small> "));
+  gtk_widget_show (labelModifiertitle);
+  gtk_fixed_put (GTK_FIXED (fixedModiferNassim), labelModifiertitle, 0, 16);
+  gtk_widget_set_size_request (labelModifiertitle, 257, 51);
+  gtk_label_set_use_markup (GTK_LABEL (labelModifiertitle), TRUE);
+
   btn_retour_modifier_nassim = gtk_button_new ();
   gtk_widget_show (btn_retour_modifier_nassim);
-  gtk_fixed_put (GTK_FIXED (fixedModiferNassim), btn_retour_modifier_nassim, 64, 536);
-  gtk_widget_set_size_request (btn_retour_modifier_nassim, 80, 30);
+  gtk_fixed_put (GTK_FIXED (fixedModiferNassim), btn_retour_modifier_nassim, 64, 514);
+  gtk_widget_set_size_request (btn_retour_modifier_nassim, 100, 35);
 
   alignment20 = gtk_alignment_new (0.5, 0.5, 0, 0);
   gtk_widget_show (alignment20);
@@ -1815,6 +1875,9 @@ create_windowModifierListe (void)
   GLADE_HOOKUP_OBJECT (windowModifierListe, entryCINC3M, "entryCINC3M");
   GLADE_HOOKUP_OBJECT (windowModifierListe, combobox7, "combobox7");
   GLADE_HOOKUP_OBJECT (windowModifierListe, entryIDchercherNassim, "entryIDchercherNassim");
+  GLADE_HOOKUP_OBJECT (windowModifierListe, radiobtn_GM, "radiobtn_GM");
+  GLADE_HOOKUP_OBJECT (windowModifierListe, radiotbn_CM, "radiotbn_CM");
+  GLADE_HOOKUP_OBJECT (windowModifierListe, radiobtn_DM, "radiobtn_DM");
   GLADE_HOOKUP_OBJECT (windowModifierListe, label_nassim_1, "label_nassim_1");
   GLADE_HOOKUP_OBJECT (windowModifierListe, label_nassim_2, "label_nassim_2");
   GLADE_HOOKUP_OBJECT (windowModifierListe, label_nassim_3, "label_nassim_3");
@@ -1829,14 +1892,13 @@ create_windowModifierListe (void)
   GLADE_HOOKUP_OBJECT (windowModifierListe, hbox22, "hbox22");
   GLADE_HOOKUP_OBJECT (windowModifierListe, image26, "image26");
   GLADE_HOOKUP_OBJECT (windowModifierListe, label_nassim_10, "label_nassim_10");
-  GLADE_HOOKUP_OBJECT (windowModifierListe, radiobtn_GM, "radiobtn_GM");
-  GLADE_HOOKUP_OBJECT (windowModifierListe, radiotbn_CM, "radiotbn_CM");
-  GLADE_HOOKUP_OBJECT (windowModifierListe, radiobtn_DM, "radiobtn_DM");
   GLADE_HOOKUP_OBJECT (windowModifierListe, btn_Modifier_Nassim, "btn_Modifier_Nassim");
   GLADE_HOOKUP_OBJECT (windowModifierListe, alignment23, "alignment23");
   GLADE_HOOKUP_OBJECT (windowModifierListe, hbox23, "hbox23");
   GLADE_HOOKUP_OBJECT (windowModifierListe, image27, "image27");
   GLADE_HOOKUP_OBJECT (windowModifierListe, label_nassim_11, "label_nassim_11");
+  GLADE_HOOKUP_OBJECT (windowModifierListe, image28, "image28");
+  GLADE_HOOKUP_OBJECT (windowModifierListe, labelModifiertitle, "labelModifiertitle");
   GLADE_HOOKUP_OBJECT (windowModifierListe, btn_retour_modifier_nassim, "btn_retour_modifier_nassim");
   GLADE_HOOKUP_OBJECT (windowModifierListe, alignment20, "alignment20");
   GLADE_HOOKUP_OBJECT (windowModifierListe, hbox20, "hbox20");
