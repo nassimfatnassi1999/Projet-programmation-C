@@ -1,3 +1,0 @@
-0 8 1 1 1 centre sousse 7 7 7 7
-1 hamma 12 12 100 centre tunis  111 111 111 1111
-2 chalbi 12 13 100 droite beja 555 555 555 55
