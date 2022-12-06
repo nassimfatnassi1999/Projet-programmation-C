@@ -100,7 +100,8 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_exe_OBJECTS = main.$(OBJEXT) support.$(OBJEXT) interface.$(OBJEXT) \
-	callbacks.$(OBJEXT) function.$(OBJEXT) functionPrint.$(OBJEXT)
+	callbacks.$(OBJEXT) function.$(OBJEXT) bv.$(OBJEXT) \
+	functionPrint.$(OBJEXT)
 exe_OBJECTS = $(am_exe_OBJECTS)
 am__DEPENDENCIES_1 =
 exe_DEPENDENCIES = $(am__DEPENDENCIES_1)
@@ -283,6 +284,7 @@ exe_SOURCES = \
 	interface.c interface.h \
 	callbacks.c callbacks.h \
 	function.c function.h   \
+	bv.c bv.h \
 	functionPrint.c
 
 exe_LDADD = @PACKAGE_LIBS@ $(INTLLIBS)
@@ -372,6 +374,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bv.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/callbacks.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/function.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/functionPrint.Po@am__quote@

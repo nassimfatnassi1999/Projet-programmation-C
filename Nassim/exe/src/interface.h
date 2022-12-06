@@ -8,3 +8,7 @@ GtkWidget* create_AjouterListe (void);
 GtkWidget* create_windowModifierListe (void);
 GtkWidget* create_Statistique (void);
 GtkWidget* create_Stat_Liste_Nassim (void);
+GtkWidget* create_ajoutBV (void);
+GtkWidget* create_afficherBV (void);
+GtkWidget* create_supprimerbuv (void);
+GtkWidget* create_modifierBV (void);

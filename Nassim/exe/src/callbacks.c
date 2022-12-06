@@ -530,3 +530,667 @@ treeview_Nassim=lookup_widget(afficher_u,"treeviewNBRV");
 afficher_Liste_ordre(treeview_Nassim);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////// Interface BUreau de Vote -CHAIMA MATOUSSI- /////////////////////////////////////////////////////
+
+
+#include"bv.h"
+
+
+int salle=2;
+checkModif=0;
+BV bvModif;
+
+void
+on_afficherbv_clicked                  (GtkWidget       *objet,
+                                        gpointer         user_data)
+{
+	GtkWidget *ajout;
+	GtkWidget *affiche;
+	GtkWidget *treeview;
+
+	ajout=lookup_widget(objet,"ajoutBV");
+
+	gtk_widget_destroy(ajout);
+	affiche=lookup_widget(objet,"afficherBV");
+	affiche=create_afficherBV();
+	
+	gtk_widget_show(affiche);
+	
+	treeview=lookup_widget(affiche,"treeviewBV");
+	afficher_bv(treeview);
+	
+}
+
+
+
+
+void
+on_ajouterbv_clicked                   (GtkWidget       *objet,
+                                        gpointer         user_data)
+{
+	BV bv;
+	char sallebv[10];
+	char cE[10];
+	char cO[10];
+	char agentbv[50];
+	int a,b,erreur=0;
+
+	sprintf(sallebv,"%d",salle);
+
+	GtkWidget *id, *capElec, *capObserv, *gouv, *deleg, *idAg, *alert;
+	GtkWidget *ajoutBV;
+	GtkWidget *alertnidbv,*labelngouv,*labelndelg;
+	
+
+	ajoutBV=lookup_widget(objet,"ajoutBV");
+	id=lookup_widget(objet,"idbv");
+	capElec=lookup_widget(objet,"elecbv");
+	capObserv=lookup_widget(objet,"obsbv");
+	gouv=lookup_widget(objet,"gouvernoratajbv");
+	deleg=lookup_widget(objet,"delegation");
+	idAg=lookup_widget(objet,"idagentbv");
+	alert=lookup_widget(objet,"alertajbv");
+	alertnidbv=lookup_widget(objet,"alertnidbv");
+	labelngouv=lookup_widget(objet,"labelngouv");
+	labelndelg=lookup_widget(objet,"labelndelg");
+
+	strcpy(bv.id,gtk_entry_get_text(GTK_ENTRY(id)));
+	a=gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(capElec));
+	b=gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(capObserv));
+	sprintf(cE,"%d",a);
+	sprintf(cO,"%d",b);
+	strcpy(bv.capElecteurs,cE);
+	strcpy(bv.capObservateurs,cO);
+	strcpy(bv.gouvernorat,gtk_combo_box_get_active_text(GTK_COMBO_BOX(gouv)));
+	strcpy(bv.delegation,gtk_combo_box_get_active_text(GTK_COMBO_BOX(deleg)));
+	strcpy(bv.IDagent.idAg,gtk_combo_box_get_active_text(GTK_COMBO_BOX(idAg)));
+	strcpy(bv.salle,sallebv);
+
+
+	/*if(strlen(bv.IDagent.idAg)!=4)
+	{gtk_label_set_text(GTK_LABEL(alertnidbv),"L'identifiant doit contenir 4 caractéres");
+	erreur=1;
+	}
+	else{
+	erreur=0;
+	}
+//
+	if(strlen(bv.gouvernorat)==0) 
+	{gtk_label_set_text(GTK_LABEL(labelngouv),"Vous devez choisir un gouvernorat");
+	erreur=1;	
+	}
+	else
+	{erreur=0;
+	}
+
+	 if(strlen(bv.delegation)==0) 
+	{gtk_label_set_text(GTK_LABEL(labelndelg),"Vous devez choisir une delegation");
+	erreur=1;
+	}
+	else{
+	erreur=0;
+	}
+*/
+	if(erreur==1)
+	{
+	gtk_label_set_text(GTK_LABEL(alert),"Vous devez remplir tout les champs");
+	}
+	else
+	{
+	
+	ajouter_bv(bv);
+	supprimerAgent("agent.txt", bv.IDagent.idAg);
+	supprimerDelegation("delegation.txt", bv.delegation);
+	
+
+
+	gtk_widget_destroy(ajoutBV);
+
+	ajoutBV=create_ajoutBV();
+	
+	gtk_widget_show(ajoutBV);
+
+	gtk_label_set_text(GTK_LABEL(alert),"Opération Réussie");
+}
+}
+
+
+
+
+
+
+void
+on_retourbv_clicked                      (GtkWidget       *objet,
+                                        gpointer         user_data)
+{
+GtkWidget *ajout, *affiche;
+affiche=lookup_widget(objet,"afficherBV");
+
+gtk_widget_destroy(affiche);
+ajout=create_ajoutBV();
+gtk_widget_show(ajout);
+}
+
+
+
+
+void
+on_bt_clicked                          (GtkWidget       *objet,
+                                        gpointer         user_data)
+{int i,n,m;
+BV bv;
+char agent[50][50],delegat[50][50],gouver[30];
+GtkWidget *idagentbv,*delegation,*gouvernorat;
+idagentbv=lookup_widget(objet,"idagentbv");
+delegation=lookup_widget(objet,"delegation");
+gouvernorat=lookup_widget(objet,"gouvernorat");
+n=tableau_agent(agent);
+
+for(i=0;i<n;i++)
+{gtk_combo_box_append_text(GTK_COMBO_BOX(idagentbv),_(agent[i]));
+}
+
+strcpy(gouver,gtk_combo_box_get_active_text(GTK_COMBO_BOX(gouvernorat)));
+m=tableau_delegation(delegat, gouver);
+for(i=0;i<m;i++)
+{gtk_combo_box_append_text(GTK_COMBO_BOX(delegation),_(delegat[i]));
+}
+}
+
+
+
+
+
+
+
+void
+on_salle3_toggled                      (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+if(gtk_toggle_button_get_active(GTK_RADIO_BUTTON(togglebutton)))
+salle=3;
+}
+
+
+void
+on_salle2_toggled                      (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+if(gtk_toggle_button_get_active(GTK_RADIO_BUTTON(togglebutton)))
+salle=2;
+}
+
+
+void
+on_salle1_toggled                      (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+if(gtk_toggle_button_get_active(GTK_RADIO_BUTTON(togglebutton)))
+salle=1;
+}
+
+
+void
+on_treeviewBV_row_activated            (GtkTreeView     *treeview,
+                                        GtkTreePath     *path,
+                                        GtkTreeViewColumn *column,
+                                        gpointer         user_data)
+{
+	GtkTreeIter iter;
+	gchar* id;
+	gchar* capElecteurs;
+	gchar* capObservateurs;
+	gchar* salle;
+	gchar* gouvernorat;
+	gchar* delegation;
+	gchar* idAg;
+
+	BV bv;
+
+	GtkTreeModel *model = gtk_tree_view_get_model(treeview);
+
+	if(gtk_tree_model_get_iter(model, &iter, path))
+	{ 
+gtk_tree_model_get (GTK_LIST_STORE(model), &iter, 0, &id, 1, &capElecteurs, 2, &capObservateurs, 3, &salle, 4, &gouvernorat, 5, &delegation, 6, &idAg, -1);
+	strcpy(bv.id,id);
+	strcpy(bv.capElecteurs,capElecteurs);
+	strcpy(bv.capObservateurs,capObservateurs);
+	strcpy(bv.salle,salle);
+	strcpy(bv.gouvernorat,gouvernorat);
+	strcpy(bv.delegation,delegation);
+	strcpy(bv.IDagent.idAg,idAg);
+
+	supprimer_bv(bv);
+
+	afficher_bv(treeview);
+
+	 
+	}
+}
+
+
+void
+on_supprimerbv_clicked                 (GtkWidget       *objet,
+                                        gpointer         user_data)
+{
+
+GtkWidget *affiche, *supprimer,*treeview;
+
+	affiche=lookup_widget(objet,"afficherBV");
+	gtk_widget_destroy(affiche);
+
+	supprimer=lookup_widget(objet,"supprimerbuv");
+	supprimer=create_supprimerbuv();
+	
+	gtk_widget_show(supprimer);
+	treeview=lookup_widget(supprimer,"treeview2BV");
+	afficher_bv(treeview);
+	
+}
+
+
+void
+on_retouraffichebv_clicked             (GtkWidget       *objet,
+                                        gpointer         user_data)
+{
+GtkWidget *affiche, *supprimer, *treeview;
+supprimer=lookup_widget(objet,"supprimerbuv");
+
+gtk_widget_destroy(supprimer);
+affiche=create_afficherBV();
+gtk_widget_show(affiche);
+	treeview=lookup_widget(affiche,"treeviewBV");
+	afficher_bv(treeview);
+
+}
+
+
+void
+on_supprimerfinal_clicked              (GtkWidget       *objet,
+                                        gpointer         user_data)
+{char suppI[20],gouvSup[30],delegt[30],idagn[20];
+int t;
+	GtkWidget *idsupp,*alertsupp,*supprimerbuv;
+	GtkWidget *treeview;
+
+	supprimerbuv=lookup_widget(objet,"supprimerbuv");
+	idsupp=lookup_widget(objet,"supprimerbvid");
+	alertsupp=lookup_widget(objet,"alertsupp");
+	strcpy(suppI,gtk_entry_get_text(GTK_ENTRY(idsupp)));
+
+
+	t=supprimer_idbv(suppI);
+if(t==1)
+{
+	gtk_label_set_text(GTK_LABEL(alertsupp),"Opération Réussie");
+	
+
+}
+else
+{
+	gtk_label_set_text(GTK_LABEL(alertsupp),"identifiant non trouvé !");
+}
+
+
+	treeview=lookup_widget(supprimerbuv,"treeview2BV");
+	afficher_bv(treeview);
+
+}
+
+
+void
+on_quitterbv_clicked                   (GtkButton       *button,
+                                        gpointer         user_data)
+{gtk_main_quit();
+
+}
+
+
+void
+on_rechercherBV_clicked                (GtkWidget       *objet,
+                                        gpointer         user_data)
+	{ 
+	char idrech[20];
+	char gouv[20];
+	BV bv;
+	int i=-1, trouve=0,tr=0 , capE=0, capO=0;
+	GtkWidget *idbvv, *gouvernoratv, *delegationv, *idagentbvv, *alert, *elecbvv, *obsbvv, *radio1, *radio2, *radio3;
+
+
+	idbvv=lookup_widget(objet, "idbvv");
+	gouvernoratv=lookup_widget(objet, "gouvernoratv");
+	delegationv=lookup_widget(objet, "delegationv");
+	idagentbvv=lookup_widget(objet, "idagentbvv");
+	alert=lookup_widget(objet, "alertRech");
+	elecbvv=lookup_widget(objet, "elecbvv");
+	obsbvv=lookup_widget(objet, "obsbvv");
+	radio1=lookup_widget(objet, "radio1");
+	radio2=lookup_widget(objet, "radio2");
+	radio3=lookup_widget(objet, "radio3");
+
+	strcpy(idrech,gtk_entry_get_text(GTK_ENTRY(idbvv)));
+
+	FILE *g=fopen("bureauV.txt","r");
+while(!tr && fscanf(g,"%s %s %s %s %s %s %s\n",bv.id,bv.capElecteurs,bv.capObservateurs,bv.salle,bv.gouvernorat,bv.delegation,bv.IDagent.idAg)!=EOF)
+	{
+	if(strcmp(idrech,bv.id)==0)
+	  { tr=1;   //condition d'arret
+	  }
+	}
+	fclose(g);
+
+	if(tr==0)
+	{gtk_label_set_text(GTK_LABEL(alert),"identifiant non trouvé !");
+	}
+	else
+	{
+	gtk_label_set_text(GTK_LABEL(alert),"");
+	bvModif=bv;
+	//traitement gouv
+	FILE *f=fopen("gouvernorat.txt","r");
+	while(!trouve && fscanf(f,"%s \n",gouv)!=EOF)
+	   {i++; 
+	    if(strcmp(gouv,bv.gouvernorat)==0)
+	    trouve=1;   //condition d'arret
+	   }
+	gtk_combo_box_set_active(GTK_COMBO_BOX(gouvernoratv),i);
+
+
+	//traitement electeur
+	capE=atoi(bv.capElecteurs);
+	gtk_spin_button_set_value(elecbvv,capE);
+
+
+	//traitement observateur
+	capO=atoi(bv.capObservateurs);
+	gtk_spin_button_set_value(obsbvv,capO);
+
+
+	//traitement salle
+	if(strcmp(bv.salle,"1")==0)
+	{gtk_toggle_button_set_active(GTK_RADIO_BUTTON(radio1),TRUE);
+	}
+	else if(strcmp(bv.salle,"2")==0)
+	{gtk_toggle_button_set_active(GTK_RADIO_BUTTON(radio2),TRUE);
+	}
+	else if(strcmp(bv.salle,"3")==0)
+	{gtk_toggle_button_set_active(GTK_RADIO_BUTTON(radio3),TRUE);
+	}
+
+
+	fclose(f);
+	}
+
+	
+          
+
+}
+
+
+void
+on_affTomod_clicked                    (GtkWidget       *objet,
+                                        gpointer         user_data)
+	{GtkWidget *afficherBV, *modifierBV;
+	afficherBV=lookup_widget(objet,"afficherBV");
+
+	gtk_widget_destroy(afficherBV);
+	modifierBV=lookup_widget(objet,"modifierBV");
+	modifierBV=create_modifierBV();
+	
+	gtk_widget_show(modifierBV);
+	
+	}
+
+
+void
+on_modToaff_clicked                    (GtkWidget       *objet,
+                                        gpointer         user_data)
+	{GtkWidget *afficherBV, *modifierBV ,*treeview;
+	modifierBV=lookup_widget(objet,"modifierBV");
+
+	gtk_widget_destroy(modifierBV);
+	afficherBV=lookup_widget(objet,"afficherBV");
+	afficherBV=create_afficherBV();
+	
+	gtk_widget_show(afficherBV);
+	treeview=lookup_widget(afficherBV,"treeviewBV");
+	afficher_bv(treeview);
+
+	}
+
+
+void
+on_trierBVMunic_clicked                (GtkWidget       *objet,
+                                        gpointer         user_data)
+{
+	GtkWidget *treeview, *afficherBV;
+	trierMunicipalite("bureauV.txt");
+	afficherBV=lookup_widget(objet,"afficherBV");
+	treeview=lookup_widget(afficherBV,"treeviewBV");
+	afficher_bv(treeview);
+}
+
+
+void
+on_deleg_clicked                          (GtkWidget       *objet,
+                                        gpointer         user_data)
+{int i,n,m;
+BV bv;
+char agent[50][50],delegat[50][50],gouver[30];
+GtkWidget *idagentbv,*delegation,*gouvernorat;
+idagentbv=lookup_widget(objet,"idagentbvv");
+delegation=lookup_widget(objet,"delegationv");
+gouvernorat=lookup_widget(objet,"gouvernoratv");
+n=tableau_agent(agent);
+
+for(i=0;i<n;i++)
+{gtk_combo_box_append_text(GTK_COMBO_BOX(idagentbv),_(agent[i]));
+}
+
+strcpy(gouver,gtk_combo_box_get_active_text(GTK_COMBO_BOX(gouvernorat)));
+m=tableau_delegation(delegat, gouver);
+for(i=0;i<m;i++)
+{gtk_combo_box_append_text(GTK_COMBO_BOX(delegation),_(delegat[i]));
+}
+}
+
+void
+on_confirmAjout_clicked                (GtkWidget       *objet,
+                                        gpointer         user_data)
+{
+BV bv,bv2;
+	char sallebv[10];
+	char cE[10];
+	char cO[10];
+	char agentbv[50];
+	int a,b,erreur=0;
+
+	sprintf(sallebv,"%d",salle);
+
+	GtkWidget *id, *capElec, *capObserv, *gouv, *deleg, *idAg, *alertCheck;
+	GtkWidget *modifierBV;
+	GtkWidget *alertnidbv,*labelngouv,*labelndelg;
+	
+
+	modifierBV=lookup_widget(objet,"modifierBV");
+	id=lookup_widget(objet,"idbvv");
+	capElec=lookup_widget(objet,"elecbvv");
+	capObserv=lookup_widget(objet,"obsbvv");
+	gouv=lookup_widget(objet,"gouvernoratv");
+	deleg=lookup_widget(objet,"delegationv");
+	idAg=lookup_widget(objet,"idagentbvv");
+	alertCheck=lookup_widget(objet,"alertCheck");
+
+
+
+	strcpy(bv.id,gtk_entry_get_text(GTK_ENTRY(id)));
+	a=gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(capElec));
+	b=gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(capObserv));
+	sprintf(cE,"%d",a);
+	sprintf(cO,"%d",b);
+	strcpy(bv.capElecteurs,cE);
+	strcpy(bv.capObservateurs,cO);
+	strcpy(bv.gouvernorat,gtk_combo_box_get_active_text(GTK_COMBO_BOX(gouv)));
+	strcpy(bv.delegation,gtk_combo_box_get_active_text(GTK_COMBO_BOX(deleg)));
+	strcpy(bv.IDagent.idAg,gtk_combo_box_get_active_text(GTK_COMBO_BOX(idAg)));
+	strcpy(bv.salle,sallebv);
+
+
+	if(checkModif!=1)
+	{	gtk_label_set_text(GTK_LABEL(alertCheck),"Confirmer la modification");
+	}
+	else{
+	gtk_label_set_text(GTK_LABEL(alertCheck),"Opération Réussie");
+	supprimer_bv(bvModif);
+	ajouter_bv(bv);
+	supprimerAgent("agent.txt", bv.IDagent.idAg);
+	supprimerDelegation("delegation.txt", bv.delegation);
+	}
+	gtk_widget_destroy(modifierBV);
+
+	modifierBV=create_modifierBV();
+	
+	gtk_widget_show(modifierBV);
+	
+
+}
+
+
+void
+on_check_toggled                       (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+if(gtk_toggle_button_get_active(togglebutton))
+{checkModif=1;}
+}
+
+
+void
+on_quitterAff_clicked                  (GtkButton       *button,
+                                        gpointer         user_data)
+{
+gtk_main_quit();
+}
+
+
+void
+on_quitterSupp_clicked                 (GtkButton       *button,
+                                        gpointer         user_data)
+{
+gtk_main_quit();
+}
+
+
+void
+on_quitterMod_clicked                  (GtkButton       *button,
+                                        gpointer         user_data)
+{
+gtk_main_quit();
+}
+
+
+
+
+
+void
+on_trierElect_clicked                  (GtkWidget       *objet,
+                                        gpointer         user_data)
+{
+	GtkWidget *treeview, *afficherBV;
+	trierElecteurs("bureauV.txt");
+	afficherBV=lookup_widget(objet,"afficherBV");
+	treeview=lookup_widget(afficherBV,"treeviewBV");
+	afficher_bv(treeview);
+}
+
+
+
+void
+on_TrierSalle_clicked                  (GtkWidget       *objet,
+                                        gpointer         user_data)
+{
+	GtkWidget *treeview, *afficherBV;
+	trierSalle("bureauV.txt");
+	afficherBV=lookup_widget(objet,"afficherBV");
+	treeview=lookup_widget(afficherBV,"treeviewBV");
+	afficher_bv(treeview);
+}
+
+///////////////////////////////////////////FIN Interface BUreau de Vote -CHAIMA MATOUSSI-/////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void
+on_btn_Connexion_clicked               (GtkWidget       *objet,
+                                        gpointer         user_data)
+{	GtkWidget *AjouterListe, *ajoutBV, *WindowLogin, *entryLogin, *entryPass;
+	char login[20];
+	char Motdepasse[20];
+
+	WindowLogin=lookup_widget(objet,"WindowLogin");
+	entryLogin=lookup_widget(objet,"entryLogin");
+	entryPass=lookup_widget(objet,"entryPass");
+	AjouterListe=lookup_widget(objet,"AjouterListe");
+	ajoutBV=lookup_widget(objet,"ajoutBV");
+	strcpy(login,gtk_entry_get_text(GTK_ENTRY(entryLogin)));
+	strcpy(Motdepasse,gtk_entry_get_text(GTK_ENTRY(Motdepasse)));
+	if((strcmp(login,"2")==0) && (strcmp(Motdepasse,"22")==0))
+	{gtk_widget_destroy(WindowLogin);
+	ajoutBV=create_ajoutBV();
+	gtk_widget_show(ajoutBV);
+	}
+	else if((strcmp(login,"3")==0) && (strcmp(Motdepasse,"33")==0))
+	{gtk_widget_destroy(WindowLogin);
+	AjouterListe=create_AjouterListe();
+	gtk_widget_show(AjouterListe);
+	}
+
+
+
+}
+
+
+void
+on_fenetreAjoutBV_clicked              (GtkWidget       *objet,
+                                        gpointer         user_data)
+{
+	GtkWidget *AjouterListe, *ajoutBV;
+	AjouterListe=lookup_widget(objet,"AjouterListe");
+	ajoutBV=lookup_widget(objet,"ajoutBV");
+	gtk_widget_destroy(AjouterListe);
+	ajoutBV=create_ajoutBV();
+	gtk_widget_show(ajoutBV);
+}
+

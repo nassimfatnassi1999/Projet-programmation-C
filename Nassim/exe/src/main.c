@@ -20,6 +20,9 @@ main (int argc, char *argv[])
   GtkWidget *AjouterListe;
   GtkWidget *Statistique;
   GtkWidget *Stat_nassim;
+  GtkWidget *ajoutBV;
+  GtkWidget *afficherBV;
+  GtkWidget *supprimerbuv;
 
 
 #ifdef ENABLE_NLS

@@ -85,3 +85,131 @@ on_treeviewNBRV_row_activated          (GtkTreeView     *treeview,
 void
 on_btn_actualiser_TreeNBRV_clicked     (GtkButton       *button,
                                         gpointer         user_data);
+
+
+
+
+
+
+/////////////////////////////////////////// Interface BUreau de Vote -CHAIMA MATOUSSI- /////////////////////////////////////////////////////
+
+
+void
+on_afficherbv_clicked                  (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_ajouterbv_clicked                   (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_retourbv_clicked                    (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+
+
+
+
+
+void
+on_bt_clicked                          (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+
+
+
+
+void
+on_salle3_toggled                      (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_salle2_toggled                      (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_salle1_toggled                      (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_treeviewBV_row_activated            (GtkTreeView     *treeview,
+                                        GtkTreePath     *path,
+                                        GtkTreeViewColumn *column,
+                                        gpointer         user_data);
+
+void
+on_supprimerbv_clicked                 (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_retouraffichebv_clicked             (GtkWidget      *objet,
+                                        gpointer         user_data);
+
+void
+on_supprimerfinal_clicked              (GtkWidget      *objet,
+                                        gpointer         user_data);
+
+void
+on_quitterbv_clicked                   (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_rechercherBV_clicked                (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_affTomod_clicked                    (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_modToaff_clicked                    (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_trierBVMunic_clicked                (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_deleg_clicked                       (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_confirmAjout_clicked                (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_check_toggled                       (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_quitterAff_clicked                  (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_quitterSupp_clicked                 (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_quitterMod_clicked                  (GtkButton       *button,
+                                        gpointer         user_data);
+
+
+
+void
+on_trierElect_clicked                  (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_TrierSalle_clicked                  (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+///////////////////////////////////////////FIN Interface BUreau de Vote -CHAIMA MATOUSSI- /////////////////////////////////////////////////////
+
+
+void
+on_btn_Connexion_clicked               (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_fenetreAjoutBV_clicked              (GtkWidget       *objet,
+                                        gpointer         user_data);
