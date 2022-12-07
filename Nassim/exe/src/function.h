@@ -1,18 +1,13 @@
 #ifndef FUNCTION_H_INCLUDED
 #define FUNCTION_H_INCLUDED
 #include <gtk/gtk.h>
+#include"user.h"
 typedef struct Date
 {
     int jour;
     int mois;
     int annee;
 } date;
-typedef struct DateH
-{
-    char jour[3];
-    char mois[3];
-    char annee[3];
-} dateH;
 //struct liste
 typedef struct liste_electorale
 {
@@ -32,19 +27,6 @@ typedef struct
     int idListe;
     int NbrVote;
 }Lorder;
-typedef struct infoUtilisateur
-{
-   char CIN[50];
-char Nempreinte[50];
-char Ntelephone[50];
-char nom[50];
-char prenom[50];
-char municipalite[50];
-char role[50];
-char genre[50];
- dateH dh;
-char vote[50];
-} utilisateur;
 //les fonctions
 
 int genererIdListe(char * filename); //fonction pour generer l'id automatiquement

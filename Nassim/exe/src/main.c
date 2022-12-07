@@ -47,14 +47,14 @@ main (int argc, char *argv[])
   /*WindowLogin = create_WindowLogin ();
   gtk_widget_show (WindowLogin);*/
 
-  windowel = create_windowel();
-  gtk_widget_show (windowel);
+  /*windowel = create_windowel();
+  gtk_widget_show (windowel);*/
   
   /*ajoutBV = create_ajoutBV ();
   gtk_widget_show (ajoutBV);*/
 
-  /*GestionListeElectorale = create_GestionListeElectorale ();
-  gtk_widget_show (GestionListeElectorale);*/
+  GestionListeElectorale = create_GestionListeElectorale ();
+  gtk_widget_show (GestionListeElectorale);
 
   /*AjouterListe = create_AjouterListe ();
   gtk_widget_show (AjouterListe);*/

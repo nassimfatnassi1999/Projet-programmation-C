@@ -15,3 +15,6 @@ GtkWidget* create_modifierBV (void);
 GtkWidget* create_windowel (void);
 GtkWidget* create_windowafficherel (void);
 GtkWidget* create_modifeel (void);
+GtkWidget* create_window_ajouter_utilisateur (void);
+GtkWidget* create_window_Affichage (void);
+GtkWidget* create_window_modifierUtilisateur (void);

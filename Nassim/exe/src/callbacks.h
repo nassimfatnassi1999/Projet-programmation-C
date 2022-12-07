@@ -271,3 +271,83 @@ on_retoure_aff_clicked                 (GtkButton       *button,
 void
 on_quittermod_clicked                  (GtkButton       *button,
                                         gpointer         user_data);
+////////////////////////////////////////////////////////////////mohamed rebai////////////////////////////////////////////////////////
+void
+on_button__quitterUserAJOUT_clicked    (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_button_quitter_affichageUSER_clicked
+                                        (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_button_quitterModifierUSER_clicked  (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_radiobutton_FemmeUSER_toggled       (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_radiobutton_HommeUSER_toggled       (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_button_Ajouter_clicked              (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_button_TOafficherUSER_clicked       (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_treeview_affichageUSER_row_activated
+                                        (GtkTreeView     *treeview,
+                                        GtkTreePath     *path,
+                                        GtkTreeViewColumn *column,
+                                        gpointer         user_data);
+
+void
+on_button_refresh_affichageUSER_clicked
+                                        (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_button_TOmodifierUSER_clicked       (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_button_TOajouterUSER_clicked        (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_button_chercherModifierUSER_clicked (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_button_ModifierUSER_clicked         (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_button_annulerModifierUSER_clicked  (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_button2_FROMmodifierTOsupprimerUSER_clicked
+                                        (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_button12_clicked                    (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_button2_FROMmodifierTOafficherUSER_clicked
+                                        (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_button2_FRObutton_FROMmodifierTOsupprimerUSERMmodifierTOsupprimerUSER_clicked
+                                        (GtkButton       *button,
+                                        gpointer         user_data);

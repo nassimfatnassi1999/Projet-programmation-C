@@ -15,7 +15,8 @@ exe_SOURCES = \
 	function.c function.h   \
 	functionPrint.c\
 	bv.c bv.h \
-	election.c election.h
+	election.c election.h \
+	user.h user.c 
 	
 
 exe_LDADD = @PACKAGE_LIBS@ $(INTLLIBS)

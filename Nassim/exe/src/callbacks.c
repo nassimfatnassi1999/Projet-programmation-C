@@ -10,6 +10,10 @@
 #include"function.h" //nassim
 #include"election.h" //seif
 #include"bv.h"	     //chaima
+#include"user.h"   //mohamed
+int genre=2;
+int genreMODIFIER=2;
+char PCIN[50];
 int cons=22;
 int consm=22;
 election em;
@@ -18,6 +22,7 @@ int n=0;
 int x=3;
 int y=1;
 Liste LM; //utilser dans la btn chercher pour passer enn param ala btn modifier
+
 void
 on_radiobtn_M_G_toggled                (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
@@ -1671,4 +1676,521 @@ on_quittermod_clicked                  (GtkButton       *button,
 {
 gtk_main_quit();
 }
+////////////////////////////////////////////////mohamed rebai///////////////////////////////////////////////////////////////
+
+void
+on_button__quitterUserAJOUT_clicked    (GtkButton       *button,
+                                        gpointer         user_data)
+{
+gtk_main_quit();
+}
+
+
+void
+on_button_quitter_affichageUSER_clicked
+                                        (GtkButton       *button,
+                                        gpointer         user_data)
+{
+gtk_main_quit();
+}
+
+
+void
+on_button_quitterModifierUSER_clicked  (GtkButton       *button,
+                                        gpointer         user_data)
+{
+gtk_main_quit();
+}
+
+
+void
+on_radiobutton_FemmeUSER_toggled       (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+if(gtk_toggle_button_get_active(GTK_RADIO_BUTTON(togglebutton)))
+genre=2;
+}
+
+
+void
+on_radiobutton_HommeUSER_toggled       (GtkToggleButton *togglebutton,
+                                        gpointer         user_data)
+{
+if(gtk_toggle_button_get_active(GTK_RADIO_BUTTON(togglebutton)))
+genre=3;
+}
+
+
+void
+on_button_Ajouter_clicked              (GtkButton       *button,
+                                        gpointer         user_data)
+{
+char ch[20];
+	utilisateur L;
+	int x;
+	int AA,MM,JJ;
+	GtkWidget *id;
+	id=lookup_widget(button,"entry_CIN_ajUSER");
+	strcpy(L.CIN,gtk_entry_get_text(GTK_ENTRY(id)));
+	
+	GtkWidget *nom;
+	nom=lookup_widget(button,"entry_nom_ajUSER");
+	strcpy(L.nom,gtk_entry_get_text(GTK_ENTRY(nom)));
+
+	GtkWidget *prenom;
+	prenom=lookup_widget(button,"entry_prenom_ajUSER");
+	strcpy(L.prenom,gtk_entry_get_text(GTK_ENTRY(prenom)));
+/*
+	GtkWidget *sexe;
+	sexe=lookup_widget(button,"entry_sexe");
+	strcpy(,gtk_entry_get_text(GTK_ENTRY(sexe)));
+*/
+	if(genre==2)
+	{strcpy(L.genre,"Homme");}
+	else if(genre==3){strcpy(L.genre,"Femme");}
+
+	GtkWidget *municipalite;
+	municipalite=lookup_widget(button,"combobox_municipalit___ajUSER");
+	strcpy(L.municipalite,gtk_combo_box_get_active_text(GTK_COMBO_BOX (municipalite)));
+
+	GtkWidget *role;
+	role=lookup_widget(button,"combobox_role_ajUSER");
+	strcpy(L.role,gtk_combo_box_get_active_text(GTK_COMBO_BOX (role)));
+
+	GtkWidget *password;
+	password=lookup_widget(button,"entry_password_ajUSER");
+	strcpy(L.Nempreinte,gtk_entry_get_text(GTK_ENTRY(password)));	
+
+	GtkWidget *Ntelephone;
+	Ntelephone=lookup_widget(button,"entry_Ntelephone_ajUSER");
+	strcpy(L.Ntelephone,gtk_entry_get_text(GTK_ENTRY(Ntelephone)));	
+
+
+	GtkWidget *Jour; //spinbuttun pour le choix du jour
+	GtkWidget *Mois; //spinbuttun pour Le choix du mois.
+	GtkWidget *Annee; //spinbuttun pour le choix de l'année
+	Jour=lookup_widget (button, "spinbutton_jour_ajUSER");
+	Mois=lookup_widget(button, "spinbutton_mois_ajUSER"); 
+	Annee=lookup_widget(button, "spinbutton_annee_ajUSER"); 
+	/* récupérer les valeurs des spin buttons en utilisant la fonction gtk spin_button_get_value as int qui retourne l'entier choisi par l'utilisateur */ 
+	JJ=gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (Jour));
+	MM=gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (Mois));
+	AA=gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (Annee));
+	sprintf(L.d.jour,"%d",JJ);
+	sprintf(L.d.mois,"%d",MM);
+	sprintf(L.d.annee,"%d",AA);
+	
+
+	GtkWidget *erreurAjouter;
+	erreurAjouter=lookup_widget(button,"label_erreur_ajouter");
+	
+	GtkWidget *AjouterAvecSucces;
+	AjouterAvecSucces=lookup_widget(button,"label_ajouter_avec_succes");
+
+
+	x=ajouterUtilisateur("utilisateur.txt",L);
+	if (x==1){ gtk_widget_show (AjouterAvecSucces);}
+	else { gtk_widget_show (erreurAjouter);}
+
+
+/*
+GtkWidget *afficher_user;
+	afficher_user =create_window_ajouter_utilisateur ();// create_window_ajouter_utilisateur 
+	gtk_widget_show (afficher_user);
+*/
+}
+
+
+void
+on_button_TOafficherUSER_clicked       (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *ajouter_user;
+	ajouter_user=lookup_widget(button,"window_ajouter_utilisateur");
+	gtk_widget_destroy(ajouter_user);
+
+	GtkWidget *afficher_user;
+	afficher_user =create_window_Affichage ();//create_window_Affichage 
+	gtk_widget_show (afficher_user);
+
+	GtkWidget *treeview;
+	treeview=lookup_widget(afficher_user,"treeview_affichageUSER");
+	afficher_USERtreeview(treeview);
+}
+
+
+void
+on_treeview_affichageUSER_row_activated
+                                        (GtkTreeView     *treeview,
+                                        GtkTreePath     *path,
+                                        GtkTreeViewColumn *column,
+                                        gpointer         user_data)
+{
+
+	GtkTreeIter iter;
+	gchar* CIN;
+	gchar* Nempreinte;
+	gchar* Ntelephone;
+	gchar* nom;
+	gchar* prenom;
+	gchar* municipalite;
+	gchar* role;
+	gchar* genre;
+	gchar* vote;
+	gchar* jour;
+	gchar* mois;
+	gchar* annee;
+
+	utilisateur L;
+
+GtkTreeModel *model = gtk_tree_view_get_model(treeview);
+
+if(gtk_tree_model_get_iter(model, &iter, path))
+{
+gtk_tree_model_get (GTK_LIST_STORE(model), &iter, 0, &CIN, 1, &Nempreinte, 2, &Ntelephone, 3, &nom, 4, &prenom, 5, &municipalite, 6, &role, 7, &genre, 8, &vote, 9, &jour, 10, &mois, 11, &annee, -1);
+
+strcpy(L.CIN,CIN);
+strcpy(L.Nempreinte,Nempreinte);
+strcpy(L.Ntelephone,Ntelephone);
+strcpy(L.nom,nom);
+strcpy(L.prenom,prenom);
+strcpy(L.d.jour,jour);
+strcpy(L.d.mois,mois);
+strcpy(L.d.annee,annee);
+strcpy(L.municipalite,municipalite);
+strcpy(L.genre,genre);
+strcpy(L.role,role);
+strcpy(L.vote,vote);
+
+
+
+supprimer_USERtreev(L);
+afficher_USERtreeview(treeview);
+
+
+}
+}
+
+
+void
+on_button_refresh_affichageUSER_clicked
+                                        (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *ajouter_user;
+	ajouter_user=lookup_widget(button,"window_Affichage");
+	gtk_widget_destroy(ajouter_user);
+
+	
+
+	GtkWidget *afficher_user;
+	afficher_user =create_window_Affichage ();//create_window_Affichage 
+	gtk_widget_show (afficher_user);
+
+	GtkWidget *treeview;
+	treeview=lookup_widget(afficher_user,"treeview_affichageUSER");
+	afficher_USERtreeview(treeview);
+}
+
+
+void
+on_button_TOmodifierUSER_clicked       (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *ajouter_user;
+	ajouter_user=lookup_widget(button,"window_Affichage");
+	gtk_widget_destroy(ajouter_user);
+
+	GtkWidget *afficher_user;
+	afficher_user =create_window_modifierUtilisateur ();// create_window_ajouter_utilisateur create_window_Affichage 
+	gtk_widget_show (afficher_user);
+}
+
+
+void
+on_button_TOajouterUSER_clicked        (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *ajouter_user;
+	ajouter_user=lookup_widget(button,"window_Affichage");
+	gtk_widget_destroy(ajouter_user);
+
+	GtkWidget *afficher_user;
+	afficher_user =create_window_ajouter_utilisateur ();// create_window_ajouter_utilisateur create_window_Affichage 
+	gtk_widget_show (afficher_user);
+}
+
+
+void
+on_button_chercherModifierUSER_clicked (GtkButton       *button,
+                                        gpointer         user_data)
+{
+char ch[20];
+	char CIN[20];
+	utilisateur L,U;
+	int x,n=0;
+	int AA,MM,JJ;
+	GtkWidget *id;
+	id=lookup_widget(button,"entry_CIN_modifier_USER");
+	strcpy(U.CIN,gtk_entry_get_text(GTK_ENTRY(id)));
+	strcpy(CIN,gtk_entry_get_text(GTK_ENTRY(id)));
+	strcpy(PCIN,CIN);
+	
+	L=chercherUtilisateur("utilisateur.txt",U.CIN);
+	 if(strcmp(L.CIN,"-1")==0){
+	
+	char vide[10]=" ";	
+	GtkWidget *nom;
+	nom=lookup_widget(button,"entry_nom_modifier_USER");
+	gtk_entry_set_text(GTK_ENTRY(nom),vide);
+
+	GtkWidget *prenom;
+	prenom=lookup_widget(button,"entry_prenom_Modifier_USER");
+	gtk_entry_set_text(GTK_ENTRY(prenom),vide);
+	
+	GtkWidget *password;
+	password=lookup_widget(button,"entry_password_rModifierUSER");
+	gtk_entry_set_text(GTK_ENTRY(password),vide);
+	
+	GtkWidget *Ntelephone;
+	Ntelephone=lookup_widget(button,"entry_NumTelephoneModifierUSER");
+	gtk_entry_set_text(GTK_ENTRY(Ntelephone),vide);
+	
+	int J= 1;
+	GtkSpinButton *SJ=lookup_widget(button, "spinbutton_jour_ModifierUSER");
+        gtk_spin_button_set_value(SJ,J);
+	
+	GtkSpinButton *SM=lookup_widget(button, "spinbutton_mois_ModifierUSER");
+        gtk_spin_button_set_value(SM,J);
+	double A=1999;
+	GtkSpinButton *SA=lookup_widget(button, "spinbutton_annee_ModifierUSER");
+        gtk_spin_button_set_value(SA,A);
+
+	GtkWidget *erreurModification;
+	erreurModification= lookup_widget (button ,"label_erreurModifiationUSER");
+	gtk_widget_show (erreurModification);
+
+	
+
+	}
+	
+	else{
+	GtkWidget *nom;
+	nom=lookup_widget(button,"entry_nom_modifier_USER");
+	gtk_entry_set_text(GTK_ENTRY(nom),L.nom);
+
+	GtkWidget *prenom;
+	prenom=lookup_widget(button,"entry_prenom_Modifier_USER");
+	gtk_entry_set_text(GTK_ENTRY(prenom),L.prenom);
+	
+	GtkWidget *password;
+	password=lookup_widget(button,"entry_password_rModifierUSER");
+	gtk_entry_set_text(GTK_ENTRY(password),L.Nempreinte);
+	
+	GtkWidget *Ntelephone;
+	Ntelephone=lookup_widget(button,"entry_NumTelephoneModifierUSER");
+	gtk_entry_set_text(GTK_ENTRY(Ntelephone),L.Ntelephone);
+	
+	int J= atoi(L.d.jour);
+	GtkSpinButton *SJ=lookup_widget(button, "spinbutton_jour_ModifierUSER");
+        gtk_spin_button_set_value(SJ,J);
+	int M= atoi(L.d.mois);
+	GtkSpinButton *SM=lookup_widget(button, "spinbutton_mois_ModifierUSER");
+        gtk_spin_button_set_value(SM,M);
+	int A= atoi(L.d.annee);
+	GtkSpinButton *SA=lookup_widget(button, "spinbutton_annee_ModifierUSER");
+        gtk_spin_button_set_value(SA,A);
+
+
+	 GtkWidget* COX;
+	 COX=lookup_widget(button,"combobox_role_ModifierUSER");
+	 
+ 
+	 GtkWidget* COX11;
+	 COX11=lookup_widget(button,"combobox_municipalite_ModifierUSER");
+
+
+
+
+
+int trouve=0;
+int i=-1;
+
+
+char gouv[20];
+//traitement gouv
+FILE *f=fopen("gouvernorat.txt","r");
+while(!trouve && fscanf(f,"%s \n",gouv)!=EOF)
+  {i++;
+   if(strcmp(gouv,L.municipalite)==0)
+   trouve=1;   //condition d'arret
+  }
+gtk_combo_box_set_active(GTK_COMBO_BOX(COX11),i);
+
+int trouveR=0;
+int iR=-1;
+
+
+char gouvR[20];
+//traitement gouv
+FILE *fR=fopen("role.txt","r");
+while(!trouveR && fscanf(fR,"%s \n",gouvR)!=EOF)
+  {iR++;
+   if(strcmp(gouvR,L.role)==0)
+   trouveR=1;   //condition d'arret
+  }
+gtk_combo_box_set_active(GTK_COMBO_BOX(COX),iR);
+
+
+
+
+	  
+	GtkWidget *output,*output2;
+        output=lookup_widget(button,"radiobutton_HommeModifierUSER");	
+             output2=lookup_widget(button,"radiobutton_femmeModifierUSER");
+	if(strcmp(L.genre,"Homme")==0)
+	{
+
+        gtk_toggle_button_set_active(GTK_RADIO_BUTTON(output),TRUE);
+	}
+	else if (strcmp(L.genre,"Femme")==0)
+	    {
+
+             gtk_toggle_button_set_active(GTK_RADIO_BUTTON(output2),TRUE);
+            }
+
+
+	  }
+}
+
+
+void
+on_button_ModifierUSER_clicked         (GtkButton       *button,
+                                        gpointer         user_data)
+{
+
+	char ch[20];
+	char CIN[20];
+	utilisateur L;
+	int x;
+	int AA,MM,JJ;
+	GtkWidget *id;
+	id=lookup_widget(button,"entry_CIN_modifier_USER");
+	strcpy(L.CIN,gtk_entry_get_text(GTK_ENTRY(id)));
+	strcpy(CIN,PCIN);
+	
+	GtkWidget *nom;
+	nom=lookup_widget(button,"entry_nom_modifier_USER");
+	strcpy(L.nom,gtk_entry_get_text(GTK_ENTRY(nom)));
+
+	GtkWidget *prenom;
+	prenom=lookup_widget(button,"entry_prenom_Modifier_USER");
+	strcpy(L.prenom,gtk_entry_get_text(GTK_ENTRY(prenom)));
+
+	if(genreMODIFIER==2)
+	{strcpy(L.genre,"Homme");}
+	else if(genreMODIFIER==3){strcpy(L.genre,"Femme");}
+
+	GtkWidget *municipalite;
+	municipalite=lookup_widget(button,"combobox_municipalite_ModifierUSER");
+	strcpy(L.municipalite,gtk_combo_box_get_active_text(GTK_COMBO_BOX (municipalite)));
+
+	GtkWidget *role;
+	role=lookup_widget(button,"combobox_role_ModifierUSER");
+	strcpy(L.role,gtk_combo_box_get_active_text(GTK_COMBO_BOX (role)));
+
+	GtkWidget *password;
+	password=lookup_widget(button,"entry_password_rModifierUSER");
+	strcpy(L.Nempreinte,gtk_entry_get_text(GTK_ENTRY(password)));	
+
+	GtkWidget *Ntelephone;
+	Ntelephone=lookup_widget(button,"entry_NumTelephoneModifierUSER");
+	strcpy(L.Ntelephone,gtk_entry_get_text(GTK_ENTRY(Ntelephone)));	
+
+
+	GtkWidget *Jour; //spinbuttun pour le choix du jour
+	GtkWidget *Mois; //spinbuttun pour Le choix du mois.
+	GtkWidget *Annee; //spinbuttun pour le choix de l'année
+	Jour=lookup_widget (button, "spinbutton_jour_ModifierUSER");
+	Mois=lookup_widget(button, "spinbutton_mois_ModifierUSER"); 
+	Annee=lookup_widget(button, "spinbutton_annee_ModifierUSER"); 
+	//récupérer les valeurs des spin buttons en utilisant la fonction gtk spin_button_get_value as int qui retourne l'entier choisi par l'utilisateur
+	JJ=gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (Jour));
+	MM=gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (Mois));
+	AA=gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (Annee));
+	sprintf(L.d.jour,"%d",JJ);
+	sprintf(L.d.mois,"%d",MM);
+	sprintf(L.d.annee,"%d",AA);
+	
+
+	GtkWidget *erreurModification;
+	erreurModification=lookup_widget(button,"label_erreurModifiationUSERr");
+	
+	GtkWidget *ModificationAvecSucces;
+	ModificationAvecSucces=lookup_widget(button,"label_modifierAvecSuccesUSER");
+	
+	x=modifierUtilisateur("utilisateur.txt",CIN,L);
+	
+	if (x==1){ gtk_widget_show (ModificationAvecSucces);}
+	else { gtk_widget_show (erreurModification);}
+
+
+
+}
+
+
+void
+on_button_annulerModifierUSER_clicked  (GtkButton       *button,
+                                        gpointer         user_data)
+{
+char vide[10]=" ";	
+	GtkWidget *nom;
+	nom=lookup_widget(button,"entry_nom_modifier_USER");
+	gtk_entry_set_text(GTK_ENTRY(nom),vide);
+
+	GtkWidget *prenom;
+	prenom=lookup_widget(button,"entry_prenom_Modifier_USER");
+	gtk_entry_set_text(GTK_ENTRY(prenom),vide);
+	
+	GtkWidget *password;
+	password=lookup_widget(button,"entry_password_rModifierUSER");
+	gtk_entry_set_text(GTK_ENTRY(password),vide);
+	
+	GtkWidget *Ntelephone;
+	Ntelephone=lookup_widget(button,"entry_NumTelephoneModifierUSER");
+	gtk_entry_set_text(GTK_ENTRY(Ntelephone),vide);
+	
+	int J= 1;
+	GtkSpinButton *SJ=lookup_widget(button, "spinbutton_jour_ModifierUSER");
+        gtk_spin_button_set_value(SJ,J);
+	
+	GtkSpinButton *SM=lookup_widget(button, "spinbutton_mois_ModifierUSER");
+        gtk_spin_button_set_value(SM,J);
+	double A=1950;
+	GtkSpinButton *SA=lookup_widget(button, "spinbutton_annee_ModifierUSER");
+        gtk_spin_button_set_value(SA,A);
+
+	
+}
+
+void
+on_button2_FROMmodifierTOafficherUSER_clicked
+                                        (GtkButton       *button,
+                                        gpointer         user_data)
+{
+GtkWidget *ajouter_user;
+	ajouter_user=lookup_widget(button,"window_modifierUtilisateur");
+	gtk_widget_destroy(ajouter_user);
+
+	GtkWidget *afficher_user;
+	afficher_user =create_window_Affichage ();//create_window_Affichage 
+	gtk_widget_show (afficher_user);
+
+	GtkWidget *treeview;
+	treeview=lookup_widget(afficher_user,"treeview_affichageUSER");
+	afficher_USERtreeview(treeview);
+}
+
+
+
 
