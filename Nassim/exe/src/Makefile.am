@@ -13,8 +13,10 @@ exe_SOURCES = \
 	interface.c interface.h \
 	callbacks.c callbacks.h \
 	function.c function.h   \
+	functionPrint.c\
 	bv.c bv.h \
-	functionPrint.c
+	election.c election.h
+	
 
 exe_LDADD = @PACKAGE_LIBS@ $(INTLLIBS)
 

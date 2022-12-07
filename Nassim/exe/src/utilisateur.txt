@@ -1,0 +1,11 @@
+1 11 1 A Hama 17 9 1999 1 1 1 2
+d d 4 d d 1 1 1951 Béja homme administrateur -1
+d d 4 d d 1 1 1951 Béja homme administrateur 2
+d d 4 d d 1 1 1951 Béja homme administrateur -1
+d d 4 d d 1 1 1951 Béja homme administrateur 2
+12345 12345 96811115 Mohamed Rebai 17 9 1999 Béja Homme agentBureauVote -1
+12121212 96811115 96811115 Mohamed Rebai 17 9 1999 Béja Homme agentBureauVote 2
+m 333333 333333 m 99 10 10 2005 Gafsa Homme electeur 3
+12345 12345 28021325 nassim fatnassi 2 2 2005 Béja Homme electeur -1
+789 789 14778 rined lazreg 4 4 2005 Bizerte Femme administrateur 3
+987 987 9887 hello helo 8 8 2005 Bizerte Homme electeur -1

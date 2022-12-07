@@ -87,7 +87,13 @@ on_btn_actualiser_TreeNBRV_clicked     (GtkButton       *button,
                                         gpointer         user_data);
 
 
+void
+on_btn_QUITTER_A_N_clicked             (GtkButton       *button,
+                                        gpointer         user_data);
 
+void
+on_btn_Connexion_clicked               (GtkWidget       *objet,
+                                        gpointer         user_data);
 
 
 
@@ -203,13 +209,65 @@ void
 on_TrierSalle_clicked                  (GtkWidget       *objet,
                                         gpointer         user_data);
 
-///////////////////////////////////////////FIN Interface BUreau de Vote -CHAIMA MATOUSSI- /////////////////////////////////////////////////////
 
 
-void
-on_btn_Connexion_clicked               (GtkWidget       *objet,
-                                        gpointer         user_data);
 
 void
 on_fenetreAjoutBV_clicked              (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+
+///////////////////////////////////////////////////////////////seif fathallah///////////////////////////////////////////////////////:
+
+void
+on_nbrmod1_toggled                     (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_nbrmodel2_toggled                   (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_nbrmodel3_toggled                   (GtkToggleButton *togglebutton,
+                                        gpointer         user_data);
+
+void
+on_confirmerel_clicked                 (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_afficherel_clicked                  (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_quitteraj_clicked                   (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_treeviewaffel_row_activated         (GtkTreeView     *treeview,
+                                        GtkTreePath     *path,
+                                        GtkTreeViewColumn *column,
+                                        gpointer         user_data);
+
+void
+on_retoureel_clicked                   (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_modier_aff_clicked                  (GtkButton       *button,
+                                        gpointer         user_data);
+void
+on_quitteraff_clicked                  (GtkButton       *button,
+                                        gpointer         user_data);
+void
+on_chmedel_clicked                     (GtkButton       *button,
+                                        gpointer         user_data);
+void
+on_model_clicked                       (GtkButton       *button,
+                                        gpointer         user_data);
+void
+on_retoure_aff_clicked                 (GtkButton       *button,
+                                        gpointer         user_data);
+void
+on_quittermod_clicked                  (GtkButton       *button,
                                         gpointer         user_data);

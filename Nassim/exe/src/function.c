@@ -33,6 +33,15 @@ fclose(f);
 	return (L.id+1);
 
 }
+void MiseAjourIdListe(char * filename ,Liste *L)
+{
+
+L->id=1;
+FILE * f=fopen(filename, "r");
+while(fscanf(f,"%d %s %d %d %d %s %s %s %s %s %s",&L->id,L->nom_liste,&L->d.jour,&L->d.mois,&L->d.annee,L->orientation,L->municipalite,L->nom_tete_liste,L->candidat_1,L->candidat_2,L->candidat_3)!=EOF);
+	{L->id=L->id+1;}
+fclose(f);
+}
 
 void ajouterListe(Liste L)
 {
@@ -223,7 +232,7 @@ int modifierListe( char * filename,int id,Liste LM )
     {
         while(fscanf(f,"%d %s %d %d %d %s %s %s %s %s %s\n",&L.id,L.nom_liste,&L.d.jour,&L.d.mois,&L.d.annee,L.orientation,L.municipalite,L.nom_tete_liste,L.candidat_1,L.candidat_2,L.candidat_3)!=EOF )
         {
-            if(L.id==id && !verifier(LM.nom_tete_liste,LM.candidat_1,LM.candidat_2,LM.candidat_3))//test verif
+            if(L.id==id)
             {
               fprintf(f2,"%d %s %d %d %d %s %s %s %s %s %s\n",LM.id,LM.nom_liste,LM.d.jour,LM.d.mois,LM.d.annee,LM.orientation,LM.municipalite,LM.nom_tete_liste,LM.candidat_1,LM.candidat_2,LM.candidat_3);
                 tr=1;
@@ -242,36 +251,40 @@ int modifierListe( char * filename,int id,Liste LM )
 }
 
 
-/*
+
 //function connexion
-int connexion(int login,int pass)
+int connexion(char login[],char pass[])
 {
     utilisateur L;
-    int role =-1;
-    FILE * f=fopen("user.txt", "r");
-     FILE * f2=fopen("connected.txt", "w");
+    char role[20];
+	int r=-1;
+    FILE * f=fopen("utilisateur.txt", "r");
+     FILE * f2=fopen("connected.txt", "w+");
 
 
     if(f!=NULL && f2!=NULL)
     {
-        while(fscanf(f,"%d %d %d %s %s %d %d %d %d %d %d %d\n",&L.CIN,&L.Nempreinte,&L.Ntelephone,L.nom,L.prenom,&L.d.jour,&L.d.mois,&L.d.annee,&L.municipalite,&L.genre,&L.role,&L.vote)!=EOF)
+        while(fscanf(f,"%s %s %s %s %s %s %s %s %s %s %s %s\n",L.CIN,L.Nempreinte,L.Ntelephone,L.nom,L.prenom,L.dh.jour,L.dh.mois,L.dh
+.annee,L.municipalite,L.genre,L.role,L.vote)!=EOF)
         {
-            if(L.CIN==login && L.Nempreinte==pass)
+            if((strcmp(L.CIN,login)==0) && (strcmp(L.Nempreinte,pass)==0))
             {
-                role=L.role;
+                strcpy(role,L.role);
             }
         }
-        if(role!=-1){
-             fprintf(f2,"%d\n",login);
+        if(strcmp(role,"-1")!=0){
+             fprintf(f2,"%s\n",login);
         }
     }
-
     fclose(f);
     fclose(f2);
-    return role;
+	if(strcmp(role,"administrateur")==0){r=1;}
+	if(strcmp(role,"agentBureauVote")==0){r=2;}
+	if(strcmp(role,"electeur")==0){r=3;}
+    return r;
 }
 
-*/
+
 
 
 

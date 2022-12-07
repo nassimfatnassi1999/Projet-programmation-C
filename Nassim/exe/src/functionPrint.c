@@ -51,7 +51,7 @@ GtkCellRenderer *renderer;
 	}
 	else{
 	
-	while(fscanf(f,"%s %d %d\n",L.nomListe,L.idListe,L.NbrVote)!=EOF)
+	while(fscanf(f,"%s %d %d\n",L.nomListe,&L.idListe,&L.NbrVote)!=EOF)
 	{
 	gtk_list_store_append (store, &iter); 
 	gtk_list_store_set (store,&iter,NAME_LISTE,L.nomListe,IDL,L.idListe,NBR_VOTE,L.NbrVote);
@@ -65,22 +65,22 @@ GtkCellRenderer *renderer;
 }
 }
 //statistique nombre de vote de chaque liste
-int nbv(char * filename,char *idc[])
+int nbv(char idc[])
 {
-    int id=atoi(idc);
-    int nbr_vote=0;
+    int nbrvote=0;
     utilisateur L;
-    FILE * f=fopen(filename, "r");
+    FILE *f=fopen("utilisateur.txt", "r");
     if(f!=NULL)
     {
-        while(fscanf(f,"%d %d %d %s %s %d %d %d %d %d %d %d\n",&L.CIN,&L.Nempreinte,&L.Ntelephone,L.nom,L.prenom,&L.d.jour,&L.d.mois,&L.d.annee,&L.municipalite,&L.genre,&L.role,&L.vote)!=EOF)
+        while(fscanf(f,"%s %s %s %s %s %s %s %s %s %s %s %s\n",L.CIN,L.Nempreinte,L.Ntelephone,L.nom,L.prenom,L.dh.jour,L.dh.mois,L.dh
+.annee,L.municipalite,L.genre,L.role,L.vote)!=EOF)
         {
-            if(L.vote==id)
-                nbr_vote++;
+            if(strcmp(L.vote,idc)==0)
+                nbrvote++;
         }
     }
     fclose(f);
-    return nbr_vote;
+    return nbrvote;
 }
 //remplir tab nbr de vote et id liste
 void remplirtab(Lorder tab[],int *n)
@@ -93,12 +93,13 @@ void remplirtab(Lorder tab[],int *n)
     if(f!=NULL&&f2!=NULL)
     {
         //ajouter les id dans un tableau
-        while(fscanf(f,"%d %d %d %s %s %d %d %d %d %d %d %d\n",&L.CIN,&L.Nempreinte,&L.Ntelephone,L.nom,L.prenom,&L.d.jour,&L.d.mois,&L.d.annee,&L.municipalite,&L.genre,&L.role,&L.vote)!=EOF)
+        while(fscanf(f,"%s %s %s %s %s %s %s %s %s %s %s %s\n",L.CIN,L.Nempreinte,L.Ntelephone,L.nom,L.prenom,L.dh.jour,L.dh.mois,L.dh
+.annee,L.municipalite,L.genre,L.role,L.vote)!=EOF)
         {
             //ajouter dans le tableau les id de liste et eliminer le vote blanc
-            if(L.vote!=0&&L.vote!=-1)
+            if((strcmp(L.vote,"0")!=0)&&(strcmp(L.vote,"-1")!=0))
             {
-                tab[*n].idListe=L.vote;
+                strcpy(tab[*n].idListe,L.vote);
                 (*n)++;
             }
         }
@@ -107,7 +108,7 @@ void remplirtab(Lorder tab[],int *n)
         {
             for (j=i+1; j<(*n);)
             {
-                if (tab[j].idListe==tab[i].idListe)
+                if (strcmp(tab[j].idListe,tab[i].idListe)==0)
                 {
                     for (k=j; k<(*n); k++)
                     {
@@ -119,7 +120,7 @@ void remplirtab(Lorder tab[],int *n)
                     j++;
             }
             //ajouter les nbr de vote dans un tableau
-            tab[i].NbrVote=nbv("liste.txt",tab[i].idListe);
+            tab[i].NbrVote=nbv(tab[i].idListe);
         }
         //pour ajouter ne nom de la liste
         while(fscanf(f2,"%d %s %d %d %d %s %s %s %s %s %s\n",&Li.id,Li.nom_liste,&Li.d.jour,&Li.d.mois,&Li.d.annee,Li.orientation,Li.municipalite,Li.nom_tete_liste,Li.candidat_1,Li.candidat_2,Li.candidat_3)!=EOF)
@@ -150,7 +151,7 @@ void printTab(Lorder tab[],int *n)
         min=i;
         for(j=i+1; j<(*n); j++)
         {
-            if(tab[j].NbrVote>tab[min].NbrVote)
+            if(strcmp(tab[j].NbrVote,tab[min].NbrVote)>0)
             {
                 min=j;
             }

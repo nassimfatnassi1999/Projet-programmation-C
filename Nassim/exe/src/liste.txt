@@ -1,6 +1,7 @@
 2 aaaaaaaa 1 1 2000 Centre Sousse 88 8 8 8
 3 skander 5 5 2022 Centre Beja 85 11 11 11
-
-4 kkjh 1 1 2000 ğ<à3ìU Tunis  45465 4354563 242 52
-5 gkg 2 1 2000 ğ<à3ìU Tunis  535643 4534 13 453
-6 hkh 2 1 2000 °l`¿%V Tunis  4444 7777 888 666
+5 aaaabbb 1 1 2100 Droite Kasserine 3 3 3 3
+6 chalbi 2 2 2022 Droite Tunis 20 20 20 20
+7 ffffffff 1 1 2000 Gauche Sousse 55 55 55 55
+8 chalibo 5 5 2022 Droite Beja 99 99 99 99
+9 jdid 1 1 2000 Gauche Kasserine 101 101 101 101

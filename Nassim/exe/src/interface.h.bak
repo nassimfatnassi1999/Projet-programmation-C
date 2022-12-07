@@ -12,3 +12,6 @@ GtkWidget* create_ajoutBV (void);
 GtkWidget* create_afficherBV (void);
 GtkWidget* create_supprimerbuv (void);
 GtkWidget* create_modifierBV (void);
+GtkWidget* create_windowel (void);
+GtkWidget* create_windowafficherel (void);
+GtkWidget* create_modifeel (void);

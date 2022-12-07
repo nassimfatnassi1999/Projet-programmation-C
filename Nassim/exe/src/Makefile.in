@@ -100,8 +100,8 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_exe_OBJECTS = main.$(OBJEXT) support.$(OBJEXT) interface.$(OBJEXT) \
-	callbacks.$(OBJEXT) function.$(OBJEXT) bv.$(OBJEXT) \
-	functionPrint.$(OBJEXT)
+	callbacks.$(OBJEXT) function.$(OBJEXT) functionPrint.$(OBJEXT) \
+	bv.$(OBJEXT) election.$(OBJEXT)
 exe_OBJECTS = $(am_exe_OBJECTS)
 am__DEPENDENCIES_1 =
 exe_DEPENDENCIES = $(am__DEPENDENCIES_1)
@@ -284,8 +284,9 @@ exe_SOURCES = \
 	interface.c interface.h \
 	callbacks.c callbacks.h \
 	function.c function.h   \
+	functionPrint.c\
 	bv.c bv.h \
-	functionPrint.c
+	election.c election.h
 
 exe_LDADD = @PACKAGE_LIBS@ $(INTLLIBS)
 all: all-am
@@ -376,6 +377,7 @@ distclean-compile:
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/bv.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/callbacks.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/election.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/function.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/functionPrint.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/interface.Po@am__quote@

@@ -100,8 +100,8 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_exe_OBJECTS = main.$(OBJEXT) support.$(OBJEXT) interface.$(OBJEXT) \
-	callbacks.$(OBJEXT) function.$(OBJEXT) bv.$(OBJEXT) \
-	functionPrint.$(OBJEXT)
+	callbacks.$(OBJEXT) function.$(OBJEXT) functionPrint.$(OBJEXT) \
+	bv.$(OBJEXT) election.$(OBJEXT)
 exe_OBJECTS = $(am_exe_OBJECTS)
 am__DEPENDENCIES_1 =
 exe_DEPENDENCIES = $(am__DEPENDENCIES_1)
@@ -161,12 +161,12 @@ ETAGS = etags
 CTAGS = ctags
 am__DIST_COMMON = $(srcdir)/Makefile.in $(top_srcdir)/depcomp
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /home/chaima/Desktop/Projet-programmation-C/Nassim/exe/missing aclocal-1.15
+ACLOCAL = ${SHELL} /home/nassimubunto/Desktop/exe_stat_nbv_te5dem/exe/missing aclocal-1.15
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
-AUTOCONF = ${SHELL} /home/chaima/Desktop/Projet-programmation-C/Nassim/exe/missing autoconf
-AUTOHEADER = ${SHELL} /home/chaima/Desktop/Projet-programmation-C/Nassim/exe/missing autoheader
-AUTOMAKE = ${SHELL} /home/chaima/Desktop/Projet-programmation-C/Nassim/exe/missing automake-1.15
+AUTOCONF = ${SHELL} /home/nassimubunto/Desktop/exe_stat_nbv_te5dem/exe/missing autoconf
+AUTOHEADER = ${SHELL} /home/nassimubunto/Desktop/exe_stat_nbv_te5dem/exe/missing autoheader
+AUTOMAKE = ${SHELL} /home/nassimubunto/Desktop/exe_stat_nbv_te5dem/exe/missing automake-1.15
 AWK = mawk
 CATALOGS = 
 CATOBJEXT = .gmo
@@ -201,7 +201,7 @@ LIBOBJS =
 LIBS = 
 LTLIBOBJS = 
 MAINT = 
-MAKEINFO = ${SHELL} /home/chaima/Desktop/Projet-programmation-C/Nassim/exe/missing makeinfo
+MAKEINFO = ${SHELL} /home/nassimubunto/Desktop/exe_stat_nbv_te5dem/exe/missing makeinfo
 MKDIR_P = /bin/mkdir -p
 MKINSTALLDIRS = ./mkinstalldirs
 MSGFMT = /usr/bin/msgfmt
@@ -230,10 +230,10 @@ STRIP =
 USE_NLS = yes
 VERSION = 0.1
 XGETTEXT = /usr/bin/xgettext
-abs_builddir = /home/chaima/Desktop/Projet-programmation-C/Nassim/exe/src
-abs_srcdir = /home/chaima/Desktop/Projet-programmation-C/Nassim/exe/src
-abs_top_builddir = /home/chaima/Desktop/Projet-programmation-C/Nassim/exe
-abs_top_srcdir = /home/chaima/Desktop/Projet-programmation-C/Nassim/exe
+abs_builddir = /home/nassimubunto/Desktop/exe_stat_nbv_te5dem/exe/src
+abs_srcdir = /home/nassimubunto/Desktop/exe_stat_nbv_te5dem/exe/src
+abs_top_builddir = /home/nassimubunto/Desktop/exe_stat_nbv_te5dem/exe
+abs_top_srcdir = /home/nassimubunto/Desktop/exe_stat_nbv_te5dem/exe
 ac_ct_CC = gcc
 am__include = include
 am__leading_dot = .
@@ -252,7 +252,7 @@ host_alias =
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/chaima/Desktop/Projet-programmation-C/Nassim/exe/install-sh
+install_sh = ${SHELL} /home/nassimubunto/Desktop/exe_stat_nbv_te5dem/exe/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -284,8 +284,9 @@ exe_SOURCES = \
 	interface.c interface.h \
 	callbacks.c callbacks.h \
 	function.c function.h   \
+	functionPrint.c\
 	bv.c bv.h \
-	functionPrint.c
+	election.c election.h
 
 exe_LDADD = -lgtk-x11-2.0 -lgdk-x11-2.0 -lpangocairo-1.0 -latk-1.0 -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lpangoft2-1.0 -lpango-1.0 -lgobject-2.0 -lglib-2.0 -lfontconfig -lfreetype $(INTLLIBS)
 all: all-am
@@ -376,6 +377,7 @@ distclean-compile:
 
 include ./$(DEPDIR)/bv.Po
 include ./$(DEPDIR)/callbacks.Po
+include ./$(DEPDIR)/election.Po
 include ./$(DEPDIR)/function.Po
 include ./$(DEPDIR)/functionPrint.Po
 include ./$(DEPDIR)/interface.Po

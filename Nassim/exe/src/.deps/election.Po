@@ -1,4 +1,4 @@
-callbacks.o: callbacks.c /usr/include/stdc-predef.h ../config.h \
+election.o: election.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/gtk-2.0/gtk/gtk.h /usr/include/gtk-2.0/gdk/gdk.h \
  /usr/include/gtk-2.0/gdk/gdkapplaunchcontext.h \
  /usr/include/glib-2.0/gio/gio.h /usr/include/glib-2.0/gio/giotypes.h \
@@ -603,9 +603,7 @@ callbacks.o: callbacks.c /usr/include/stdc-predef.h ../config.h \
  /usr/include/gtk-2.0/gtk/gtkoldeditable.h \
  /usr/include/gtk-2.0/gtk/gtkoptionmenu.h \
  /usr/include/gtk-2.0/gtk/gtkpreview.h \
- /usr/include/gtk-2.0/gtk/gtktipsquery.h callbacks.h interface.h \
- support.h /usr/include/libintl.h /usr/include/locale.h \
- /usr/include/x86_64-linux-gnu/bits/locale.h function.h election.h bv.h
+ /usr/include/gtk-2.0/gtk/gtktipsquery.h election.h function.h
 
 /usr/include/stdc-predef.h:
 
@@ -1947,20 +1945,6 @@ callbacks.o: callbacks.c /usr/include/stdc-predef.h ../config.h \
 
 /usr/include/gtk-2.0/gtk/gtktipsquery.h:
 
-callbacks.h:
-
-interface.h:
-
-support.h:
-
-/usr/include/libintl.h:
-
-/usr/include/locale.h:
-
-/usr/include/x86_64-linux-gnu/bits/locale.h:
-
-function.h:
-
 election.h:
 
-bv.h:
+function.h:

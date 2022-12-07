@@ -23,6 +23,9 @@ main (int argc, char *argv[])
   GtkWidget *ajoutBV;
   GtkWidget *afficherBV;
   GtkWidget *supprimerbuv;
+  GtkWidget *windowel; 
+  GtkWidget *windowafficherel;
+  GtkWidget *modifeel;
 
 
 #ifdef ENABLE_NLS
@@ -43,12 +46,22 @@ main (int argc, char *argv[])
    */
   /*WindowLogin = create_WindowLogin ();
   gtk_widget_show (WindowLogin);*/
-  GestionListeElectorale = create_GestionListeElectorale ();
-  gtk_widget_show (GestionListeElectorale);
+
+  windowel = create_windowel();
+  gtk_widget_show (windowel);
+  
+  /*ajoutBV = create_ajoutBV ();
+  gtk_widget_show (ajoutBV);*/
+
+  /*GestionListeElectorale = create_GestionListeElectorale ();
+  gtk_widget_show (GestionListeElectorale);*/
+
   /*AjouterListe = create_AjouterListe ();
   gtk_widget_show (AjouterListe);*/
+
   /*Statistique = create_Statistique ();
   gtk_widget_show (Statistique);*/
+
   /*Stat_nassim = create_Stat_Liste_Nassim ();
   gtk_widget_show (Stat_nassim);*/
 
