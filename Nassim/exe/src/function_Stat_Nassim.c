@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "function.h"
 #include <gtk/gtk.h>
@@ -85,7 +86,8 @@ int nbv(char idc[])
 //remplir tab nbr de vote et id liste
 void remplirtab(Lorder tab[],int *n)
 {
-    int i,j,k,p;
+    int i,j,k,p,id;
+    int chTid;
     Liste Li;
     utilisateur L;
     FILE * f=fopen("utilisateur.txt", "r");
@@ -99,7 +101,8 @@ void remplirtab(Lorder tab[],int *n)
             //ajouter dans le tableau les id de liste et eliminer le vote blanc
             if((strcmp(L.vote,"0")!=0)&&(strcmp(L.vote,"-1")!=0))
             {
-                strcpy(tab[*n].idListe,L.vote);
+		id=atoi(L.vote);
+                tab[*n].idListe=id;
                 (*n)++;
             }
         }
@@ -120,7 +123,8 @@ void remplirtab(Lorder tab[],int *n)
                     j++;
             }
             //ajouter les nbr de vote dans un tableau
-            tab[i].NbrVote=nbv(tab[i].idListe);
+		sprintf(chTid,"%d",tab[i].idListe);
+            tab[i].NbrVote=nbv(chTid);
         }
         //pour ajouter ne nom de la liste
         while(fscanf(f2,"%d %s %d %d %d %s %s %s %s %s %s\n",&Li.id,Li.nom_liste,&Li.d.jour,&Li.d.mois,&Li.d.annee,Li.orientation,Li.municipalite,Li.nom_tete_liste,Li.candidat_1,Li.candidat_2,Li.candidat_3)!=EOF)
@@ -151,7 +155,7 @@ void printTab(Lorder tab[],int *n)
         min=i;
         for(j=i+1; j<(*n); j++)
         {
-            if(strcmp(tab[j].NbrVote,tab[min].NbrVote)>0)
+            if(tab[j].NbrVote==tab[min].NbrVote)
             {
                 min=j;
             }

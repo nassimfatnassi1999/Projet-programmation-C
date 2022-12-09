@@ -55,23 +55,111 @@ void ajouterListe(Liste L)
     }
     fclose(f);
 }
+
+
+//function pour chercher liste
+void Chercher_Nassim(GtkWidget *liste,char ch[20])
+{
+GtkCellRenderer *renderer;
+GtkTreeViewColumn *column;
+GtkTreeIter iter;
+GtkListStore *store;
+
+
+store=NULL;
+FILE *f;
+store=gtk_tree_view_get_model(liste);
+if(store==NULL)
+{
+
+	renderer = gtk_cell_renderer_text_new (); 
+	column = gtk_tree_view_column_new_with_attributes("id", renderer, "text", ID, NULL);
+	gtk_tree_view_append_column (GTK_TREE_VIEW (liste), column);
+
+	renderer = gtk_cell_renderer_text_new (); 
+	column = gtk_tree_view_column_new_with_attributes("nom_liste", renderer, "text",NOM_LISTE, NULL);
+	gtk_tree_view_append_column (GTK_TREE_VIEW (liste), column);
+
+	renderer = gtk_cell_renderer_text_new (); 
+	column = gtk_tree_view_column_new_with_attributes("Jour", renderer, "text",JOUR, NULL);
+	gtk_tree_view_append_column (GTK_TREE_VIEW (liste), column);
+
+	renderer = gtk_cell_renderer_text_new (); 
+	column = gtk_tree_view_column_new_with_attributes("Mois", renderer, "text",MOIS, NULL);
+	gtk_tree_view_append_column (GTK_TREE_VIEW (liste), column);
+
+	renderer = gtk_cell_renderer_text_new (); 
+	column = gtk_tree_view_column_new_with_attributes("Annee", renderer, "text",ANNEE, NULL);
+	gtk_tree_view_append_column (GTK_TREE_VIEW (liste), column);
+
+	renderer = gtk_cell_renderer_text_new (); 
+	column = gtk_tree_view_column_new_with_attributes("orientation", renderer, "text",ORIENTA, NULL);
+	gtk_tree_view_append_column (GTK_TREE_VIEW (liste), column);
+
+	renderer = gtk_cell_renderer_text_new (); 
+	column = gtk_tree_view_column_new_with_attributes("municipalite", renderer, "text",MUNI, NULL);
+	gtk_tree_view_append_column (GTK_TREE_VIEW (liste), column);
+	
+
+	renderer = gtk_cell_renderer_text_new (); 
+	column = gtk_tree_view_column_new_with_attributes("cin_tete_liste", renderer, "text",CINT, NULL);
+	gtk_tree_view_append_column (GTK_TREE_VIEW (liste), column);
+	
+	
+	renderer = gtk_cell_renderer_text_new (); 
+	column = gtk_tree_view_column_new_with_attributes("candidat_1", renderer, "text",CINC1, NULL);
+	gtk_tree_view_append_column (GTK_TREE_VIEW (liste), column);
+	
+
+	renderer = gtk_cell_renderer_text_new (); 
+	column = gtk_tree_view_column_new_with_attributes("candidat_2", renderer, "text",CINC2, NULL);
+	gtk_tree_view_append_column (GTK_TREE_VIEW (liste), column);
+	
+
+	renderer = gtk_cell_renderer_text_new (); 
+	column = gtk_tree_view_column_new_with_attributes("candidat_3", renderer, "text",CINC3, NULL);
+	gtk_tree_view_append_column (GTK_TREE_VIEW (liste), column);
+}
+ store=gtk_list_store_new (COLUMNS,
+	 				 G_TYPE_UINT,
+					 G_TYPE_STRING,
+					 G_TYPE_UINT,
+					 G_TYPE_UINT,
+					 G_TYPE_UINT,
+					 G_TYPE_STRING, 
+					 G_TYPE_STRING,
+					 G_TYPE_STRING,
+					 G_TYPE_STRING,
+					 G_TYPE_STRING,
+					 G_TYPE_STRING);
+f=fopen("liste.txt","r");
+Liste L;
+
+{f=fopen("liste.txt","a+");
+	while(fscanf(f,"%d %s %d %d %d %s %s %s %s %s %s",&L.id,L.nom_liste,&L.d.jour,&L.d.mois,&L.d.annee,L.orientation,L.municipalite,L.nom_tete_liste,L.candidat_1,L.candidat_2,L.candidat_3)!=EOF)
+{   
+      if((strcmp(ch,L.municipalite)==0) ){
+	gtk_list_store_append (store, &iter); 
+	gtk_list_store_set (store,&iter,ID,L.id,NOM_LISTE,L.nom_liste,JOUR,L.d.jour,MOIS,L.d.mois,ANNEE,L.d.annee,ORIENTA,L.orientation,MUNI,L.municipalite,CINT,L.nom_tete_liste,CINC1,L.candidat_1,CINC2,L.candidat_2,CINC3,L.candidat_3);
+	}
+	else if((strcmp(ch,L.orientation)==0) ){
+	gtk_list_store_append (store, &iter); 
+	gtk_list_store_set (store,&iter,ID,L.id,NOM_LISTE,L.nom_liste,JOUR,L.d.jour,MOIS,L.d.mois,ANNEE,L.d.annee,ORIENTA,L.orientation,MUNI,L.municipalite,CINT,L.nom_tete_liste,CINC1,L.candidat_1,CINC2,L.candidat_2,CINC3,L.candidat_3);
+	}
+}
+fclose(f);
+	gtk_tree_view_set_model (GTK_TREE_VIEW (liste), GTK_TREE_MODEL (store)); 
+	g_object_unref (store);
+}
+}
+//treview affichage
 void afficher_Liste(GtkWidget *liste)
 {
 	GtkCellRenderer *renderer;
 	GtkTreeViewColumn *column;
 	GtkTreeIter iter;
 	GtkListStore *store;
-	int idliste;
-	char nomListe[30];
-	char orienta[30];
-	char muni[30];
-	int Jour;
-	int Mois;
-	int Annee;
-	char cinT[30];
-	char cinC1[30];
-	char cinC2[30];
-	char cinC3[30];
+	
 	store=NULL;
 	FILE *f;
 	Liste L;

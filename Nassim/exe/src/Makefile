@@ -100,8 +100,8 @@ CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_exe_OBJECTS = main.$(OBJEXT) support.$(OBJEXT) interface.$(OBJEXT) \
-	callbacks.$(OBJEXT) function.$(OBJEXT) functionPrint.$(OBJEXT) \
-	bv.$(OBJEXT) election.$(OBJEXT) user.$(OBJEXT)
+	callbacks.$(OBJEXT) function.$(OBJEXT) \
+	function_Stat_Nassim.$(OBJEXT) bv.$(OBJEXT) election.$(OBJEXT)
 exe_OBJECTS = $(am_exe_OBJECTS)
 am__DEPENDENCIES_1 =
 exe_DEPENDENCIES = $(am__DEPENDENCIES_1)
@@ -284,10 +284,9 @@ exe_SOURCES = \
 	interface.c interface.h \
 	callbacks.c callbacks.h \
 	function.c function.h   \
-	functionPrint.c\
+	function_Stat_Nassim.c\
 	bv.c bv.h \
-	election.c election.h \
-	user.h user.c
+	election.c election.h
 
 exe_LDADD = -lgtk-x11-2.0 -lgdk-x11-2.0 -lpangocairo-1.0 -latk-1.0 -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lpangoft2-1.0 -lpango-1.0 -lgobject-2.0 -lglib-2.0 -lfontconfig -lfreetype $(INTLLIBS)
 all: all-am
@@ -380,11 +379,10 @@ include ./$(DEPDIR)/bv.Po
 include ./$(DEPDIR)/callbacks.Po
 include ./$(DEPDIR)/election.Po
 include ./$(DEPDIR)/function.Po
-include ./$(DEPDIR)/functionPrint.Po
+include ./$(DEPDIR)/function_Stat_Nassim.Po
 include ./$(DEPDIR)/interface.Po
 include ./$(DEPDIR)/main.Po
 include ./$(DEPDIR)/support.Po
-include ./$(DEPDIR)/user.Po
 
 .c.o:
 	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
