@@ -70,8 +70,12 @@ int connexion(char login[],char pass[]);
 void MiseAjourIdListe(char * filename ,Liste *L);
 
 void afficher_Liste(GtkWidget *liste);
+
 void afficher_Liste_ordre(GtkWidget *liste);
+
 void Chercher_Nassim(GtkWidget *liste,char ch[20]);
+
+int verifier_Length_Cin(char cinT[],char cinc1[],char cinc2[],char cinc3[]);
 
 
 

@@ -105,6 +105,7 @@ on_btn_Ajouter_Liste_clicked           (GtkButton       *button,
 //declarer la struct qui ajouter
         Liste L;
 	int verifiA=-1;
+	int verifLen=-1;
 // associer les objets avec des variables
 	inputNom = lookup_widget(button,"entryNomListe") ;
 	Jour = lookup_widget(button,"spinJourListe") ;
@@ -144,10 +145,10 @@ on_btn_Ajouter_Liste_clicked           (GtkButton       *button,
 	strcpy(L.candidat_3,gtk_entry_get_text(GTK_ENTRY(cinC3)));
 //appel de la function ajouter
 	   verifiA=verifier(L.nom_tete_liste,L.candidat_1,L.candidat_2,L.candidat_3);
+	   verifLen=verifier_Length_Cin(L.nom_tete_liste,L.candidat_1,L.candidat_2,L.candidat_3);
+	if(verifiA!=1&&verifLen==1){
 
-	if(verifiA!=1){
-
-		if( checkN!=0){
+		if( checkN==1){
 		        ajouterListe(L);
 			//traja3ni ltree view 
 			GtkWidget *ajouter101;
@@ -155,7 +156,8 @@ on_btn_Ajouter_Liste_clicked           (GtkButton       *button,
 			destroy101=lookup_widget(button,"AjouterListe");
 			gtk_widget_destroy(destroy101);
 			ajouter101=create_GestionListeElectorale();
-			gtk_widget_show (ajouter101);}
+			gtk_widget_show (ajouter101);
+		}
 		else{
 			GdkColor color;
 			gdk_color_parse("red",&color);
@@ -164,10 +166,18 @@ on_btn_Ajouter_Liste_clicked           (GtkButton       *button,
 		}
 	}
 	else{
+		if(verifiA==1){
 		GdkColor color;
 		gdk_color_parse("red",&color);
 		gtk_widget_modify_fg(output,GTK_STATE_NORMAL,&color);
 		gtk_label_set_text(GTK_LABEL(output),"L'un des candidats existe deja dans une Liste !!");
+		}
+		else if(verifLen!=1){
+		GdkColor color;
+		gdk_color_parse("red",&color);
+		gtk_widget_modify_fg(output,GTK_STATE_NORMAL,&color);
+		gtk_label_set_text(GTK_LABEL(output),"veuillez saisir 8 chiffre dans le cin s'il vous plait !");
+		}
 	}
 }
 
@@ -354,15 +364,7 @@ while(!tr && fscanf(g,"%d %s %d %d %d %s %s %s %s %s %s\n",&Li.id,Li.nom_liste,&
 	  { tr=1;   //condition d'arret
 	  }
 	}
-	fclose(g);
-
-	/*if(tr==0)
-	{gtk_label_set_text(GTK_LABEL(alert),"identifiant non trouvé !");
-	}
-	else
-	{
-	gtk_label_set_text(GTK_LABEL(alert),"");*/
-	
+	fclose(g);	
 	//traitement gouv
 	FILE *f=fopen("gouvernorat.txt","r");
 	while(!trouve && fscanf(f,"%s \n",gouv)!=EOF)
@@ -371,14 +373,6 @@ while(!tr && fscanf(g,"%d %s %d %d %d %s %s %s %s %s %s\n",&Li.id,Li.nom_liste,&
 	    trouve=1;   //condition d'arret
 	   }
 	gtk_combo_box_set_active(GTK_COMBO_BOX(COX),i);
-//*************************************
-	/* 
-	 if(strcmp(LM.municipalite,"Tunis")){
-         	gtk_combo_box_set_active(COX,2);}
-	 else if(strcmp(LM.municipalite,"Beja")){
-         	gtk_combo_box_set_active(COX,1);}
-	 else if(strcmp(LM.municipalite,"Sousse")){
-         	gtk_combo_box_set_active(COX,3);}*/
 //*************************************
 	 output=lookup_widget(button,"entry_M_cinT");
          gtk_entry_set_text(GTK_ENTRY(output),LM.nom_tete_liste);
@@ -470,7 +464,7 @@ on_btn_M_Modifier_clicked              (GtkButton       *button,
 	strcpy(nouvL.candidat_1,gtk_entry_get_text(GTK_ENTRY(cinC1)));
 	strcpy(nouvL.candidat_2,gtk_entry_get_text(GTK_ENTRY(cinC2)));
 	strcpy(nouvL.candidat_3,gtk_entry_get_text(GTK_ENTRY(cinC3)));
-
+	
 		//appel function modifier
 	        test=modifierListe("liste.txt",idIN,nouvL);
 		if(test==1){
@@ -486,7 +480,7 @@ on_btn_M_Modifier_clicked              (GtkButton       *button,
 			GdkColor color;
 		        gdk_color_parse("red",&color);
 		        gtk_widget_modify_fg(outputEM,GTK_STATE_NORMAL,&color);
-		        gtk_label_set_text(GTK_LABEL(outputEM),"Oups echec modification !!");
+		        gtk_label_set_text(GTK_LABEL(outputEM),"Oups echec modification verifie le nbr de CIN !!");
 			
 		    }
 

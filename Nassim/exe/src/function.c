@@ -55,7 +55,20 @@ void ajouterListe(Liste L)
     }
     fclose(f);
 }
-
+//function verif longeur cin
+int verifier_Length_Cin(char cinT[],char cinc1[],char cinc2[],char cinc3[])
+{
+    
+	int cT,c1,c2,c3;
+	cT=strlen(cinT);
+	c1=strlen(cinc1);
+	c2=strlen(cinc2);
+	c3=strlen(cinc3);
+	    int tr=0;
+            if(cT==8&&c1==8&&c2==8&&c3==8)
+                tr=1;
+    return tr;
+}
 
 //function pour chercher liste
 void Chercher_Nassim(GtkWidget *liste,char ch[20])

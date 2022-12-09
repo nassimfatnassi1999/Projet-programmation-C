@@ -59,7 +59,7 @@ main (int argc, char *argv[])
   /*AjouterListe = create_AjouterListe ();
   gtk_widget_show (AjouterListe);*/
 
-  /*Statistique = create_Statistique ();
+ /* Statistique = create_Statistique ();
   gtk_widget_show (Statistique);*/
 
   /*Stat_nassim = create_Stat_Liste_Nassim ();
