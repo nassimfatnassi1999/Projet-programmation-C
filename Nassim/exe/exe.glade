@@ -227,7 +227,7 @@
 </widget>
 
 <widget class="GtkWindow" id="GestionListeElectorale">
-  <property name="width_request">800</property>
+  <property name="width_request">850</property>
   <property name="height_request">600</property>
   <property name="visible">True</property>
   <property name="title" translatable="yes">Gestion Liste Electorale</property>
@@ -249,27 +249,6 @@
       <property name="width_request">800</property>
       <property name="height_request">500</property>
       <property name="visible">True</property>
-
-      <child>
-	<widget class="GtkTreeView" id="treeview1">
-	  <property name="width_request">795</property>
-	  <property name="height_request">280</property>
-	  <property name="visible">True</property>
-	  <property name="can_focus">True</property>
-	  <property name="headers_visible">True</property>
-	  <property name="rules_hint">False</property>
-	  <property name="reorderable">False</property>
-	  <property name="enable_search">True</property>
-	  <property name="fixed_height_mode">False</property>
-	  <property name="hover_selection">False</property>
-	  <property name="hover_expand">False</property>
-	  <signal name="row_activated" handler="on_treeview1_row_activated" last_modification_time="Tue, 29 Nov 2022 18:42:25 GMT"/>
-	</widget>
-	<packing>
-	  <property name="x">24</property>
-	  <property name="y">64</property>
-	</packing>
-      </child>
 
       <child>
 	<widget class="GtkLabel" id="labelTreeListe">
@@ -848,6 +827,40 @@
 	<packing>
 	  <property name="x">56</property>
 	  <property name="y">536</property>
+	</packing>
+      </child>
+
+      <child>
+	<widget class="GtkScrolledWindow" id="scrolledwindow1">
+	  <property name="width_request">795</property>
+	  <property name="height_request">280</property>
+	  <property name="visible">True</property>
+	  <property name="can_focus">True</property>
+	  <property name="hscrollbar_policy">GTK_POLICY_ALWAYS</property>
+	  <property name="vscrollbar_policy">GTK_POLICY_ALWAYS</property>
+	  <property name="shadow_type">GTK_SHADOW_NONE</property>
+	  <property name="window_placement">GTK_CORNER_TOP_LEFT</property>
+
+	  <child>
+	    <widget class="GtkTreeView" id="treeview1">
+	      <property name="width_request">795</property>
+	      <property name="height_request">280</property>
+	      <property name="visible">True</property>
+	      <property name="can_focus">True</property>
+	      <property name="headers_visible">True</property>
+	      <property name="rules_hint">False</property>
+	      <property name="reorderable">False</property>
+	      <property name="enable_search">True</property>
+	      <property name="fixed_height_mode">False</property>
+	      <property name="hover_selection">False</property>
+	      <property name="hover_expand">False</property>
+	      <signal name="row_activated" handler="on_treeview1_row_activated" last_modification_time="Tue, 29 Nov 2022 18:42:25 GMT"/>
+	    </widget>
+	  </child>
+	</widget>
+	<packing>
+	  <property name="x">24</property>
+	  <property name="y">64</property>
 	</packing>
       </child>
     </widget>

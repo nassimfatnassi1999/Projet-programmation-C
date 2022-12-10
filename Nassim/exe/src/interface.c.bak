@@ -124,7 +124,6 @@ create_GestionListeElectorale (void)
 {
   GtkWidget *GestionListeElectorale;
   GtkWidget *fixedListe;
-  GtkWidget *treeview1;
   GtkWidget *labelTreeListe;
   GtkWidget *button_warning;
   GtkWidget *image17;
@@ -160,6 +159,8 @@ create_GestionListeElectorale (void)
   GtkWidget *hbox54;
   GtkWidget *image52;
   GtkWidget *label125;
+  GtkWidget *scrolledwindow1;
+  GtkWidget *treeview1;
 
   GestionListeElectorale = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_widget_set_size_request (GestionListeElectorale, 800, 600);
@@ -169,11 +170,6 @@ create_GestionListeElectorale (void)
   gtk_widget_show (fixedListe);
   gtk_container_add (GTK_CONTAINER (GestionListeElectorale), fixedListe);
   gtk_widget_set_size_request (fixedListe, 800, 500);
-
-  treeview1 = gtk_tree_view_new ();
-  gtk_widget_show (treeview1);
-  gtk_fixed_put (GTK_FIXED (fixedListe), treeview1, 24, 64);
-  gtk_widget_set_size_request (treeview1, 795, 280);
 
   labelTreeListe = gtk_label_new (_("<big><b><span color='#842431'>Les Listes Electorales</span></b> \n</big>"));
   gtk_widget_show (labelTreeListe);
@@ -328,9 +324,16 @@ create_GestionListeElectorale (void)
   gtk_widget_show (label125);
   gtk_box_pack_start (GTK_BOX (hbox54), label125, FALSE, FALSE, 0);
 
-  g_signal_connect ((gpointer) treeview1, "row_activated",
-                    G_CALLBACK (on_treeview1_row_activated),
-                    NULL);
+  scrolledwindow1 = gtk_scrolled_window_new (NULL, NULL);
+  gtk_widget_show (scrolledwindow1);
+  gtk_fixed_put (GTK_FIXED (fixedListe), scrolledwindow1, 24, 64);
+  gtk_widget_set_size_request (scrolledwindow1, 795, 280);
+
+  treeview1 = gtk_tree_view_new ();
+  gtk_widget_show (treeview1);
+  gtk_container_add (GTK_CONTAINER (scrolledwindow1), treeview1);
+  gtk_widget_set_size_request (treeview1, 795, 280);
+
   g_signal_connect ((gpointer) btn_Modifier, "clicked",
                     G_CALLBACK (on_btn_Modifier_clicked),
                     NULL);
@@ -349,11 +352,13 @@ create_GestionListeElectorale (void)
   g_signal_connect ((gpointer) btn_R_Liste_Dashbord, "clicked",
                     G_CALLBACK (on_btn_R_Liste_Dashbord_clicked),
                     NULL);
+  g_signal_connect ((gpointer) treeview1, "row_activated",
+                    G_CALLBACK (on_treeview1_row_activated),
+                    NULL);
 
   /* Store pointers to all widgets, for use by lookup_widget(). */
   GLADE_HOOKUP_OBJECT_NO_REF (GestionListeElectorale, GestionListeElectorale, "GestionListeElectorale");
   GLADE_HOOKUP_OBJECT (GestionListeElectorale, fixedListe, "fixedListe");
-  GLADE_HOOKUP_OBJECT (GestionListeElectorale, treeview1, "treeview1");
   GLADE_HOOKUP_OBJECT (GestionListeElectorale, labelTreeListe, "labelTreeListe");
   GLADE_HOOKUP_OBJECT (GestionListeElectorale, button_warning, "button_warning");
   GLADE_HOOKUP_OBJECT (GestionListeElectorale, image17, "image17");
@@ -389,6 +394,8 @@ create_GestionListeElectorale (void)
   GLADE_HOOKUP_OBJECT (GestionListeElectorale, hbox54, "hbox54");
   GLADE_HOOKUP_OBJECT (GestionListeElectorale, image52, "image52");
   GLADE_HOOKUP_OBJECT (GestionListeElectorale, label125, "label125");
+  GLADE_HOOKUP_OBJECT (GestionListeElectorale, scrolledwindow1, "scrolledwindow1");
+  GLADE_HOOKUP_OBJECT (GestionListeElectorale, treeview1, "treeview1");
 
   return GestionListeElectorale;
 }
