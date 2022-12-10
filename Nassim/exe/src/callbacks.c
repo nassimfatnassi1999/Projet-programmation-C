@@ -1684,4 +1684,30 @@ gtk_main_quit();
 
 
 
+/////////////////////////////////////////Dashbord//////////////////////////////////////////////////////////
+
+void
+on_btn_Nassim_clicked                  (GtkButton       *button,
+                                        gpointer         user_data)
+{
+	GtkWidget *ajouter;
+			GtkWidget *afficher_Nassim;
+			afficher_Nassim=lookup_widget(button,"Dashbord");
+			gtk_widget_destroy(afficher_Nassim);
+			ajouter=create_GestionListeElectorale();
+			gtk_widget_show (ajouter);
+}
+
+
+void
+on_btn_R_Liste_Dashbord_clicked        (GtkButton       *button,
+                                        gpointer         user_data)
+{
+	GtkWidget *ajouter;
+			GtkWidget *afficher_Nassim;
+			afficher_Nassim=lookup_widget(button,"GestionListeElectorale");
+			gtk_widget_destroy(afficher_Nassim);
+			ajouter=create_Dashbord();
+			gtk_widget_show (ajouter);
+}
 

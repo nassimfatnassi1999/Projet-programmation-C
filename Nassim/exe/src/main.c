@@ -26,6 +26,7 @@ main (int argc, char *argv[])
   GtkWidget *windowel; 
   GtkWidget *windowafficherel;
   GtkWidget *modifeel;
+  GtkWidget *Dashbord;
 
 
 #ifdef ENABLE_NLS
@@ -44,6 +45,10 @@ main (int argc, char *argv[])
    * (except popup menus), just so that you see something after building
    * the project. Delete any components that you don't want shown initially.
    */
+
+   Dashbord=create_Dashbord();
+   gtk_widget_show (Dashbord);
+
   /*WindowLogin = create_WindowLogin ();
   gtk_widget_show (WindowLogin);*/
 
@@ -53,13 +58,13 @@ main (int argc, char *argv[])
   /*ajoutBV = create_ajoutBV ();
   gtk_widget_show (ajoutBV);*/
 
-  GestionListeElectorale = create_GestionListeElectorale ();
-  gtk_widget_show (GestionListeElectorale);
+  /*GestionListeElectorale = create_GestionListeElectorale ();
+  gtk_widget_show (GestionListeElectorale);*/
 
   /*AjouterListe = create_AjouterListe ();
   gtk_widget_show (AjouterListe);*/
 
- /* Statistique = create_Statistique ();
+ /*Statistique = create_Statistique ();
   gtk_widget_show (Statistique);*/
 
   /*Stat_nassim = create_Stat_Liste_Nassim ();

@@ -11,7 +11,7 @@ typedef struct DateH
 {
     char jour[3];
     char mois[3];
-    char annee[3];
+    char annee[4];
 } dateH;
 //struct liste
 typedef struct liste_electorale

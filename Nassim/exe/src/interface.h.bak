@@ -15,3 +15,4 @@ GtkWidget* create_modifierBV (void);
 GtkWidget* create_windowel (void);
 GtkWidget* create_windowafficherel (void);
 GtkWidget* create_modifeel (void);
+GtkWidget* create_Dashbord (void);

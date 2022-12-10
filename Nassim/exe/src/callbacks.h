@@ -279,3 +279,11 @@ on_btn_cher____clicked                 (GtkButton       *button,
 void
 on_checkbutton_A_N_toggled             (GtkToggleButton *togglebutton,
                                         gpointer         user_data);
+
+void
+on_btn_Nassim_clicked                  (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_btn_R_Liste_Dashbord_clicked        (GtkButton       *button,
+                                        gpointer         user_data);

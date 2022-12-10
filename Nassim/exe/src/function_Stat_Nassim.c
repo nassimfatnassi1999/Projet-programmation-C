@@ -111,7 +111,7 @@ void remplirtab(Lorder tab[],int *n)
         {
             for (j=i+1; j<(*n);)
             {
-                if (strcmp(tab[j].idListe,tab[i].idListe)==0)
+                if (tab[j].idListe=tab[i].idListe)
                 {
                     for (k=j; k<(*n); k++)
                     {
