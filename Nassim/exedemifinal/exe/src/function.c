@@ -278,13 +278,30 @@ int verifier(char cinT[],char cinc1[],char cinc2[],char cinc3[])
     {
         while(tr==0&&fscanf(f,"%d %s %d %d %d %s %s %s %s %s %s\n",&L.id,L.nom_liste,&L.d.jour,&L.d.mois,&L.d.annee,L.orientation,L.municipalite,L.nom_tete_liste,L.candidat_1,L.candidat_2,L.candidat_3)!=EOF)
         {
-            if((strcmp(cinT,L.nom_tete_liste)==0)||(strcmp(cinc1,L.candidat_1)==0)||(strcmp(cinc2,L.candidat_2)==0)||(strcmp(cinc3,L.candidat_3)==0))
-                tr=1;
+            if((strcmp(cinT,L.nom_tete_liste)==0)||(strcmp(cinc1,L.candidat_1)==0)||(strcmp(cinc2,L.candidat_2)==0)||(strcmp(cinc3,L.candidat_3)==0)){
+		 tr=1;
+		}
         }
     }
     fclose(f);
     return tr;
 }
+//function verif longuer
+int verifier_len(char cinT[],char cinc1[],char cinc2[],char cinc3[])
+{
+    Liste L;
+int ct,c1,c2,c3;
+ct=strlen(cinT);
+c1=strlen(cinc1);
+c2=strlen(cinc2);
+c3=strlen(cinc3);
+    int tr=0;
+            if(ct==8&&c1==8&&c2==8&&c3==8){
+		   tr=1;
+		}
+    return tr;
+}
+
 //function pour chercher liste
 Liste chercher( char id[])
 {

@@ -456,9 +456,9 @@ create_AjouterListe (void)
   GtkWidget *hbox7;
   GtkWidget *image8;
   GtkWidget *labelRetourN;
-  GtkWidget *labelVerif;
-  GtkWidget *labelCheckN;
   GtkWidget *labelIDListe;
+  GtkWidget *labelCheckN;
+  GtkWidget *labelVerif;
 
   AjouterListe = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_widget_set_size_request (AjouterListe, 800, 600);
@@ -700,21 +700,21 @@ create_AjouterListe (void)
   gtk_widget_show (labelRetourN);
   gtk_box_pack_start (GTK_BOX (hbox7), labelRetourN, FALSE, FALSE, 0);
 
-  labelVerif = gtk_label_new ("");
-  gtk_widget_show (labelVerif);
-  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), labelVerif, 232, 384);
-  gtk_widget_set_size_request (labelVerif, 320, 30);
+  labelIDListe = gtk_label_new (_("<b><span color='black'>Identifiant</span></b>"));
+  gtk_widget_show (labelIDListe);
+  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), labelIDListe, 176, 48);
+  gtk_widget_set_size_request (labelIDListe, 100, 25);
+  gtk_label_set_use_markup (GTK_LABEL (labelIDListe), TRUE);
 
   labelCheckN = gtk_label_new ("");
   gtk_widget_show (labelCheckN);
   gtk_fixed_put (GTK_FIXED (fixedAjouterListe), labelCheckN, 224, 440);
   gtk_widget_set_size_request (labelCheckN, 320, 30);
 
-  labelIDListe = gtk_label_new (_("<b><span color='black'>Identifiant</span></b>"));
-  gtk_widget_show (labelIDListe);
-  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), labelIDListe, 176, 48);
-  gtk_widget_set_size_request (labelIDListe, 100, 25);
-  gtk_label_set_use_markup (GTK_LABEL (labelIDListe), TRUE);
+  labelVerif = gtk_label_new ("");
+  gtk_widget_show (labelVerif);
+  gtk_fixed_put (GTK_FIXED (fixedAjouterListe), labelVerif, 152, 384);
+  gtk_widget_set_size_request (labelVerif, 438, 42);
 
   g_signal_connect ((gpointer) radio_btn_G, "toggled",
                     G_CALLBACK (on_radio_btn_G_toggled),
@@ -780,9 +780,9 @@ create_AjouterListe (void)
   GLADE_HOOKUP_OBJECT (AjouterListe, hbox7, "hbox7");
   GLADE_HOOKUP_OBJECT (AjouterListe, image8, "image8");
   GLADE_HOOKUP_OBJECT (AjouterListe, labelRetourN, "labelRetourN");
-  GLADE_HOOKUP_OBJECT (AjouterListe, labelVerif, "labelVerif");
-  GLADE_HOOKUP_OBJECT (AjouterListe, labelCheckN, "labelCheckN");
   GLADE_HOOKUP_OBJECT (AjouterListe, labelIDListe, "labelIDListe");
+  GLADE_HOOKUP_OBJECT (AjouterListe, labelCheckN, "labelCheckN");
+  GLADE_HOOKUP_OBJECT (AjouterListe, labelVerif, "labelVerif");
 
   return AjouterListe;
 }

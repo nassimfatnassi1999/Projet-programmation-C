@@ -57,6 +57,8 @@ void supprimer_Liste(Liste Li); //fonction pour supprimer une liste
 
 int verifier(char cinT[],char cinc1[],char cinc2[],char cinc3[]); //fonction pour verifier cin des candidats
 
+int verifier_len(char cinT[],char cinc1[],char cinc2[],char cinc3[]);
+
 Liste chercher( char id[]); //fonction pour chercher et retourne une liste
 
 int nbv(char idc[]);//fonction pour calculer nbr de vote de liste 

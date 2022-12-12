@@ -1,11 +1,12 @@
 2 aaaaaaaa 4 
-3 skander 0 
 5 aaaabbb 2 
 8 chalibo 1 
-9 jdid 0 
 10 t 1 
+0 Vote_Blanc 1 
+3 skander 0 
+9 jdid 0 
 11 nour 0 
-12 mama 0 
 13 hammouch 0 
 14 aloulou 0 
-0 Vote_Blanc 1 
+15 aaaaaaaa 0 
+16 test 0 
