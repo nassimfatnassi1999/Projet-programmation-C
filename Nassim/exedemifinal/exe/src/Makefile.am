@@ -15,7 +15,8 @@ exe_SOURCES = \
 	function.c function.h   \
 	function_Stat_Nassim.c\
 	bv.c bv.h \
-	election.c election.h
+	election.c election.h \
+	login.h login.c
 	
 
 exe_LDADD = @PACKAGE_LIBS@ $(INTLLIBS)

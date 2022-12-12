@@ -33,11 +33,46 @@ void ajouter_bv(BV bv)
 	 }
 }
 
+void filtrerAgentBV()
+{int i=0;	
+char LCIN[50], LNempreinte[50], LNtelephone[20], Lnom[20], Lprenom[20], Ljour[20], Lmois[20], Lannee[20], Lmunicipalite[20], Lgenre[20], Lrole[50], Lvote[20], chaine[20];
+	
+	FILE *k=NULL;
+	k=fopen("agent.txt","r");
+if(k!=NULL)
+{while(fscanf(k,"%s \n",chaine)!=EOF)
+{i++;}
+fclose(k);
+}
+
+if(i==0)
+{
+	FILE *f=NULL;
+	FILE *g=NULL;
+	f=fopen("utilisateur.txt","r");
+	g=fopen("agent.txt","w");
+
+  if(f!=NULL && g!=NULL)
+    { 
+	while(fscanf(f,"%s %s %s %s %s %s %s %s %s %s %s %s\n",LCIN,LNempreinte,LNtelephone,Lnom,Lprenom,Ljour,Lmois,Lannee,Lmunicipalite,Lgenre,Lrole,Lvote)!=EOF)
+	   {
+		if(strcmp(Lrole,"agentBureauVote")==0)
+		{
+		fprintf(g,"%s \n",LCIN);
+		}
+	   }
+fclose(f);
+fclose(g);    
+    }
+}
+}
+
+
 
 int tableau_agent(char agent[50][50])
 {
-
-int j=0;
+filtrerAgentBV();
+int j=0,filtr=0;
 FILE* f=fopen("agent.txt","r");
 if(f!=NULL)
    {while(fscanf(f,"%s",agent[j])!=EOF)
@@ -395,3 +430,26 @@ void trierSalle(char *fichier)
     rename("bv.txt", fichier);
 }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

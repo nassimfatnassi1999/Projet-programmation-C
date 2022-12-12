@@ -11,6 +11,7 @@
 #include "election.h" //seif
 #include "bv.h"	     //chaima
 #include <string.h>
+#include"login.h"
 int cons=22;
 int consm=22;
 election em;
@@ -610,6 +611,46 @@ if(gtk_toggle_button_get_active(GTK_RADIO_BUTTON (togglebutton)))
 
 
 
+void
+on_ListeToHome_clicked                 (GtkWidget       *objet,
+                                        gpointer         user_data)
+{
+	GtkWidget *GestionListeElectorale;
+	GtkWidget *interfaceCondidat;
+char cinConnecter[20], NomPrenom[30], roleREc[20];
+	getCin(cinConnecter);
+	getNomPrenom(cinConnecter, NomPrenom, roleREc);
+
+	if(strcmp(roleREc,"condidat")==0)
+	{
+	GestionListeElectorale=lookup_widget(objet,"GestionListeElectorale");
+	gtk_widget_destroy(GestionListeElectorale);
+	interfaceCondidat=lookup_widget(objet,"interfaceCondidat");
+	interfaceCondidat=create_interfaceCondidat();
+	gtk_widget_show(interfaceCondidat);
+	}
+	else
+	{
+	GestionListeElectorale=lookup_widget(objet,"GestionListeElectorale");
+	gtk_widget_destroy(GestionListeElectorale);
+	GtkWidget *AdminHome;
+	AdminHome=lookup_widget(objet,"AdminHome");
+	AdminHome=create_AdminHome();
+	gtk_widget_show(AdminHome);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 ///////////////////////////////// Interface BUreau de Vote-CHAIMAMATOUSSI- ///////////////////////////////////////////////
 
@@ -617,7 +658,7 @@ if(gtk_toggle_button_get_active(GTK_RADIO_BUTTON (togglebutton)))
 
 
 
-int salle=2;
+int salle=2, cliquer=0;
 checkModif=0;
 BV bvModif;
 
@@ -654,13 +695,16 @@ on_ajouterbv_clicked                   (GtkWidget       *objet,
 	char cE[10];
 	char cO[10];
 	char agentbv[50];
-	int a,b,erreur=0;
+	int a,b,erreur=0,idNum,TestId=0,Testbt=0;
 
 	sprintf(sallebv,"%d",salle);
 
 	GtkWidget *id, *capElec, *capObserv, *gouv, *deleg, *idAg, *alert;
 	GtkWidget *ajoutBV;
-	GtkWidget *alertnidbv,*labelngouv,*labelndelg;
+
+	strcpy(bv.gouvernorat,"vide");
+	strcpy(bv.delegation,"vide");
+	strcpy(bv.IDagent.idAg,"vide");
 	
 
 	ajoutBV=lookup_widget(objet,"ajoutBV");
@@ -670,10 +714,7 @@ on_ajouterbv_clicked                   (GtkWidget       *objet,
 	gouv=lookup_widget(objet,"gouvernoratajbv");
 	deleg=lookup_widget(objet,"delegation");
 	idAg=lookup_widget(objet,"idagentbv");
-	alert=lookup_widget(objet,"alertajbv");
-	alertnidbv=lookup_widget(objet,"alertnidbv");
-	labelngouv=lookup_widget(objet,"labelngouv");
-	labelndelg=lookup_widget(objet,"labelndelg");
+
 
 	strcpy(bv.id,gtk_entry_get_text(GTK_ENTRY(id)));
 	a=gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(capElec));
@@ -683,56 +724,69 @@ on_ajouterbv_clicked                   (GtkWidget       *objet,
 	strcpy(bv.capElecteurs,cE);
 	strcpy(bv.capObservateurs,cO);
 	strcpy(bv.gouvernorat,gtk_combo_box_get_active_text(GTK_COMBO_BOX(gouv)));
-	strcpy(bv.delegation,gtk_combo_box_get_active_text(GTK_COMBO_BOX(deleg)));
 	strcpy(bv.IDagent.idAg,gtk_combo_box_get_active_text(GTK_COMBO_BOX(idAg)));
 	strcpy(bv.salle,sallebv);
 
 
-	/*if(strlen(bv.IDagent.idAg)!=4)
-	{gtk_label_set_text(GTK_LABEL(alertnidbv),"L'identifiant doit contenir 4 caractéres");
-	erreur=1;
-	}
-	else{
-	erreur=0;
-	}
-//
-	if(strlen(bv.gouvernorat)==0) 
-	{gtk_label_set_text(GTK_LABEL(labelngouv),"Vous devez choisir un gouvernorat");
-	erreur=1;	
+////////////////  TEST DE SAISIE  ////////////////
+
+   	 idNum=atoi(bv.id);
+	
+	if((idNum<10000000)||(idNum>99999999))
+	{
+	GtkWidget *alert1bv;
+	alert1bv=lookup_widget(objet,"alert1bv");
+	gtk_label_set_text(GTK_LABEL(alert1bv),"❌ Il faut saisir un ID comporte 8 numéro !");
+	TestId=0;
 	}
 	else
-	{erreur=0;
+	{
+	GtkWidget *alert1bv;
+	alert1bv=lookup_widget(objet,"alert1bv");
+	gtk_label_set_text(GTK_LABEL(alert1bv)," ");
+	TestId=1;
 	}
 
-	 if(strlen(bv.delegation)==0) 
-	{gtk_label_set_text(GTK_LABEL(labelndelg),"Vous devez choisir une delegation");
-	erreur=1;
-	}
-	else{
-	erreur=0;
-	}
-*/
-	if(erreur==1)
-	{
-	gtk_label_set_text(GTK_LABEL(alert),"Vous devez remplir tout les champs");
+	
+	if(cliquer==0)
+	{GtkWidget *alert2bv;
+	alert2bv=lookup_widget(objet,"alert2bv");
+	gtk_label_set_text(GTK_LABEL(alert2bv),"ℹ Cliquer sur le bouton pour afficher les délegations");
+	Testbt=0;
 	}
 	else
 	{
-	
+	strcpy(bv.delegation,gtk_combo_box_get_active_text(GTK_COMBO_BOX(deleg)));
+	GtkWidget *alert2bv;
+	alert2bv=lookup_widget(objet,"alert2bv");
+	gtk_label_set_text(GTK_LABEL(alert2bv)," ");
+	Testbt=1;
+	}
+
+	if((Testbt==1) && (TestId==1))
+	{
+
 	ajouter_bv(bv);
 	supprimerAgent("agent.txt", bv.IDagent.idAg);
 	supprimerDelegation("delegation.txt", bv.delegation);
-	
-
-
 	gtk_widget_destroy(ajoutBV);
-
 	ajoutBV=create_ajoutBV();
-	
 	gtk_widget_show(ajoutBV);
-
+	alert=lookup_widget(ajoutBV,"alertajbv");
 	gtk_label_set_text(GTK_LABEL(alert),"Opération Réussie");
-}
+
+	}
+	else{
+	GtkWidget *alert3bv;
+	alert3bv=lookup_widget(objet,"alert3bv");
+	gtk_label_set_text(GTK_LABEL(alert3bv),"Echec d'ajout !");
+	}
+
+
+
+
+
+
 }
 
 
@@ -760,16 +814,12 @@ on_bt_clicked                          (GtkWidget       *objet,
                                         gpointer         user_data)
 {int i,n,m;
 BV bv;
-char agent[50][50],delegat[50][50],gouver[30];
-GtkWidget *idagentbv,*delegation,*gouvernorat;
-idagentbv=lookup_widget(objet,"idagentbv");
+
+char delegat[50][50],gouver[30];
+cliquer=1;
+GtkWidget *delegation,*gouvernorat;
 delegation=lookup_widget(objet,"delegation");
 gouvernorat=lookup_widget(objet,"gouvernoratajbv");
-n=tableau_agent(agent);
-
-for(i=0;i<n;i++)
-{gtk_combo_box_append_text(GTK_COMBO_BOX(idagentbv),_(agent[i]));
-}
 
 strcpy(gouver,gtk_combo_box_get_active_text(GTK_COMBO_BOX(gouvernorat)));
 m=tableau_delegation(delegat, gouver);
@@ -1040,6 +1090,11 @@ on_modToaff_clicked                    (GtkWidget       *objet,
 	}
 
 
+
+
+
+
+
 void
 on_trierBVMunic_clicked                (GtkWidget       *objet,
                                         gpointer         user_data)
@@ -1257,6 +1312,17 @@ on_fenetreAjoutBV_clicked              (GtkWidget       *objet,
 	gtk_widget_show(ajoutBV);
 }
 
+
+void
+on_bvToAdmin_clicked                   (GtkWidget       *objet,
+                                        gpointer         user_data)
+{
+	GtkWidget *ajoutBV, *AdminHome;
+	ajoutBV=lookup_widget(objet,"ajoutBV");
+	gtk_widget_destroy(ajoutBV);
+	AdminHome=create_AdminHome();
+	gtk_widget_show(AdminHome);
+}
 
 
 
@@ -1726,7 +1792,7 @@ strcpy(e.del.jour0,joure);
 strcpy(e.del.mois0,moise);
 strcpy(e.del.annee0,an);
 
-verif=verifier_seif(e.id);
+verif=verifier_seif(e.id, e.del.annee0);
 
 if(y11==1 && !verif){
 ajouter_election("election.txt",e);
@@ -1915,5 +1981,724 @@ GtkWidget *afficher;
 afficher=lookup_widget(button,"RechercheM");
 treeview=lookup_widget(afficher,"treeviewcherchermul");
 afficher_election(treeview);
+}
+
+
+
+
+
+void
+on_ElectTOAdmiin_clicked               (GtkWidget      *objet,
+                                        gpointer         user_data)
+{
+	GtkWidget *windowel;
+	GtkWidget *interfaceAdmin;
+
+	windowel=lookup_widget(objet,"windowel");
+	gtk_widget_destroy(windowel);
+
+	interfaceAdmin=lookup_widget(objet,"interfaceAdmin");
+	interfaceAdmin=create_interfaceAdmin();	
+	gtk_widget_show(interfaceAdmin);
+int n,i;
+	char listeElec[20][50];
+	GtkWidget *ListElection;
+	ListElection=lookup_widget(interfaceAdmin,"ListElection");
+	n=tableau_listeElecvote(listeElec);
+
+	for(i=0;i<n;i++)
+             {gtk_combo_box_append_text(GTK_COMBO_BOX(ListElection),_(listeElec[i]));
+             }
+
+}
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////////    Partie LOGIN    ///////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+void
+on_connexionlogin_clicked              (GtkWidget      *objet,
+                                        gpointer         user_data)
+{
+	int tr=0,r=0;   
+	char cin[50], motdp[50], LCIN[50], LNempreinte[50], LNtelephone[20], Lnom[20], Lprenom[20], Ljour[20], Lmois[20], Lannee[20], Lmunicipalite[20], Lgenre[20], Lrole[50], Lvote[20], role[50], ch[50], cinConnecter[20];
+
+	GtkWidget *loginCin, *loginMdp, *alertLOgin, *login, *interfaceCondidat, *interfaceElecteur, *interfaceAdmin, *interfaceReclamation, *nomPrenomElec, *connecterReclam;
+	
+	loginCin=lookup_widget(objet,"loginCin");
+	loginMdp=lookup_widget(objet,"loginMdp");
+	alertLOgin=lookup_widget(objet,"alertLOgin");
+	login=lookup_widget(objet,"login");
+	interfaceCondidat=lookup_widget(objet,"interfaceCondidat");
+	interfaceElecteur=lookup_widget(objet,"interfaceElecteur");
+	interfaceAdmin=lookup_widget(objet,"interfaceAdmin");
+	interfaceReclamation=lookup_widget(objet,"interfaceReclamation");
+	
+	
+	
+	strcpy(cin,gtk_entry_get_text(GTK_ENTRY(loginCin)));
+	strcpy(motdp,gtk_entry_get_text(GTK_ENTRY(loginMdp)));
+   
+	FILE *f, *g;
+	f=fopen("utilisateur.txt","r");
+	g=fopen("connected.txt","w");
+
+    if(f!=NULL)
+    { 
+	while(!tr && (fscanf(f,"%s %s %s %s %s %s %s %s %s %s %s %s\n",LCIN,LNempreinte,LNtelephone,Lnom,Lprenom,Ljour,Lmois,Lannee,Lmunicipalite,Lgenre,Lrole,Lvote)!=EOF))
+	   {
+	if( (strcmp(cin,LCIN)==0) && (strcmp(motdp,LNempreinte)==0) )
+		{	gtk_label_set_text(GTK_LABEL(alertLOgin)," ");
+		tr=1;
+		strcpy(role,Lrole);
+	fprintf(g,"%s\n",LCIN);
+
+
+
+		}
+
+	   }
+fclose(f);
+fclose(g);
+    }
+
+if(strcmp(role,"administrateur")==0)
+{
+	gtk_widget_destroy(login);
+	interfaceAdmin=create_interfaceAdmin();
+	gtk_widget_show(interfaceAdmin);
+int n,i;
+	char listeElec[20][50];
+	GtkWidget *ListElection;
+	ListElection=lookup_widget(interfaceAdmin,"ListElection");
+	n=tableau_listeElecvote(listeElec);
+
+	for(i=0;i<n;i++)
+             {gtk_combo_box_append_text(GTK_COMBO_BOX(ListElection),_(listeElec[i]));
+             }
+	
+
+}
+else if((strcmp(role,"agentBureauVote")==0) || (strcmp(role,"observateur")==0))
+{
+	gtk_widget_destroy(login);
+	interfaceReclamation=create_interfaceReclamation();
+	gtk_widget_show(interfaceReclamation);
+	connecterReclam=lookup_widget(interfaceReclamation,"connecterReclam");
+	getCin(cinConnecter);
+	gtk_label_set_text(GTK_LABEL(connecterReclam),cinConnecter);
+}
+else if(strcmp(role,"electeur")==0)
+{	if(strcmp(Lvote,"-1")!=0)
+	{
+	GtkWidget *cinvoteexiste;
+	cinvoteexiste=lookup_widget(objet,"cinvoteexiste");
+	gtk_label_set_text(GTK_LABEL(cinvoteexiste),"Le porteur de cette carte d'identité nationale a déjà voté");
+	}
+	else
+	{
+	GtkWidget *cinvoteexiste;
+	cinvoteexiste=lookup_widget(objet,"cinvoteexiste");
+	gtk_label_set_text(GTK_LABEL(cinvoteexiste)," ");
+	gtk_widget_destroy(login);
+	interfaceElecteur=create_interfaceElecteur();
+	gtk_widget_show(interfaceElecteur);
+	nomPrenomElec=lookup_widget(interfaceElecteur,"nomPrenomElec");
+	strcpy(ch,Lnom);
+	strcat(ch," ");
+	strcat(ch,Lprenom);
+	gtk_label_set_text(GTK_LABEL(nomPrenomElec),ch);
+	int n,i;
+	char listeElecVote[20][50];
+	GtkWidget *comboListeVote;
+	comboListeVote=lookup_widget(interfaceElecteur,"comboListeVote");
+	n=tableau_listeElV(listeElecVote);
+
+	strcpy(listeElecVote[n],"VOTE_BLANCHE");
+
+	for(i=0;i<n+1;i++)
+             {gtk_combo_box_append_text(GTK_COMBO_BOX(comboListeVote),_(listeElecVote[i]));
+             }
+	}
+}
+else if(strcmp(role,"condidat")==0)
+{
+	gtk_widget_destroy(login);
+	interfaceCondidat=create_interfaceCondidat();
+	gtk_widget_show(interfaceCondidat);
+	GtkWidget *CondidatCin;
+	CondidatCin=lookup_widget(interfaceCondidat,"CondidatCin");
+	getCin(cinConnecter);
+	gtk_label_set_text(GTK_LABEL(CondidatCin),cinConnecter);
+}
+else
+{
+	gtk_label_set_text(GTK_LABEL(alertLOgin),"login ou mot de passe incorrecte");
+}
+
+
+}
+
+void
+on_quitterlogin_clicked                (GtkButton       *button,
+                                        gpointer         user_data)
+{
+	gtk_main_quit();
+}
+
+
+void
+on_button3_clicked                     (GtkButton       *button,
+                                        gpointer         user_data)
+{
+	gtk_main_quit();
+}
+
+
+
+
+
+void
+on_voterFinale_clicked                 (GtkWidget       *objet,
+                                        gpointer         user_data)
+{	char choixVote[20], charr[20];
+	int n=0,id=0;
+	FILE *f=NULL;
+	GtkWidget *comboListeVote, *popUpVote, *interfaceElecteur;
+	
+	interfaceElecteur=lookup_widget(objet,"interfaceElecteur");
+	popUpVote=lookup_widget(objet,"popUpVote");
+
+	comboListeVote=lookup_widget(objet,"comboListeVote");
+	strcpy(choixVote,gtk_combo_box_get_active_text(GTK_COMBO_BOX(comboListeVote)));
+
+	id=getID(choixVote);
+
+	modifier(id);
+
+	gtk_widget_hide(interfaceElecteur);
+	popUpVote=create_popUpVote();
+	gtk_widget_show(popUpVote);
+	GtkWidget *alertVote;
+	alertVote=lookup_widget(popUpVote,"alertVote");
+	gtk_label_set_text(GTK_LABEL(alertVote),choixVote);
+
+}
+
+
+
+
+void
+on_annulerVote_clicked                 (GtkWidget       *objet,
+                                        gpointer         user_data)
+{
+	GtkWidget *popUpVote, *interfaceElecteur;
+	char cin[50], motdp[50], LCIN[50], LNempreinte[50], LNtelephone[20], Lnom[20], Lprenom[20], Ljour[20], Lmois[20], Lannee[20], Lmunicipalite[20], Lgenre[20], Lrole[50], Lvote[20], role[50], ch[50], cinConnecter[20], NomPrenom[30], roleREc[20];
+	popUpVote=lookup_widget(objet,"popUpVote");
+	interfaceElecteur=lookup_widget(objet,"interfaceElecteur");
+	interfaceElecteur=create_interfaceElecteur();
+	gtk_widget_show(interfaceElecteur);
+
+	gtk_widget_destroy(popUpVote);
+	modifier(-1);
+	getCin(cinConnecter);	
+	getNomPrenom(cinConnecter, NomPrenom, roleREc);
+	GtkWidget *nomPrenomElec;
+	nomPrenomElec=lookup_widget(interfaceElecteur,"nomPrenomElec");
+	gtk_label_set_text(GTK_LABEL(nomPrenomElec),NomPrenom);
+
+int n,i;
+	char listeElecVote[20][50], cinConnect[20];
+	GtkWidget *comboListeVote;
+	comboListeVote=lookup_widget(interfaceElecteur,"comboListeVote");
+	n=tableau_listeElV(listeElecVote);
+
+	strcpy(listeElecVote[n],"VOTE_BLANCHE");
+
+	for(i=0;i<n+1;i++)
+             {gtk_combo_box_append_text(GTK_COMBO_BOX(comboListeVote),_(listeElecVote[i]));
+             }
+
+}
+
+
+void
+on_confirmerVote_clicked               (GtkWidget       *objet,
+                                        gpointer         user_data)
+{	GtkWidget *login, *interfaceElecteur, *popUpVote;
+
+	interfaceElecteur=lookup_widget(objet,"interfaceElecteur");	
+	gtk_widget_destroy(interfaceElecteur);
+	popUpVote=lookup_widget(objet,"popUpVote");
+	gtk_widget_destroy(popUpVote);
+
+
+	login=lookup_widget(objet,"login");
+	login=create_login();
+	gtk_widget_show(login);
+
+}
+
+
+void
+on_retourLogin_clicked                 (GtkWidget       *objet,
+                                        gpointer         user_data)
+{
+	GtkWidget *login, *interfaceReclamation;
+	interfaceReclamation=lookup_widget(objet,"interfaceReclamation");
+
+	gtk_widget_destroy(interfaceReclamation);
+	login=create_login();
+	gtk_widget_show(login);
+}
+
+
+void
+on_quitterREclaV_clicked               (GtkButton       *button,
+                                        gpointer         user_data)
+{
+	gtk_main_quit();
+}
+
+
+void
+on_voteREcLogin_clicked                (GtkWidget       *objet,
+                                        gpointer         user_data)
+{	char cinConnecter[20], NomPrenom[30], roleREc[20];
+	GtkWidget *InterditAccesVote;
+	InterditAccesVote=lookup_widget(objet,"InterditAccesVote");
+
+	int v;
+	getCin(cinConnecter);
+	v=verifierVote(cinConnecter);
+	if(v==1)
+	{	gtk_label_set_text(GTK_LABEL(InterditAccesVote),"Ce personne a déja voté !");
+	}
+	else
+	{
+	GtkWidget *interfaceElecteur, *interfaceReclamation;
+	interfaceReclamation=lookup_widget(objet,"interfaceReclamation");
+
+	gtk_widget_destroy(interfaceReclamation);
+	interfaceElecteur=create_interfaceElecteur();
+	gtk_widget_show(interfaceElecteur);
+	getNomPrenom(cinConnecter, NomPrenom, roleREc);
+	GtkWidget *nomPrenomElec;
+	nomPrenomElec=lookup_widget(interfaceElecteur,"nomPrenomElec");
+	gtk_label_set_text(GTK_LABEL(nomPrenomElec),NomPrenom);
+
+int n,i;
+	char listeElecVote[20][50];
+	GtkWidget *comboListeVote;
+	comboListeVote=lookup_widget(interfaceElecteur,"comboListeVote");
+	n=tableau_listeElV(listeElecVote);
+
+	strcpy(listeElecVote[n],"VOTE_BLANCHE");
+
+	for(i=0;i<n+1;i++)
+             {gtk_combo_box_append_text(GTK_COMBO_BOX(comboListeVote),_(listeElecVote[i]));
+             }
+	}
+}
+
+
+void
+on_ObsREcLogin_clicked                 (GtkWidget       *objet,
+                                        gpointer         user_data)
+{	GtkWidget *page404, *InterditAccesObs;
+	page404=lookup_widget(objet,"page404");
+	InterditAccesObs=lookup_widget(objet,"InterditAccesObs");
+	gtk_label_set_text(GTK_LABEL(page404),"  ");
+	gtk_label_set_text(GTK_LABEL(InterditAccesObs),"  ");
+	char cinConnecter[20], NomPrenom[30], roleREc[20];
+	getCin(cinConnecter);	
+	getNomPrenom(cinConnecter, NomPrenom, roleREc);
+	if(strcmp(roleREc, "agentBureauVote")==0)
+	{ 	gtk_label_set_text(GTK_LABEL(page404),"Cette page n'est pas encore prête !");
+	}
+	else
+	{	gtk_label_set_text(GTK_LABEL(InterditAccesObs),"Vous n'avez pas le droit d'accès à cette page !");
+	}
+}
+
+
+void
+on_RecREcLogin_clicked                 (GtkWidget       *objet,
+                                        gpointer         user_data)
+{	GtkWidget *page404, *InterditAccesObs;
+	page404=lookup_widget(objet,"page404");
+	InterditAccesObs=lookup_widget(objet,"InterditAccesObs");
+	gtk_label_set_text(GTK_LABEL(page404),"  ");
+	gtk_label_set_text(GTK_LABEL(InterditAccesObs),"  ");
+	char cinConnecter[20], NomPrenom[30], roleREc[20];
+	getCin(cinConnecter);	
+	getNomPrenom(cinConnecter, NomPrenom, roleREc);
+	if(strcmp(roleREc, "observateur")==0)
+	{ 	gtk_label_set_text(GTK_LABEL(page404),"Cette page n'est pas encore prête !");
+	}
+	else
+	{	gtk_label_set_text(GTK_LABEL(InterditAccesObs),"Vous n'avez pas le droit d'accès à cette page !");
+	}
+}
+
+
+void
+on_listeElecCond_clicked               (GtkWidget       *objet,
+                                        gpointer         user_data)
+{
+	GtkWidget *GestionListeElectorale, *interfaceCondidat;
+	interfaceCondidat=lookup_widget(objet,"interfaceCondidat");
+
+	gtk_widget_destroy(interfaceCondidat);
+	GestionListeElectorale=create_GestionListeElectorale();
+	gtk_widget_show(GestionListeElectorale);
+}
+
+
+void
+on_VoteCond_clicked                    (GtkWidget       *objet,
+                                        gpointer         user_data)
+{
+char cinConnecter[20], NomPrenom[30], roleREc[20];
+	GtkWidget *AlertVoteCond;
+	AlertVoteCond=lookup_widget(objet,"AlertVoteCond");
+
+	int v;
+	getCin(cinConnecter);
+	v=verifierVote(cinConnecter);
+	if(v==1)
+	{	gtk_label_set_text(GTK_LABEL(AlertVoteCond),"Ce personne a déja voté !");
+	}
+	else
+	{
+	GtkWidget *interfaceElecteur, *interfaceCondidat;
+	interfaceCondidat=lookup_widget(objet,"interfaceCondidat");
+
+	gtk_widget_destroy(interfaceCondidat);
+	interfaceElecteur=create_interfaceElecteur();
+	gtk_widget_show(interfaceElecteur);
+	getNomPrenom(cinConnecter, NomPrenom, roleREc);
+	GtkWidget *nomPrenomElec;
+	nomPrenomElec=lookup_widget(interfaceElecteur,"nomPrenomElec");
+	gtk_label_set_text(GTK_LABEL(nomPrenomElec),NomPrenom);
+
+int n,i;
+	char listeElecVote[20][50];
+	GtkWidget *comboListeVote;
+	comboListeVote=lookup_widget(interfaceElecteur,"comboListeVote");
+	n=tableau_listeElV(listeElecVote);
+
+	strcpy(listeElecVote[n],"VOTE_BLANCHE");
+
+	for(i=0;i<n+1;i++)
+             {gtk_combo_box_append_text(GTK_COMBO_BOX(comboListeVote),_(listeElecVote[i]));
+             }
+	}
+
+}
+
+
+void
+on_retourLogCond_clicked               (GtkWidget       *objet,
+                                        gpointer         user_data)
+{
+	GtkWidget *login, *interfaceCondidat;
+	interfaceCondidat=lookup_widget(objet,"interfaceCondidat");
+
+	gtk_widget_destroy(interfaceCondidat);
+	login=create_login();
+	gtk_widget_show(login);
+}
+
+
+void
+on_QuitterCondVote_clicked             (GtkButton       *button,
+                                        gpointer         user_data)
+{
+	gtk_main_quit();
+}
+
+
+void
+on_quitterInterAdm_clicked             (GtkButton       *button,
+                                        gpointer         user_data)
+{
+	gtk_main_quit();
+}
+
+
+void
+on_choisirElect_clicked                (GtkWidget       *objet,
+                                        gpointer         user_data)
+{	char anneeEl[20], cinConnecter[20], NomPrenom[20], roleREc[20];
+	GtkWidget *ListElection, *alertElecVote, *AdminHome, *interfaceAdmin, *nomPrenomAdmin;
+	ListElection=lookup_widget(objet,"ListElection");
+	alertElecVote=lookup_widget(objet,"alertElecVote");
+	strcpy(anneeEl,gtk_combo_box_get_active_text(GTK_COMBO_BOX(ListElection)));
+	if(strcmp(anneeEl,"Election 2022")==0)
+	{
+	interfaceAdmin=lookup_widget(objet,"interfaceAdmin");
+	gtk_widget_destroy(interfaceAdmin);
+	AdminHome=create_AdminHome();
+	gtk_widget_show(AdminHome);
+	getCin(cinConnecter);	
+	getNomPrenom(cinConnecter, NomPrenom, roleREc);
+	nomPrenomAdmin=lookup_widget(AdminHome,"nomPrenomAdmin");
+gtk_label_set_text(GTK_LABEL(nomPrenomAdmin),NomPrenom);
+	
+	}
+	else
+	{gtk_label_set_text(GTK_LABEL(alertElecVote),"Il faut choisir l'élection municipale en cours!");}
+
+}
+
+
+
+void
+on_button4_clicked                     (GtkWidget       *objet,
+                                        gpointer         user_data)
+{
+	GtkWidget *windowel, *interfaceAdmin;
+	interfaceAdmin=lookup_widget(objet,"interfaceAdmin");
+	gtk_widget_destroy(interfaceAdmin);
+	windowel=create_windowel();
+	gtk_widget_show(windowel);
+}
+
+
+void
+on_AdminVote_clicked                   (GtkWidget       *objet,
+                                        gpointer         user_data)
+{	GtkWidget *alertVoteAdmin;
+	char cinConnecter[20], NomPrenom[20], roleREc[20];
+	alertVoteAdmin=lookup_widget(objet,"alertVoteAdmin");
+gtk_label_set_text(GTK_LABEL(alertVoteAdmin)," ");
+	int v;
+	getCin(cinConnecter);
+	v=verifierVote(cinConnecter);
+	if(v==1)
+	{	gtk_label_set_text(GTK_LABEL(alertVoteAdmin),"Vous avez déja voté !");
+	}
+	else
+	{
+	GtkWidget *interfaceElecteur, *alertVoteAdmin, *AdminHome;
+	AdminHome=lookup_widget(objet,"AdminHome");
+
+	gtk_widget_destroy(AdminHome);
+	interfaceElecteur=create_interfaceElecteur();
+	gtk_widget_show(interfaceElecteur);
+
+	getNomPrenom(cinConnecter, NomPrenom, roleREc);
+	GtkWidget *nomPrenomElec;
+	nomPrenomElec=lookup_widget(interfaceElecteur,"nomPrenomElec");
+	gtk_label_set_text(GTK_LABEL(nomPrenomElec),NomPrenom);
+int n,i;
+	char listeElecVote[20][50];
+	GtkWidget *comboListeVote;
+	comboListeVote=lookup_widget(interfaceElecteur,"comboListeVote");
+	n=tableau_listeElV(listeElecVote);
+
+	strcpy(listeElecVote[n],"VOTE_BLANCHE");
+
+	for(i=0;i<n+1;i++)
+             {gtk_combo_box_append_text(GTK_COMBO_BOX(comboListeVote),_(listeElecVote[i]));
+             }
+	}
+}
+
+
+void
+on_AdminUtil_clicked                   (GtkWidget       *objet,
+                                        gpointer         user_data)
+{
+	/*GtkWidget *AdminHome, *MOHAMED;
+	AdminHome=lookup_widget(objet,"AdminHome");
+	gtk_widget_destroy(AdminHome);
+	MOHAMED=create_MOHAMED();
+	gtk_widget_show(MOHAMED);*/
+}
+
+
+void
+on_AdminLISTELEC_clicked               (GtkWidget       *objet,
+                                        gpointer         user_data)
+{	GtkWidget *AdminHome, *GestionListeElectorale;
+	AdminHome=lookup_widget(objet,"AdminHome");
+	gtk_widget_destroy(AdminHome);
+	GestionListeElectorale=create_GestionListeElectorale();
+	gtk_widget_show(GestionListeElectorale);
+
+}
+
+
+void
+on_AdminBV_clicked                     (GtkWidget       *objet,
+                                        gpointer         user_data)
+{
+	GtkWidget *AdminHome, *ajoutBV;
+	AdminHome=lookup_widget(objet,"AdminHome");
+	gtk_widget_destroy(AdminHome);
+	ajoutBV=create_ajoutBV();
+	gtk_widget_show(ajoutBV);
+int i=0;
+char agent[50][50];
+GtkWidget *idagentbv;
+idagentbv=lookup_widget(ajoutBV,"idagentbv");
+n=tableau_agent(agent);
+
+for(i=0;i<n;i++)
+{gtk_combo_box_append_text(GTK_COMBO_BOX(idagentbv),_(agent[i]));
+}
+GtkWidget *gouvernoratajbv;
+gouvernoratajbv=lookup_widget(ajoutBV,"gouvernoratajbv");
+gtk_combo_box_set_active(GTK_COMBO_BOX(gouvernoratajbv),0);
+
+
+}
+
+
+void
+on_quitterHomeAdmin_clicked            (GtkButton       *button,
+                                        gpointer         user_data)
+{
+	gtk_main_quit();
+}
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////   FIN PARTIE LOGIN   /////////////////////////////////////////////////////////
+
+
+
+
+void
+on_button5_clicked                     (GtkWidget	*objet,
+                                        gpointer         user_data)
+{ 	 int Lid, nb ,nombrTotal,parc=0,fin=0, nbn,Lidn;
+	char listeElecVote[30], Lident[10], listeElecVoten[30];
+
+	//creation fichier VOTE
+	CalculVotes();
+
+	FILE *f=NULL;
+	f=fopen("vote.txt","r");
+	FILE *g=NULL;
+	g=fopen("nouv.txt","a");
+
+	if(f!=NULL && g!=NULL)
+	{
+	while(fscanf(f,"%d %s %d \n",&Lid, listeElecVote, &nb )!=EOF)
+	   { sprintf(Lident,"%d",Lid);
+	     nombrTotal=calculerLeVote(Lident);
+	     fprintf(g,"%d %s %d \n",Lid, listeElecVote, nombrTotal);
+	     nombrTotal=0;		
+	   }
+fclose(f);
+fclose(g);
+    remove("vote.txt");
+    rename("nouv.txt", "vote.txt");
+	}
+trierVote();
+	GtkWidget *AdminHome;
+	GtkWidget *Dashboard;
+	GtkWidget *treeview;
+	GtkWidget *premierGangant, *DeuxiemeGagnat, *TRoisiemeGang;
+
+	AdminHome=lookup_widget(objet,"AdminHome");
+
+	gtk_widget_destroy(AdminHome);
+	Dashboard=lookup_widget(objet,"Dashboard");
+	Dashboard=create_Dashboard();
+	
+	gtk_widget_show(Dashboard);
+	
+	treeview=lookup_widget(Dashboard,"treeviewStatis");
+	premierGangant=lookup_widget(Dashboard,"premierGangant");
+	DeuxiemeGagnat=lookup_widget(Dashboard,"DeuxiemeGagnat");
+	TRoisiemeGang=lookup_widget(Dashboard,"TRoisiemeGang");
+	afficher_VOTE(treeview);
+
+	FILE *k=NULL;
+	k=fopen("vote.txt","r");
+	if(k!=NULL)
+	{
+		while(!fin && fscanf(k,"%d %s %d \n",&Lidn, listeElecVoten, &nbn )!=EOF)
+		{parc++;
+		if(parc==1)
+		{ gtk_label_set_text(GTK_LABEL(premierGangant),listeElecVoten);}
+		else if(parc==2)
+		{gtk_label_set_text(GTK_LABEL(DeuxiemeGagnat),listeElecVoten);}
+		else if(parc==3)
+		{gtk_label_set_text(GTK_LABEL(TRoisiemeGang),listeElecVoten); }
+		else 
+		{fin=1;}
+		}
+		fclose(k);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+void
+on_QuitterStatVoter_clicked            (GtkButton       *button,
+                                        gpointer         user_data)
+{
+	gtk_main_quit();
+}
+
+
+void
+on_retourStatHome_clicked              (GtkWidget	*objet,
+                                        gpointer         user_data)
+{
+	GtkWidget *AdminHome;
+	GtkWidget *Dashboard;
+
+	Dashboard=lookup_widget(objet,"Dashboard");
+
+	gtk_widget_destroy(Dashboard);
+	AdminHome=lookup_widget(objet,"AdminHome");
+	AdminHome=create_AdminHome();
+	
+	gtk_widget_show(AdminHome);
 }
 

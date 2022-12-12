@@ -101,7 +101,8 @@ am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_exe_OBJECTS = main.$(OBJEXT) support.$(OBJEXT) interface.$(OBJEXT) \
 	callbacks.$(OBJEXT) function.$(OBJEXT) \
-	function_Stat_Nassim.$(OBJEXT) bv.$(OBJEXT) election.$(OBJEXT)
+	function_Stat_Nassim.$(OBJEXT) bv.$(OBJEXT) election.$(OBJEXT) \
+	login.$(OBJEXT)
 exe_OBJECTS = $(am_exe_OBJECTS)
 am__DEPENDENCIES_1 =
 exe_DEPENDENCIES = $(am__DEPENDENCIES_1)
@@ -161,12 +162,12 @@ ETAGS = etags
 CTAGS = ctags
 am__DIST_COMMON = $(srcdir)/Makefile.in $(top_srcdir)/depcomp
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /home/seif/Projects/execontrolle_saisie/exe/missing aclocal-1.15
+ACLOCAL = ${SHELL} "/home/chaima/Desktop/projet finale/Projet-programmation-C/Nassim/exedemifinal/exe/missing" aclocal-1.15
 AMTAR = $${TAR-tar}
 AM_DEFAULT_VERBOSITY = 1
-AUTOCONF = ${SHELL} /home/seif/Projects/execontrolle_saisie/exe/missing autoconf
-AUTOHEADER = ${SHELL} /home/seif/Projects/execontrolle_saisie/exe/missing autoheader
-AUTOMAKE = ${SHELL} /home/seif/Projects/execontrolle_saisie/exe/missing automake-1.15
+AUTOCONF = ${SHELL} "/home/chaima/Desktop/projet finale/Projet-programmation-C/Nassim/exedemifinal/exe/missing" autoconf
+AUTOHEADER = ${SHELL} "/home/chaima/Desktop/projet finale/Projet-programmation-C/Nassim/exedemifinal/exe/missing" autoheader
+AUTOMAKE = ${SHELL} "/home/chaima/Desktop/projet finale/Projet-programmation-C/Nassim/exedemifinal/exe/missing" automake-1.15
 AWK = mawk
 CATALOGS = 
 CATOBJEXT = .gmo
@@ -201,7 +202,7 @@ LIBOBJS =
 LIBS = 
 LTLIBOBJS = 
 MAINT = 
-MAKEINFO = ${SHELL} /home/seif/Projects/execontrolle_saisie/exe/missing makeinfo
+MAKEINFO = ${SHELL} "/home/chaima/Desktop/projet finale/Projet-programmation-C/Nassim/exedemifinal/exe/missing" makeinfo
 MKDIR_P = /bin/mkdir -p
 MKINSTALLDIRS = ./mkinstalldirs
 MSGFMT = /usr/bin/msgfmt
@@ -230,10 +231,10 @@ STRIP =
 USE_NLS = yes
 VERSION = 0.1
 XGETTEXT = /usr/bin/xgettext
-abs_builddir = /home/seif/Projects/execontrolle_saisie/exe/src
-abs_srcdir = /home/seif/Projects/execontrolle_saisie/exe/src
-abs_top_builddir = /home/seif/Projects/execontrolle_saisie/exe
-abs_top_srcdir = /home/seif/Projects/execontrolle_saisie/exe
+abs_builddir = /home/chaima/Desktop/projet finale/Projet-programmation-C/Nassim/exedemifinal/exe/src
+abs_srcdir = /home/chaima/Desktop/projet finale/Projet-programmation-C/Nassim/exedemifinal/exe/src
+abs_top_builddir = /home/chaima/Desktop/projet finale/Projet-programmation-C/Nassim/exedemifinal/exe
+abs_top_srcdir = /home/chaima/Desktop/projet finale/Projet-programmation-C/Nassim/exedemifinal/exe
 ac_ct_CC = gcc
 am__include = include
 am__leading_dot = .
@@ -252,7 +253,7 @@ host_alias =
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/seif/Projects/execontrolle_saisie/exe/install-sh
+install_sh = ${SHELL} '/home/chaima/Desktop/projet finale/Projet-programmation-C/Nassim/exedemifinal/exe/install-sh'
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -286,7 +287,8 @@ exe_SOURCES = \
 	function.c function.h   \
 	function_Stat_Nassim.c\
 	bv.c bv.h \
-	election.c election.h
+	election.c election.h \
+	login.h login.c
 
 exe_LDADD = -lgtk-x11-2.0 -lgdk-x11-2.0 -lpangocairo-1.0 -latk-1.0 -lcairo -lgdk_pixbuf-2.0 -lgio-2.0 -lpangoft2-1.0 -lpango-1.0 -lgobject-2.0 -lglib-2.0 -lfontconfig -lfreetype $(INTLLIBS)
 all: all-am
@@ -381,6 +383,7 @@ include ./$(DEPDIR)/election.Po
 include ./$(DEPDIR)/function.Po
 include ./$(DEPDIR)/function_Stat_Nassim.Po
 include ./$(DEPDIR)/interface.Po
+include ./$(DEPDIR)/login.Po
 include ./$(DEPDIR)/main.Po
 include ./$(DEPDIR)/support.Po
 

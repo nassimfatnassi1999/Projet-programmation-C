@@ -95,6 +95,10 @@ void
 on_btn_Connexion_clicked               (GtkWidget       *objet,
                                         gpointer         user_data);
 
+void
+on_ListeToHome_clicked                 (GtkWidget       *objet,
+                                        gpointer         user_data);
+
 
 
 /////////////////////////////////////////// Interface BUreau de Vote -CHAIMA MATOUSSI- /////////////////////////////////////////////////////
@@ -171,6 +175,7 @@ void
 on_modToaff_clicked                    (GtkWidget       *objet,
                                         gpointer         user_data);
 
+
 void
 on_trierBVMunic_clicked                (GtkWidget       *objet,
                                         gpointer         user_data);
@@ -216,6 +221,11 @@ void
 on_fenetreAjoutBV_clicked              (GtkWidget       *objet,
                                         gpointer         user_data);
 
+
+
+void
+on_bvToAdmin_clicked                   (GtkWidget       *objet,
+                                        gpointer         user_data);
 
 ///////////////////////////////////////////////////////////////seif fathallah///////////////////////////////////////////////////////:
 
@@ -324,4 +334,143 @@ on_quittercherche_clicked              (GtkButton       *button,
 
 void
 on_accher_clicked                      (GtkButton       *button,
+                                        gpointer         user_data);
+
+
+
+void
+on_ElectTOAdmiin_clicked               (GtkWidget      *objet,
+                                        gpointer         user_data);
+
+
+
+
+
+
+
+
+//////////////////////////////    PARTIE LOGIN    //////////////////////////////////////////////////////////////////
+
+
+
+
+
+void
+on_connexionlogin_clicked              (GtkWidget      *objet,
+                                        gpointer         user_data);
+
+
+
+void
+on_quitterlogin_clicked                (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_button3_clicked                     (GtkButton       *button,
+                                        gpointer         user_data);
+
+
+
+void
+on_voterFinale_clicked                 (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_annulerVote_clicked                 (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_confirmerVote_clicked               (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_retourLogin_clicked                 (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_quitterREclaV_clicked               (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_voteREcLogin_clicked                (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_ObsREcLogin_clicked                 (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_RecREcLogin_clicked                 (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_listeElecCond_clicked               (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_VoteCond_clicked                    (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_retourLogCond_clicked               (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_QuitterCondVote_clicked             (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_quitterInterAdm_clicked             (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_choisirElect_clicked                (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_button4_clicked                     (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_AdminVote_clicked                   (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_AdminUtil_clicked                   (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_AdminLISTELEC_clicked               (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_AdminBV_clicked                     (GtkWidget       *objet,
+                                        gpointer         user_data);
+
+void
+on_quitterHomeAdmin_clicked            (GtkButton       *button,
+                                        gpointer         user_data);
+
+
+
+/////////////////////////////   FIN PARTIE LOGIN    ////////////////////////////////////////////////////////////////
+
+
+
+
+void
+on_button5_clicked                     (GtkWidget	*objet,
+                                        gpointer         user_data);
+
+
+
+
+
+
+void
+on_QuitterStatVoter_clicked            (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_retourStatHome_clicked              (GtkWidget	*objet,
                                         gpointer         user_data);

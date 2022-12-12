@@ -272,7 +272,7 @@ fclose(f);
 
 }
 //function pour verifier seif
-int verifier_seif(char idv[])
+int verifier_seif(char idv[], char an[])
 {
     election e;
     int tr=0;
@@ -281,7 +281,7 @@ int verifier_seif(char idv[])
     {
         while(tr==0&&fscanf(f,"%s %s %s %s %s %s\n",e.id,e.nbr_conseiller,e.municipalite,e.del.jour0,e.del.mois0,e.del.annee0)!=EOF)
         {
-            if((strcmp(idv,e.id)==0))
+            if((strcmp(idv,e.id)==0) ||(strlen(idv)!=8) || (strcmp(an,"2022")==0))
                 tr=1;
         }
     }

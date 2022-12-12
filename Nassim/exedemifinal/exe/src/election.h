@@ -24,5 +24,5 @@ void supprimer_election(election e);
 election chercher_election( char id[]);
 int modifier_election( char * filename,char id[],election em );
 void Chercher_MUL(GtkWidget *liste,char ch[20]);
-int verifier_seif(char idv[]);
+int verifier_seif(char idv[], char an[]);
 

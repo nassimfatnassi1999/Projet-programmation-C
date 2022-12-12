@@ -27,6 +27,14 @@ main (int argc, char *argv[])
   GtkWidget *windowafficherel;
   GtkWidget *modifeel;
   GtkWidget *RechercheM;
+  GtkWidget *login;
+  GtkWidget *interfaceCondidat;
+  GtkWidget *interfaceElecteur;
+  GtkWidget *interfaceAdmin;
+  GtkWidget *interfaceReclamation;
+  GtkWidget *popUpVote;
+  GtkWidget *AdminHome;
+
 
 
 #ifdef ENABLE_NLS
@@ -45,8 +53,8 @@ main (int argc, char *argv[])
    * (except popup menus), just so that you see something after building
    * the project. Delete any components that you don't want shown initially.
    */
-  /*WindowLogin = create_WindowLogin ();
-  gtk_widget_show (WindowLogin);*/
+  login = create_login();
+  gtk_widget_show(login);
 
   /*windowel = create_windowel();
   gtk_widget_show (windowel);*/
@@ -54,8 +62,8 @@ main (int argc, char *argv[])
   /*ajoutBV = create_ajoutBV ();
   gtk_widget_show (ajoutBV);*/
 
-  GestionListeElectorale = create_GestionListeElectorale ();
-  gtk_widget_show (GestionListeElectorale);
+ /* GestionListeElectorale = create_GestionListeElectorale ();
+  gtk_widget_show (GestionListeElectorale);*/
 
   /*AjouterListe = create_AjouterListe ();
   gtk_widget_show (AjouterListe);*/
@@ -65,6 +73,8 @@ main (int argc, char *argv[])
 
   /*Stat_nassim = create_Stat_Liste_Nassim ();
   gtk_widget_show (Stat_nassim);*/
+
+  
 
   gtk_main ();
   return 0;
