@@ -1338,7 +1338,7 @@ on_nbrmod1_toggled                     (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
 if( gtk_toggle_button_get_active(GTK_RADIO_BUTTON (togglebutton)))
-{consm==22;}
+{consm=22;}
 }
 
 
@@ -1347,7 +1347,7 @@ on_nbrmodel2_toggled                   (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
 if( gtk_toggle_button_get_active(GTK_RADIO_BUTTON (togglebutton)))
-{consm==40;}
+{consm=40;}
 }
 
 
@@ -1356,7 +1356,7 @@ on_nbrmodel3_toggled                   (GtkToggleButton *togglebutton,
                                         gpointer         user_data)
 {
 if( gtk_toggle_button_get_active(GTK_RADIO_BUTTON (togglebutton)))
-{consm==60;}
+{consm=60;}
 }
 
 
@@ -1494,7 +1494,9 @@ on_chmedel_clicked                     (GtkButton       *button,
 	{
 	GtkWidget *erreurModification;
 erreurModification= lookup_widget (button ,"labelch_erreurmod");
-
+GdkColor color;
+gdk_color_parse("green",&color);
+gtk_widget_modify_fg(erreurModification,GTK_STATE_NORMAL,&color);
 gtk_label_set_text(GTK_LABEL(erreurModification),"Cette election existe !");
 gtk_widget_show (erreurModification);
 
@@ -1553,6 +1555,9 @@ gtk_widget_show (erreurModification);
                // gtk_entry_set_text(GTK_ENTRY(outputEr),"Cette election n'existe pas !");
 	GtkWidget *erreurModification;
 erreurModification= lookup_widget (button ,"labelch_erreurmod");
+GdkColor color;
+gdk_color_parse("red",&color);
+gtk_widget_modify_fg(erreurModification,GTK_STATE_NORMAL,&color);
 gtk_label_set_text(GTK_LABEL(erreurModification),"Cette election n'existe pas ");
 gtk_widget_show (erreurModification);
 
@@ -1661,7 +1666,7 @@ alert1=lookup_widget(button,"labelajoutermodel");
 
 
 
-sprintf(conseiller,"%d",cons);
+sprintf(conseiller,"%d",consm);
 sprintf(joure,"%d",j);
 sprintf(moise,"%d",m);
 sprintf(an,"%d",a);
@@ -1672,6 +1677,9 @@ strcpy(em1.id,gtk_entry_get_text(GTK_ENTRY(id)));
 strcpy(em1.municipalite,gtk_combo_box_get_active_text(GTK_COMBO_BOX(municipalite)));
 
 gtk_label_set_text(GTK_LABEL(alert),em1.nbr_conseiller);
+GdkColor color;
+gdk_color_parse("green",&color);
+gtk_widget_modify_fg(alert1,GTK_STATE_NORMAL,&color);
 gtk_label_set_text(GTK_LABEL(alert1),"modification avec succés");
 strcpy(em1.del.jour0,joure);
 strcpy(em1.del.mois0,moise);
@@ -1697,12 +1705,12 @@ on_retoure_aff_clicked                 (GtkButton       *button,
 	ajout=lookup_widget(button,"modifeel");
 
 	gtk_widget_destroy(ajout);
-	affiche=lookup_widget(button,"windowafficherel");
-	affiche=create_windowafficherel();
+	affiche=lookup_widget(button,"seifafficher");
+	affiche=create_seifafficher();
 	
 	gtk_widget_show(affiche);
 
-	treeview=lookup_widget(affiche,"treeviewaffel");
+	treeview=lookup_widget(affiche,"treeview2affseif");
 	afficher_election(treeview);
 }
 
@@ -1758,7 +1766,7 @@ char an[50];
 int j,m,a;
 int verif=-1;
 
-GtkWidget *id , *municipalite ,*jour, *mois, *annee, *alert ,*alert1;
+GtkWidget *id , *municipalite ,*jour, *mois, *annee, *alert ,*alert1,*alert2;
 GtkWidget *window;
 window=lookup_widget(button,"windowel");
 
@@ -1780,7 +1788,7 @@ m=m+1;
 //a=gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(annee));
 alert=lookup_widget(button,"alertel");
 alert1=lookup_widget(button,"labelconseilleraj");
-
+alert2=lookup_widget(button,"label189seifvid");
 
 sprintf(conseiller,"%d",cons);
 sprintf(joure,"%d",j);
@@ -1802,10 +1810,21 @@ verif=verifier_seif(e.id, e.del.annee0);
 
 if(y11==1 && !verif){
 ajouter_election("election.txt",e);
-gtk_label_set_text(GTK_LABEL(alert),"ajout avec succés");}
+GdkColor color;
+gdk_color_parse("green",&color);
+gtk_widget_modify_fg(alert,GTK_STATE_NORMAL,&color);
+gtk_label_set_text(GTK_LABEL(alert),"ajout avec succés");
+gtk_label_set_text(GTK_LABEL(alert2),"");}
 
 else {
+GdkColor color;
+gdk_color_parse("red",&color);
+gtk_widget_modify_fg(alert,GTK_STATE_NORMAL,&color);
 gtk_label_set_text(GTK_LABEL(alert),"echec d'ajoutée");
+GdkColor color1;
+gdk_color_parse("red",&color1);
+gtk_widget_modify_fg(alert2,GTK_STATE_NORMAL,&color1);
+gtk_label_set_text(GTK_LABEL(alert2),"verifier votre identifiant");
 }
 
 
@@ -1957,11 +1976,11 @@ on_supel_clicked                       (GtkButton       *button,
 	ajout=lookup_widget(button,"windowel");
 
 	gtk_widget_destroy(ajout);
-	affiche=lookup_widget(button,"windowafficherel");
-	affiche=create_windowafficherel();
+	affiche=lookup_widget(button,"seifafficher");
+	affiche=create_seifafficher();
 	
 	gtk_widget_show(affiche);
-	treeview=lookup_widget(affiche,"treeviewaffel");
+	treeview=lookup_widget(affiche,"treeview2affseif");
 	afficher_election(treeview);
 }
 
@@ -2706,5 +2725,91 @@ on_retourStatHome_clicked              (GtkWidget	*objet,
 	AdminHome=create_AdminHome();
 	
 	gtk_widget_show(AdminHome);
+}
+
+
+void
+on_treeview2affseif_row_activated      (GtkTreeView     *treeview,
+                                        GtkTreePath     *path,
+                                        GtkTreeViewColumn *column,
+                                        gpointer         user_data)
+{
+	GtkTreeIter iter;
+	gchar* id;
+        gchar* nbr_conseiller;
+        gchar* municipalite;
+	gchar* jour0;
+	gchar* mois0;
+	gchar* annee0;
+
+	election e;
+
+	GtkTreeModel *model = gtk_tree_view_get_model(treeview);
+
+	if(gtk_tree_model_get_iter(model, &iter, path))
+	{ 
+gtk_tree_model_get (GTK_LIST_STORE(model), &iter, 0, &id, 1, &nbr_conseiller, 2, &municipalite, 3, &jour0, 4, &mois0, 5, &annee0, -1);
+	strcpy(e.id,id);
+	strcpy(e.nbr_conseiller,nbr_conseiller);
+	strcpy(e.municipalite,municipalite);
+	strcpy(e.del.jour0,jour0);
+	strcpy(e.del.mois0,mois0);
+	strcpy(e.del.annee0,annee0);
+	
+
+	//supprimer_election(e);
+
+	afficher_election(treeview);
+}
+}
+
+
+
+
+void
+on_retourseifaj_clicked                (GtkButton       *button,
+                                        gpointer         user_data)
+{
+	
+
+
+
+ 	GtkWidget *ajout;
+	GtkWidget *affiche;
+	
+	ajout=lookup_widget(button,"seifafficher");
+
+	gtk_widget_destroy(ajout);
+	affiche=lookup_widget(button,"windowel");
+	affiche=create_windowel();
+	
+	gtk_widget_show(affiche);
+	
+}
+
+
+void
+on_modseifaj_clicked                   (GtkButton       *button,
+                                        gpointer         user_data)
+{
+	GtkWidget *ajout;
+	GtkWidget *affiche;
+	
+	ajout=lookup_widget(button,"windowel");
+
+	gtk_widget_destroy(ajout);
+	affiche=lookup_widget(button,"modifeel");
+	affiche=create_modifeel();
+	
+	gtk_widget_show(affiche);
+	
+}
+
+
+void
+on_quiseif_clicked                     (GtkButton       *button,
+                                        gpointer         user_data)
+{
+gtk_main_quit();
 }
 

@@ -474,3 +474,22 @@ on_QuitterStatVoter_clicked            (GtkButton       *button,
 void
 on_retourStatHome_clicked              (GtkWidget	*objet,
                                         gpointer         user_data);
+
+void
+on_treeview2affseif_row_activated      (GtkTreeView     *treeview,
+                                        GtkTreePath     *path,
+                                        GtkTreeViewColumn *column,
+                                        gpointer         user_data);
+
+
+void
+on_retourseifaj_clicked                (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_modseifaj_clicked                   (GtkButton       *button,
+                                        gpointer         user_data);
+
+void
+on_quiseif_clicked                     (GtkButton       *button,
+                                        gpointer         user_data);

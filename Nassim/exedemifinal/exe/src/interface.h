@@ -24,3 +24,4 @@ GtkWidget* create_interfaceReclamation (void);
 GtkWidget* create_popUpVote (void);
 GtkWidget* create_AdminHome (void);
 GtkWidget* create_Dashboard (void);
+GtkWidget* create_seifafficher (void);
